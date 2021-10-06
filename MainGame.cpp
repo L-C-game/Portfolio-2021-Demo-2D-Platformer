@@ -7,15 +7,18 @@ GameState state;
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 {
-	Play::CreateManager( DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_SCALE );
+	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
 
 }
 
+
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
 bool MainGameUpdate( float elapsedTime )
 {
+	// Keeping track of the elapsed time 
+	state.time += elapsedTime;
 	Play::DrawBackground();
 
 	Play::PresentDrawingBuffer();
