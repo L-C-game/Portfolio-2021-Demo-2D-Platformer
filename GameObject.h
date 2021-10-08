@@ -53,6 +53,7 @@ public:
     static void UpdateAll(GameState& state);
     static void DrawAll(GameState& state);
     static void DestroyAll();
+    static bool HasCollided(Point2f pos1, Point2f pos2);
 
 protected:
 

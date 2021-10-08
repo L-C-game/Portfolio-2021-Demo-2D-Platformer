@@ -1,6 +1,8 @@
-#define PLAY_IMPLEMENTATION
-#define PLAY_USING_GAMEOBJECT_MANAGER
 #include "MainGame.h"
+#include "Player.h"
+#define PLAY_IMPLEMENTATION
+//#define PLAY_USING_GAMEOBJECT_MANAGER
+#include "Play.h"
 
 GameState state;
 
@@ -10,38 +12,36 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
+	Player::Spawn(state);
+
 
 }
-
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
 bool MainGameUpdate( float elapsedTime )
 {
 	// Keeping track of the elapsed time 
 	state.time += elapsedTime;
-	Play::DrawBackground();
 
+	Play::DrawBackground();
+	GameObject::DrawAll(state);
 	Play::PresentDrawingBuffer();
+
+	GameObject::UpdateAll(state);
+
+	// Allows the player to easily exit the game
 	return Play::KeyDown( VK_ESCAPE );
 }
 
 // Gets called once when the player quits the game 
 int MainGameExit( void )
 {
+	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	for (GameObject* o : oList)
+	{
+		o->SetActive(false);
+	}
 	Play::DestroyManager();
+	GameObject::DestroyAll();
 	return PLAY_OK;
-}
-
-bool HasCollided(Point2f pos1, Point2f pos2)
-{
-	Vector2f d = pos2 - pos1;
-	float dist = sqrt((d.x * d.x) + (d.y * d.y));
-	if (dist < S_SCREEN_LIMIT)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }

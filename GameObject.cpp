@@ -29,7 +29,9 @@ void GameObject::UpdateAll(GameState & state)
 		s_vUpdateList[n]->Update(state);
 
 		if (!s_vUpdateList[n]->m_active)
+		{
 			delete s_vUpdateList[n--];
+		}
 	}
 }
 
@@ -38,7 +40,9 @@ void GameObject::DrawAll(GameState & state)
 	std::sort(s_vDrawList.begin(), s_vDrawList.end(), GameObject::DrawOrder);
 
 	for (int n = 0; unsigned(n) < s_vDrawList.size(); n++)
+	{
 		s_vDrawList[n]->Draw(state);
+	}
 }
 
 float GameObject::RandomNumGen(int min, int max)
@@ -46,9 +50,23 @@ float GameObject::RandomNumGen(int min, int max)
 	return static_cast<float>((std::rand() % ((max - min) + 1)) + min);
 }
 
+bool GameObject::HasCollided(Point2f pos1, Point2f pos2)
+{
+	Vector2f d = pos2 - pos1;
+	float dist = sqrt((d.x * d.x) + (d.y * d.y));
+	if (dist < S_HALF_LIMIT)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool GameObject::CheckCollisions(GameObject* a, GameObject* b)
 {
-	if (HasCollided(a->GetPosition(), b->GetPosition()))
+	if (GameObject::HasCollided(a->GetPosition(), b->GetPosition()))
 	{
 		return true;
 	}

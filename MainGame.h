@@ -8,11 +8,10 @@ struct GameState
 	float time{ 0 };
 };
 
-bool HasCollided(Point2f pos1, Point2f pos2);
-
 // Important constants
 // Used in the HasCollided function
-constexpr int S_SCREEN_LIMIT = 50;
+constexpr int S_SCREEN_LIMIT = 24;
+constexpr int S_HALF_LIMIT = 12;
 // Resolution based on the SNES
 constexpr int S_DISPLAY_WIDTH = 256;
 constexpr int S_DISPLAY_HEIGHT = 224;
