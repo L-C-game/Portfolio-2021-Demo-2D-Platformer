@@ -1486,8 +1486,8 @@ int WINAPI WinMain( _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	g_pGDIToken = token;
 
 	MainGameEntry( __argc, __argv );
-
-	return PlayWindow::Instance().HandleWindows( hInstance, hPrevInstance, lpCmdLine, nShowCmd, L"PlayBuffer" );
+	// Edited the window name to match the Portfolio project name
+	return PlayWindow::Instance().HandleWindows( hInstance, hPrevInstance, lpCmdLine, nShowCmd, L"Platformer Demo" );
 }
 
 //********************************************************************************************************************************

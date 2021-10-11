@@ -1,7 +1,6 @@
 #include "MainGame.h"
 #include "Player.h"
 #define PLAY_IMPLEMENTATION
-//#define PLAY_USING_GAMEOBJECT_MANAGER
 #include "Play.h"
 
 GameState state;
@@ -13,7 +12,6 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
 	Player::Spawn(state);
-
 
 }
 
