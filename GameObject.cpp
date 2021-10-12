@@ -1,3 +1,4 @@
+#include "Play.h"
 #include "GameObject.h"
 
 std::vector< GameObject* > GameObject::s_vUpdateList;
@@ -50,32 +51,47 @@ float GameObject::RandomNumGen(int min, int max)
 	return static_cast<float>((std::rand() % ((max - min) + 1)) + min);
 }
 
-bool GameObject::HasCollided(Point2f pos1, Point2f pos2)
+//bool GameObject::HasCollided(Point2f pos1, Point2f pos2)
+//{
+//	Vector2f d = pos2 - pos1;
+//	float dist = sqrt((d.x * d.x) + (d.y * d.y));
+//	if (dist < S_HALF_LIMIT)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
+
+bool GameObject::AABBCollision( GameObject* other)
 {
-	Vector2f d = pos2 - pos1;
-	float dist = sqrt((d.x * d.x) + (d.y * d.y));
-	if (dist < S_HALF_LIMIT)
+	if (abs((this->GetCentre().x) - (other->GetCentre().x)) < (this->GetHalfSize().x + other->GetHalfSize().x))
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
-}
 
-bool GameObject::CheckCollisions(GameObject* a, GameObject* b)
-{
-	if (GameObject::HasCollided(a->GetPosition(), b->GetPosition()))
+	if (abs((this->GetCentre().y) - (other->GetCentre().y)) < (this->GetHalfSize().y + other->GetHalfSize().y))
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
 
+	return false;
 }
+
+//bool GameObject::CheckCollisions(GameObject* a, GameObject* b)
+//{
+//	if (GameObject::HasCollided(a->GetPosition(), b->GetPosition()))
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//
+//}
 
 void GameObject::ScreenWrapper(Point2f idealPos)
 {

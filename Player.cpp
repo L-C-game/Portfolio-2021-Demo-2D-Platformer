@@ -9,6 +9,9 @@ Player::Player(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(0);
 	SetDrawOrder(0);
 	m_pStateCurrent = &IdleState::getInstance();
+	SetSolid(true);
+	SetHalfSize({ Play::GetSpriteWidth(Play::GetSpriteId("spr_zool_stand_right")) / 2, Play::GetSpriteHeight(Play::GetSpriteId("spr_zool_stand_right")) / 2 });
+	SetCentre(Play::GetSpriteOrigin(Play::GetSpriteId("spr_zool_stand_right")));
 }
 
 // Spawn player
@@ -36,6 +39,7 @@ void Player::SetPlayerState(PlayerState& newState)
 
 void Player::Update(GameState& state)
 {
+	SetPosition(GetPosition() + GetVelocity());
 	m_pStateCurrent->HandleInput(this);
 }
 
