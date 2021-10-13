@@ -9,24 +9,22 @@ Player::Player(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(0);
 	SetDrawOrder(0);
 	m_pStateCurrent = &IdleState::getInstance();
-	SetSolid(true);
-	SetHalfSize({ Play::GetSpriteWidth(Play::GetSpriteId("spr_zool_stand_right")) / 2, Play::GetSpriteHeight(Play::GetSpriteId("spr_zool_stand_right")) / 2 });
-	SetCentre(Play::GetSpriteOrigin(Play::GetSpriteId("spr_zool_stand_right")));
+	SetStatic(false);
 }
 
 // Spawn player
 void Player::Spawn(GameState& state)
 {
-	if (GameObject::s_vUpdateList.size() == 0)
-	{
+	//if (GameObject::s_vUpdateList.size() == 0)
+	//{
 		//Player constructor
 		if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
 		{
-			Point2f initialPos = {static_cast<float>(S_SCREEN_LIMIT), static_cast<float>(S_DISPLAY_HEIGHT - S_SCREEN_LIMIT)};
+			Point2f initialPos = {static_cast<float>(S_SCREEN_LIMIT), static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT))};
 			GameObject* player = new Player(initialPos);
 					
 		}
-	}
+	//}
 
 }
 
@@ -40,10 +38,10 @@ void Player::SetPlayerState(PlayerState& newState)
 void Player::Update(GameState& state)
 {
 	SetPosition(GetPosition() + GetVelocity());
+	m_pStateCurrent->SetupBB(this);
 	m_pStateCurrent->HandleInput(this);
 }
 
-// Draw with switch case
 void Player::Draw(GameState& state) const
 {
 	m_pStateCurrent->DrawPlayer(this, state);

@@ -5,10 +5,11 @@
 class IdleState : public PlayerState
 {
 public:
-	void StateEnter(Player* player) {}
-	void HandleInput(Player* player); // Implemented in cpp
+	void StateEnter(Player* player);
+	void HandleInput(Player* player);
+	void SetupBB(Player* player);
 	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player) {}
+	void StateExit(Player* player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -24,10 +25,11 @@ private:
 class WalkState : public PlayerState
 {
 public:
-	void StateEnter(Player* player) {}
-	void HandleInput(Player* player); // Implemented in cpp
+	void StateEnter(Player* player);
+	void HandleInput(Player* player);
+	void SetupBB(Player* player);
 	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player) {}
+	void StateExit(Player* player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -42,10 +44,11 @@ private:
 class CrouchState : public PlayerState
 {
 public:
-	void StateEnter(Player* player) {}
-	void HandleInput(Player* player); // Implemented in cpp
+	void StateEnter(Player* player);
+	void HandleInput(Player* player);
+	void SetupBB(Player* player);
 	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player) {}
+	void StateExit(Player* player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -60,10 +63,11 @@ private:
 class JumpState : public PlayerState
 {
 public:
-	void StateEnter(Player* player) {}
-	void HandleInput(Player* player); // Implemented in cpp
+	void StateEnter(Player* player);
+	void HandleInput(Player* player);
+	void SetupBB(Player* player);
 	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player) {}
+	void StateExit(Player* player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -78,10 +82,11 @@ private:
 class FallState : public PlayerState
 {
 public:
-	void StateEnter(Player* player) {}
-	void HandleInput(Player* player); // Implemented in cpp
+	void StateEnter(Player* player);
+	void HandleInput(Player* player);
+	void SetupBB(Player* player);
 	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player) {}
+	void StateExit(Player* player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();

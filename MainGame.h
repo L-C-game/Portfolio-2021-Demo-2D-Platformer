@@ -10,8 +10,8 @@ struct GameState
 
 // Important constants
 // Used in the HasCollided function
-constexpr int S_SCREEN_LIMIT = 24;
-constexpr int S_HALF_LIMIT = 12;
+constexpr int S_SCREEN_LIMIT = 32;
+constexpr int S_HALF_LIMIT = 16;
 
 // Resolution based on the Amiga
 constexpr int S_DISPLAY_WIDTH = 640;

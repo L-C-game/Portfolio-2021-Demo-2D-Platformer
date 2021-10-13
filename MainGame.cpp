@@ -1,4 +1,5 @@
 #include "MainGame.h"
+#include "Floor.h"
 #include "Player.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
@@ -11,6 +12,7 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
+	Floor::Spawn(state);
 	Player::Spawn(state);
 
 }

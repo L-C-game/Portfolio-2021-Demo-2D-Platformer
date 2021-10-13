@@ -1,7 +1,21 @@
 #include "PlayerStatesConcrete.h"
 
-// Constant for Jump before the platforms are added
-float initY = static_cast<float>(S_DISPLAY_HEIGHT - S_SCREEN_LIMIT);
+// Constant for controlling Jump before the collisions and gravity are added
+float initY = static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT));
+
+// IdleState
+PlayerState& IdleState::getInstance()
+{
+	static IdleState singleton;
+	return singleton;
+}
+
+void IdleState::StateEnter(Player* player)
+{
+	// Making sure the player comes to a complete stop when idle 
+	// So the velocity doesn't carry over from the previous state
+	player->SetVelocity({ 0.0f, 0.0f });
+}
 
 void IdleState::HandleInput(Player* player)
 {
@@ -21,23 +35,42 @@ void IdleState::HandleInput(Player* player)
 	}
 }
 
-void IdleState::DrawPlayer(const Player* player, GameState& state) const
+void IdleState::SetupBB(Player* player)
 {
 	if (!(player->GetIsLeftFacing()))
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_stand_right"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_right"));
 	}
 
 	if (player->GetIsLeftFacing())
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_stand_left"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
 	}
+
+	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId())/2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+
 }
 
-PlayerState& IdleState::getInstance()
+void IdleState::DrawPlayer(const Player* player, GameState& state) const
 {
-	static IdleState singleton;
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+}
+
+void IdleState::StateExit(Player* player)
+{
+
+}
+
+// WalkState
+PlayerState& WalkState::getInstance()
+{
+	static WalkState singleton;
 	return singleton;
+}
+
+void WalkState::StateEnter(Player* player)
+{
+
 }
 
 void WalkState::HandleInput(Player* player)
@@ -56,7 +89,7 @@ void WalkState::HandleInput(Player* player)
 		if (player->GetVelocity().x >= 0)
 		{
 			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x - 1),(currentVel.y) };
+			Vector2f vel = { (currentVel.x - 2),(currentVel.y) };
 			player->SetIsLeftFacing(true);
 			player->SetVelocity(vel);
 		}
@@ -66,7 +99,7 @@ void WalkState::HandleInput(Player* player)
 		if (player->GetVelocity().x <= 0)
 		{
 			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x + 1),(currentVel.y) };
+			Vector2f vel = { (currentVel.x + 2),(currentVel.y) };
 			player->SetIsLeftFacing(false);
 			player->SetVelocity(vel);
 		}
@@ -78,23 +111,14 @@ void WalkState::HandleInput(Player* player)
 		player->SetVelocity(vel);
 	}
 
-	// Still glitches on the walls if holding both L and R
-
-	if (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT))
+	if ((!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
-		player->SetVelocity({ 0.0f, 0.0f });
-		player->SetPlayerState(IdleState::getInstance());
-	}
-	
-	if (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT))
-	{
-		player->SetVelocity({ 0.0f, 0.0f });
+		// If the player presses neither of L and R, or presses L and R at once then we change from walk to Idle
 		player->SetPlayerState(IdleState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player->SetVelocity({ 0.0f, 0.0f });
 		player->SetPlayerState(CrouchState::getInstance());
 	}
 
@@ -102,31 +126,50 @@ void WalkState::HandleInput(Player* player)
 	{
 		player->SetPlayerState(JumpState::getInstance());
 	}
+}
 
-	// Needs to be able to fall
+void WalkState::SetupBB(Player* player)
+{
+	if (!(player->GetIsLeftFacing()))
+	{
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_right_strip_16"));
+	}
+
+	if (player->GetIsLeftFacing())
+	{
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
+	}
+
+	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+
 }
 
 void WalkState::DrawPlayer(const Player* player, GameState& state) const
 {
-	if (!(player->GetIsLeftFacing()))
-	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_walk_right_strip_16"), player->GetPosition(), static_cast<int>(32 * state.time));
-	}
-	
-	if (player->GetIsLeftFacing())
-	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_walk_left_strip_16"), player->GetPosition(), static_cast<int>(32 * state.time));
-	}
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(32 * state.time));
 }
 
-PlayerState& WalkState::getInstance()
+void WalkState::StateExit(Player* player)
 {
-	static WalkState singleton;
+
+}
+
+// CrouchState
+PlayerState& CrouchState::getInstance()
+{
+	static CrouchState singleton;
 	return singleton;
+}
+
+void CrouchState::StateEnter(Player* player)
+{
+	// Also don't want any movement to be carried over into the crouch state
+	player->SetVelocity({ 0.0f, 0.0f });
 }
 
 void CrouchState::HandleInput(Player* player)
 {
+	// Leave crouch state for the relevant input
 	if (!(Play::KeyDown(VK_DOWN)) && (Play::KeyDown(VK_LEFT) || Play::KeyDown(VK_RIGHT)))
 	{
 		player->SetPlayerState(WalkState::getInstance());
@@ -136,6 +179,7 @@ void CrouchState::HandleInput(Player* player)
 		player->SetPlayerState(IdleState::getInstance());
 	}
 
+	// Can change facing direction while crouched
 	if ((Play::KeyDown(VK_DOWN)) && Play::KeyDown(VK_LEFT) && !Play::KeyDown(VK_RIGHT))
 	{
 		player->SetIsLeftFacing(true);
@@ -147,33 +191,50 @@ void CrouchState::HandleInput(Player* player)
 	}
 }
 
-void CrouchState::DrawPlayer(const Player* player, GameState& state) const
+void CrouchState::SetupBB(Player* player)
 {
 	if (!(player->GetIsLeftFacing()))
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_crouch_right"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_right"));
 	}
 
 	if (player->GetIsLeftFacing())
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_crouch_left"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
 	}
+
+	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+
 }
 
-PlayerState& CrouchState::getInstance()
+void CrouchState::DrawPlayer(const Player* player, GameState& state) const
 {
-	static CrouchState singleton;
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+}
+
+void CrouchState::StateExit(Player* player)
+{
+
+}
+
+// JumpState
+PlayerState& JumpState::getInstance()
+{
+	static JumpState singleton;
 	return singleton;
+}
+
+void JumpState::StateEnter(Player* player)
+{
+
 }
 
 void JumpState::HandleInput(Player* player)
 {
-	// Changing state to falling
 	if(player->GetVelocity().y == 0)
 	{
 		Vector2f currentVel = player->GetVelocity();
 		Vector2f vel = { (currentVel.x),(currentVel.y - 2) };
-		//oldPosY = pos.y;
 		player->SetVelocity(vel);
 	}
 
@@ -183,7 +244,6 @@ void JumpState::HandleInput(Player* player)
 		{
 			Vector2f currentVel = player->GetVelocity();
 			Vector2f vel = { (currentVel.x - 1),(currentVel.y) };
-			//oldPosY = pos.y;
 			player->SetIsLeftFacing(true);
 			player->SetVelocity(vel);
 		}
@@ -194,7 +254,6 @@ void JumpState::HandleInput(Player* player)
 		{
 			Vector2f currentVel = player->GetVelocity();
 			Vector2f vel = { (currentVel.x + 1),(currentVel.y) };
-			//oldPosY = pos.y;
 			player->SetIsLeftFacing(false);
 			player->SetVelocity(vel);
 		}
@@ -203,10 +262,11 @@ void JumpState::HandleInput(Player* player)
 	{
 		Vector2f currentVel = player->GetVelocity();
 		Vector2f vel = { (0.0f),(currentVel.y) };
-		//oldPosY = pos.y;
 		player->SetVelocity(vel);
 	}
 
+	// When the player is no longer holding space and the height he is is above his initial position,
+	// Change to fall state
 	if (!(Play::KeyDown(VK_SPACE)) && player->GetPosition().y < initY - S_HALF_LIMIT)
 	{
 		player->SetPlayerState(FallState::getInstance());
@@ -214,23 +274,42 @@ void JumpState::HandleInput(Player* player)
 
 }
 
-void JumpState::DrawPlayer(const Player* player, GameState& state) const
+void JumpState::SetupBB(Player* player)
 {
 	if (!(player->GetIsLeftFacing()))
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_jump_right"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_right"));
 	}
 
 	if (player->GetIsLeftFacing())
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_jump_left"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
 	}
+
+	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+
 }
 
-PlayerState& JumpState::getInstance()
+void JumpState::DrawPlayer(const Player* player, GameState& state) const
 {
-	static JumpState singleton;
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+}
+
+void JumpState::StateExit(Player* player)
+{
+
+}
+
+// FallState
+PlayerState& FallState::getInstance()
+{
+	static FallState singleton;
 	return singleton;
+}
+
+void FallState::StateEnter(Player* player)
+{
+
 }
 
 void FallState::HandleInput(Player* player)
@@ -239,7 +318,6 @@ void FallState::HandleInput(Player* player)
 	{
 		Vector2f currentVel = player->GetVelocity();
 		Vector2f vel = { (currentVel.x),(currentVel.y + 2) };
-		//oldPosY = pos.y;
 		player->SetVelocity(vel);
 	}
 
@@ -277,27 +355,33 @@ void FallState::HandleInput(Player* player)
 	if (player->GetPosition().y == initY)
 	{
 		player->SetPosition({ player->GetPosition().x, initY });
-		player->SetVelocity({ (0.0f), (0.0f) });
 		player->SetIsGrounded(true);
 		player->SetPlayerState(WalkState::getInstance());
 	}
 }
 
-void FallState::DrawPlayer(const Player* player, GameState& state) const
+void FallState::SetupBB(Player* player)
 {
 	if (!(player->GetIsLeftFacing()))
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_fall_right"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_right"));
 	}
 
 	if (player->GetIsLeftFacing())
 	{
-		Play::DrawSprite(Play::GetSpriteId("spr_zool_fall_left"), player->GetPosition(), static_cast<int>(10 * state.time));
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
 	}
+
+	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+
 }
 
-PlayerState& FallState::getInstance()
+void FallState::DrawPlayer(const Player* player, GameState& state) const
 {
-	static FallState singleton;
-	return singleton;
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+}
+
+void FallState::StateExit(Player* player)
+{
+	player->SetVelocity({ (0.0f), (0.0f) });
 }

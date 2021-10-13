@@ -67,12 +67,12 @@ float GameObject::RandomNumGen(int min, int max)
 
 bool GameObject::AABBCollision( GameObject* other)
 {
-	if (abs((this->GetCentre().x) - (other->GetCentre().x)) < (this->GetHalfSize().x + other->GetHalfSize().x))
+	if (abs((this->GetPosition().x) - (other->GetPosition().x)) < (this->GetHalfSize().x + other->GetHalfSize().x))
 	{
 		return true;
 	}
 
-	if (abs((this->GetCentre().y) - (other->GetCentre().y)) < (this->GetHalfSize().y + other->GetHalfSize().y))
+	if (abs((this->GetPosition().y) - (other->GetPosition().y)) < (this->GetHalfSize().y + other->GetHalfSize().y))
 	{
 		return true;
 	}

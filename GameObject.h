@@ -10,6 +10,7 @@ public:
 	{
 		OBJ_NULL = -1,
 		OBJ_PLAYER,
+        OBJ_FLOOR,
 		OBJ_ALL = 999
 	};
 
@@ -44,15 +45,18 @@ public:
     void SetHalfSize(Point2f halfSize) { m_halfSize = halfSize; }
     Point2f GetHalfSize() const { return m_halfSize; };
 
-    void SetCentre(Point2f centre) { m_centre = centre; }
-    Point2f GetCentre() const { return m_centre; };
+    //void SetCentre(Point2f centre) { m_centre = centre; }
+    //Point2f GetCentre() const { return m_centre; };
 
-    void SetSolid(bool isSolid) { m_solid = isSolid; }
-    bool GetSolid() const { return m_solid; };
+    void SetStatic(bool isStatic) { m_static = isStatic; }
+    bool GetStatic() const { return m_static; };
 
-    // This means we can set the gravity for fixed objects to zero
-    void SetGravity(int gravity) { m_gravity = gravity; }
-    int GetGravity() const { return m_gravity; };
+    void SetCurrentSpriteId(int currentSId) { m_currentSId = currentSId; }
+    int GetCurrentSpriteId() const { return m_currentSId; };
+
+    //// This means we can set the gravity for static objects to zero
+    //void SetGravity(int gravity) { m_gravity = gravity; }
+    //int GetGravity() const { return m_gravity; };
 
     // Type specific getters and setters
 
@@ -73,6 +77,7 @@ public:
     static int GetObjectList(GameObject::Type eType, std::vector< GameObject* >& vList);
     static std::vector< GameObject* > GetTypeList(GameObject::Type type);
 
+    // Udate draw and free memory methods for all objects, called in main game
     static void UpdateAll(GameState& state);
     static void DrawAll(GameState& state);
     static void DestroyAll();
@@ -93,9 +98,12 @@ protected:
 
     //Setting up game objects with AABB's
     Point2f m_halfSize{ 0.0f, 0.0f }; // Half the width and half the height of the object
-    Point2f m_centre{ 0.0f, 0.0f }; // The centre of the object
-    bool m_solid{ true };
-    int m_gravity{ 2 };
+    //Point2f m_centre{ 0.0f, 0.0f }; // The centre of the object
+
+    // Is the GameObject fixed in space (independent of forces) or not:
+    bool m_static{ false };
+    //int m_gravity{ 2 };
+    int m_currentSId{Play::GetSpriteId("spr_zool_stand_right")};
 
     int spriteId{ -1 };
     float m_rot{ 0.0f };
