@@ -1,4 +1,5 @@
 #include "MainGame.h"
+#include "LeftBarrier.h"
 #include "Floor.h"
 #include "Player.h"
 #define PLAY_IMPLEMENTATION
@@ -13,6 +14,7 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
 	Floor::Spawn(state);
+	LBarrier::Spawn(state);
 	Player::Spawn(state);
 
 }

@@ -1,4 +1,6 @@
 #include "PlayerStatesConcrete.h"
+#include "Floor.h"
+#include "LeftBarrier.h"
 
 // Constant for controlling Jump before the collisions and gravity are added
 float initY = static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT));
@@ -14,6 +16,7 @@ void IdleState::StateEnter(Player* player)
 {
 	// Making sure the player comes to a complete stop when idle 
 	// So the velocity doesn't carry over from the previous state
+	player->SetAcceleration({ 0.0f, 0.0f});
 	player->SetVelocity({ 0.0f, 0.0f });
 }
 
@@ -21,7 +24,7 @@ void IdleState::HandleInput(Player* player)
 {
 	if ((Play::KeyDown(VK_LEFT) && !Play::KeyDown(VK_RIGHT)) || (Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
-		player->SetPlayerState(WalkState::getInstance());
+		player->SetPlayerState(AccelState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
@@ -29,7 +32,7 @@ void IdleState::HandleInput(Player* player)
 		player->SetPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE))
+	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
 	{
 		player->SetPlayerState(JumpState::getInstance());
 	}
@@ -47,7 +50,7 @@ void IdleState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
 	}
 
-	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId())/2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+	player->SetHalfSize({(Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER});
 
 }
 
@@ -62,59 +65,59 @@ void IdleState::StateExit(Player* player)
 }
 
 // WalkState
-PlayerState& WalkState::getInstance()
+PlayerState& AccelState::getInstance()
 {
-	static WalkState singleton;
+	static AccelState singleton;
 	return singleton;
 }
 
-void WalkState::StateEnter(Player* player)
+void AccelState::StateEnter(Player* player)
 {
 
 }
 
-void WalkState::HandleInput(Player* player)
+void AccelState::HandleInput(Player* player)
 {
 	// Input handling
 	// Allow the player to move Zool along the horizontal axis using the directional keys
-	if (player->GetVelocity().x == 0)
+	/*if (player->GetAcceleration().x >= 0)
 	{
-		Vector2f currentVel = player->GetVelocity();
-		Vector2f vel = { (currentVel.x),(currentVel.y) };
-		player->SetVelocity(vel);
-	}
+		Vector2f currentAcc = player->GetAcceleration();
+		Vector2f acc = { (currentAcc.x),(currentAcc.y) };
+		player->SetAcceleration(acc);
+	}*/
 
-	if (Play::KeyDown(VK_LEFT) && player->GetPosition().x > S_HALF_LIMIT)
+	std::vector<GameObject*> lBarriers = GameObject::GetTypeList(GameObject::Type::OBJ_LBARRIER);
+	for (GameObject* l : lBarriers)
 	{
-		if (player->GetVelocity().x >= 0)
+		LBarrier* lbarrier = static_cast<LBarrier*>(l);
+
+		if (Play::KeyDown(VK_LEFT) && !player->AABBCollision(lbarrier))
 		{
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x - 2),(currentVel.y) };
-			player->SetIsLeftFacing(true);
-			player->SetVelocity(vel);
+			if (player->GetAcceleration().x >= 0)
+			{
+				Vector2f currentAcc = player->GetAcceleration();
+				Vector2f acc = { (-(2.0f)/(60.0f)),(currentAcc.y) };
+				player->SetIsLeftFacing(true);
+				player->SetAcceleration(acc);
+			}
 		}
-	}
-	else if (Play::KeyDown(VK_RIGHT) && (player->GetPosition().x + S_HALF_LIMIT) < S_DISPLAY_WIDTH)
-	{
-		if (player->GetVelocity().x <= 0)
+		else if (Play::KeyDown(VK_RIGHT) && (player->GetPosition().x + S_HALF_LIMIT) < S_DISPLAY_WIDTH)
 		{
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x + 2),(currentVel.y) };
-			player->SetIsLeftFacing(false);
-			player->SetVelocity(vel);
+			if (player->GetAcceleration().x <= 0)
+			{
+				Vector2f currentAcc = player->GetAcceleration();
+				Vector2f acc = {(2.0f)/(60.0f),(currentAcc.y) };
+				player->SetIsLeftFacing(false);
+				player->SetAcceleration(acc);
+			}
 		}
-	}
-	else
-	{
-		Vector2f currentVel = player->GetVelocity();
-		Vector2f vel = { (0.0f),(0.0f) };
-		player->SetVelocity(vel);
 	}
 
 	if ((!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
-		// If the player presses neither of L and R, or presses L and R at once then we change from walk to Idle
-		player->SetPlayerState(IdleState::getInstance());
+		// If the player presses neither of L and R set to Deccelerate state
+		player->SetPlayerState(DeccelState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
@@ -122,13 +125,13 @@ void WalkState::HandleInput(Player* player)
 		player->SetPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE))
+	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
 	{
 		player->SetPlayerState(JumpState::getInstance());
 	}
 }
 
-void WalkState::SetupBB(Player* player)
+void AccelState::SetupBB(Player* player)
 {
 	if (!(player->GetIsLeftFacing()))
 	{
@@ -140,16 +143,82 @@ void WalkState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
 	}
 
-	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
 
 }
 
-void WalkState::DrawPlayer(const Player* player, GameState& state) const
+void AccelState::DrawPlayer(const Player* player, GameState& state) const
 {
 	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(32 * state.time));
 }
 
-void WalkState::StateExit(Player* player)
+void AccelState::StateExit(Player* player)
+{
+
+}
+
+// Decceleration State
+PlayerState& DeccelState::getInstance()
+{
+	static DeccelState singleton;
+	return singleton;
+}
+
+void DeccelState::StateEnter(Player* player)
+{
+	float acc = -(player->GetAcceleration().x);
+	player->SetAcceleration({ acc, player->GetAcceleration().y });
+}
+
+void DeccelState::HandleInput(Player* player)
+{
+	if (Play::KeyDown(VK_LEFT))
+	{
+		player->SetPlayerState(AccelState::getInstance());
+	}
+	else if (Play::KeyDown(VK_RIGHT))
+	{
+		player->SetPlayerState(AccelState::getInstance());
+	}
+
+	if ((abs(player->GetVelocity().x) <= 0.1f) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
+	{
+		// If the player presses neither of L and R set to Deccelerate state
+		player->SetPlayerState(IdleState::getInstance());
+	}
+
+	if (Play::KeyDown(VK_DOWN))
+	{
+		player->SetPlayerState(CrouchState::getInstance());
+	}
+
+	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
+	{
+		player->SetPlayerState(JumpState::getInstance());
+	}
+}
+
+void DeccelState::SetupBB(Player* player)
+{
+	if (!(player->GetIsLeftFacing()))
+	{
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_right"));
+	}
+
+	if (player->GetIsLeftFacing())
+	{
+		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_left"));
+	}
+
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
+}
+
+void DeccelState::DrawPlayer(const Player* player, GameState& state) const
+{
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+}
+
+void DeccelState::StateExit(Player* player)
 {
 
 }
@@ -164,6 +233,7 @@ PlayerState& CrouchState::getInstance()
 void CrouchState::StateEnter(Player* player)
 {
 	// Also don't want any movement to be carried over into the crouch state
+	player->SetAcceleration({ 0.0f, 0.0f });
 	player->SetVelocity({ 0.0f, 0.0f });
 }
 
@@ -172,7 +242,7 @@ void CrouchState::HandleInput(Player* player)
 	// Leave crouch state for the relevant input
 	if (!(Play::KeyDown(VK_DOWN)) && (Play::KeyDown(VK_LEFT) || Play::KeyDown(VK_RIGHT)))
 	{
-		player->SetPlayerState(WalkState::getInstance());
+		player->SetPlayerState(AccelState::getInstance());
 	}
 	else if (!(Play::KeyDown(VK_DOWN)) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
@@ -203,7 +273,7 @@ void CrouchState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
 	}
 
-	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
 
 }
 
@@ -226,7 +296,7 @@ PlayerState& JumpState::getInstance()
 
 void JumpState::StateEnter(Player* player)
 {
-
+	player->SetIsGrounded(false);
 }
 
 void JumpState::HandleInput(Player* player)
@@ -286,7 +356,7 @@ void JumpState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
 	}
 
-	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
 
 }
 
@@ -314,13 +384,9 @@ void FallState::StateEnter(Player* player)
 
 void FallState::HandleInput(Player* player)
 {
-	if (player->GetVelocity().y <= 0)
-	{
-		Vector2f currentVel = player->GetVelocity();
-		Vector2f vel = { (currentVel.x),(currentVel.y + 2) };
-		player->SetVelocity(vel);
-	}
-
+	Vector2f currentVel = player->GetVelocity();
+	Vector2f vel = { (currentVel.x),(currentVel.y + GRAVITY) };
+	player->SetVelocity(vel);
 	
 	if (Play::KeyDown(VK_LEFT))
 	{
@@ -328,7 +394,7 @@ void FallState::HandleInput(Player* player)
 		{
 			Point2f currentPos = player->GetPosition();
 			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x - 1),(currentVel.y) };
+			Vector2f vel = { (currentVel.x - 0.5f),(currentVel.y) };
 			player->SetIsLeftFacing(true);
 			player->SetVelocity(vel);
 		}
@@ -340,7 +406,7 @@ void FallState::HandleInput(Player* player)
 		{
 			Point2f currentPos = player->GetPosition();
 			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x + 1),(currentVel.y) };
+			Vector2f vel = { (currentVel.x + 0.5f),(currentVel.y) };
 			player->SetIsLeftFacing(false);
 			player->SetVelocity(vel);
 		}
@@ -352,11 +418,16 @@ void FallState::HandleInput(Player* player)
 		player->SetVelocity(vel);
 	}
 
-	if (player->GetPosition().y == initY)
+	std::vector<GameObject*> floors = GameObject::GetTypeList(GameObject::Type::OBJ_FLOOR);
+	for (GameObject* f : floors)
 	{
-		player->SetPosition({ player->GetPosition().x, initY });
-		player->SetIsGrounded(true);
-		player->SetPlayerState(WalkState::getInstance());
+		Floor* floor = static_cast<Floor*>(f);
+		if (player->AABBCollision(floor))
+		{
+			player->SetPosition({ player->GetPosition().x, initY });
+			player->SetIsGrounded(true);
+			player->SetPlayerState(AccelState::getInstance());
+		}
 	}
 }
 
@@ -372,7 +443,7 @@ void FallState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
 	}
 
-	player->SetHalfSize({ Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2 });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
 
 }
 

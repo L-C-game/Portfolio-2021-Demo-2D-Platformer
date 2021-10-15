@@ -8,7 +8,7 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetDrawOrder(1);
 	SetStatic(true);
 	this->SetCurrentSpriteId(Play::GetSpriteId("spr_floor"));
-	this->SetHalfSize({ Play::GetSpriteWidth(this->GetCurrentSpriteId()) / 2, Play::GetSpriteHeight(this->GetCurrentSpriteId()) / 2 });
+	this->SetHalfSize({(Play::GetSpriteWidth(this->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(this->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
 }
 
 void Floor::Spawn(GameState& state)
@@ -18,7 +18,7 @@ void Floor::Spawn(GameState& state)
 		// Floor constructor
 		if (GameObject::GetObjectCount(GameObject::Type::OBJ_FLOOR) < 1)
 		{
-			Point2f initialPos = { static_cast<float>(S_DISPLAY_WIDTH/2), static_cast<float>(S_DISPLAY_HEIGHT - S_HALF_LIMIT) };
+			Point2f initialPos = { (S_DISPLAY_WIDTH/2), (S_DISPLAY_HEIGHT - S_HALF_LIMIT) };
 			GameObject* floor = new Floor(initialPos);
 
 		}
@@ -32,5 +32,5 @@ void Floor::Update(GameState& state)
 
 void Floor::Draw(GameState& state) const
 {
-	Play::DrawSprite(this->GetCurrentSpriteId(), this->GetPosition(), static_cast<int>(32 * state.time));
+	Play::DrawSprite(this->GetCurrentSpriteId(), this->GetPosition(), static_cast<int>(1 * state.time));
 }

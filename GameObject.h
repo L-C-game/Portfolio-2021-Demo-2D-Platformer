@@ -11,6 +11,9 @@ public:
 		OBJ_NULL = -1,
 		OBJ_PLAYER,
         OBJ_FLOOR,
+        OBJ_LBARRIER,
+        OBJ_RBARRIER,
+        OBJ_TBARRIER,
 		OBJ_ALL = 999
 	};
 
@@ -38,6 +41,9 @@ public:
 	void SetVelocity(Vector2f vel) { m_velocity = vel; }
 	Vector2f GetVelocity() const { return m_velocity; };
 
+    void SetAcceleration(Vector2f accel) { m_acceleration = accel; }
+    Vector2f GetAcceleration() const { return m_acceleration; };
+
 	void SetRotation(float rot) { m_rot = rot; }
 	float GetRotation() const { return m_rot; };
 
@@ -45,18 +51,11 @@ public:
     void SetHalfSize(Point2f halfSize) { m_halfSize = halfSize; }
     Point2f GetHalfSize() const { return m_halfSize; };
 
-    //void SetCentre(Point2f centre) { m_centre = centre; }
-    //Point2f GetCentre() const { return m_centre; };
-
     void SetStatic(bool isStatic) { m_static = isStatic; }
     bool GetStatic() const { return m_static; };
 
     void SetCurrentSpriteId(int currentSId) { m_currentSId = currentSId; }
     int GetCurrentSpriteId() const { return m_currentSId; };
-
-    //// This means we can set the gravity for static objects to zero
-    //void SetGravity(int gravity) { m_gravity = gravity; }
-    //int GetGravity() const { return m_gravity; };
 
     // Type specific getters and setters
 
@@ -95,14 +94,20 @@ protected:
     Point2f m_pos{ 0.0f, 0.0f };
     Vector2f m_velOld{ 0.0f, 0.0f };
     Vector2f m_velocity{ 0.0f, 0.0f };
+    Vector2f m_acceleration{ 0.0f, 0.0f };
 
     //Setting up game objects with AABB's
     Point2f m_halfSize{ 0.0f, 0.0f }; // Half the width and half the height of the object
-    //Point2f m_centre{ 0.0f, 0.0f }; // The centre of the object
 
     // Is the GameObject fixed in space (independent of forces) or not:
     bool m_static{ false };
-    //int m_gravity{ 2 };
+
+    // What side the collision occurs on, this will be used to resolve the collisions
+    bool m_leftWallColl{ false };
+    bool m_rightWallColl{ false };
+    bool m_ceilingColl{ false };
+    bool m_groundColl{ false };
+
     int m_currentSId{Play::GetSpriteId("spr_zool_stand_right")};
 
     int spriteId{ -1 };

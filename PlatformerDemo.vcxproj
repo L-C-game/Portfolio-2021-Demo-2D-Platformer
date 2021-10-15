@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LeftBarrier.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateConcrete.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="LeftBarrier.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Player.h" />

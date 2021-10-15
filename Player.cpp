@@ -15,17 +15,12 @@ Player::Player(Point2f pos) : GameObject(pos)
 // Spawn player
 void Player::Spawn(GameState& state)
 {
-	//if (GameObject::s_vUpdateList.size() == 0)
-	//{
-		//Player constructor
-		if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
-		{
-			Point2f initialPos = {static_cast<float>(S_SCREEN_LIMIT), static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT))};
-			GameObject* player = new Player(initialPos);
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
+	{
+		Point2f initialPos = { static_cast<float>(S_SCREEN_LIMIT), static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT))};
+		GameObject* player = new Player(initialPos);
 					
-		}
-	//}
-
+	}
 }
 
 void Player::SetPlayerState(PlayerState& newState)
@@ -37,6 +32,7 @@ void Player::SetPlayerState(PlayerState& newState)
 
 void Player::Update(GameState& state)
 {
+	SetVelocity(GetVelocity() + GetAcceleration());
 	SetPosition(GetPosition() + GetVelocity());
 	m_pStateCurrent->SetupBB(this);
 	m_pStateCurrent->HandleInput(this);
