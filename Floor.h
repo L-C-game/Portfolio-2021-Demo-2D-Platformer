@@ -8,7 +8,7 @@ public:
 	Floor(Point2f pos);
 	~Floor() {};
 
-	static void Spawn(GameState& state);
+	static void Spawn();
 
 	// Game Object overrides
 	void Update(GameState& state) override;

@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include "LeftBarrier.h"
 #include "Floor.h"
+#include "Ceiling.h"
 #include "Player.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
@@ -13,10 +14,11 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
-	Floor::Spawn(state);
-	LBarrier::Spawn(state);
-	Player::Spawn(state);
-
+	// Spawn game world
+	Floor::Spawn();
+	LBarrier::Spawn();
+	Ceiling::Spawn();
+	Player::Spawn();
 }
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
@@ -24,7 +26,6 @@ bool MainGameUpdate( float elapsedTime )
 {
 	// Keeping track of the elapsed time 
 	state.time += elapsedTime;
-
 	Play::DrawBackground();
 	GameObject::DrawAll(state);
 	Play::PresentDrawingBuffer();

@@ -15,6 +15,7 @@ public:
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
+	//std::string GetName() const { return m_name; };
 
 private:
 	IdleState() {}
@@ -22,6 +23,8 @@ private:
 	IdleState(const IdleState& other) = delete;
 	// Prevents the singleton from being assigned
 	void operator=(const IdleState&) = delete;
+	// a string which hold the name of the state
+	//std::string m_name{ "Idle" };
 };
 
 class AccelState : public PlayerState

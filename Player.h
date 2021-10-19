@@ -13,7 +13,7 @@ public:
 	~Player() {}
 
 	// Spawning the player
-	static void Spawn(GameState& state);
+	static void Spawn();
 
 	// Getters and setters
 	PlayerState* GetPlayerState() const { return m_pStateCurrent; }
@@ -25,12 +25,15 @@ public:
 	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
 	bool GetIsGrounded() const { return m_isGrounded; }
 
+	void CollisionSystem();
+
 	// Game Object overrides
 	void Update(GameState& state) override;
 	void Draw(GameState& state) const override;
 
 
 private:
+	
 	PlayerState* m_pStateCurrent;
 	bool m_isLeftFacing{ false };
 	bool m_isGrounded{ true };

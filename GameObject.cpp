@@ -51,20 +51,6 @@ float GameObject::RandomNumGen(int min, int max)
 	return static_cast<float>((std::rand() % ((max - min) + 1)) + min);
 }
 
-//bool GameObject::HasCollided(Point2f pos1, Point2f pos2)
-//{
-//	Vector2f d = pos2 - pos1;
-//	float dist = sqrt((d.x * d.x) + (d.y * d.y));
-//	if (dist < S_HALF_LIMIT)
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-
 bool GameObject::AABBCollision( GameObject* other)
 {
 	if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
@@ -80,44 +66,60 @@ bool GameObject::AABBCollision( GameObject* other)
 	return true;
 }
 
-//bool GameObject::CheckCollisions(GameObject* a, GameObject* b)
-//{
-//	if (GameObject::HasCollided(a->GetPosition(), b->GetPosition()))
-//	{
-//		return true;
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//
-//}
-
-void GameObject::ScreenWrapper(Point2f idealPos)
+// Might want to change to giving 2 game objects if the collision moves to it's own file
+Point2f GameObject::CalcOverlap(GameObject* other)
 {
-	// Only require the x direction wrapping for the scr
-	Point2f pos = idealPos;
-	if (idealPos.x > S_DISPLAY_WIDTH + S_SCREEN_LIMIT)
-	{
-		pos = { -S_SCREEN_LIMIT, idealPos.y };
-	}
-	else if (idealPos.x < -S_SCREEN_LIMIT)
-	{
-		pos = { S_DISPLAY_WIDTH + S_SCREEN_LIMIT, idealPos.y };
-	}
-	//else if (idealPos.y < 0)
-	//{
-	//	pos = { idealPos.x, S_DISPLAY_HEIGHT + S_SCREEN_LIMIT };
-	//}
-	//else if (idealPos.y > S_DISPLAY_HEIGHT + S_SCREEN_LIMIT)
-	//{
-	//	pos = { idealPos.x, 0 };
-	//}
-
-	SetPosition(pos);
+	Point2f overlap;
+	overlap.x = (this->GetHalfSize().x + other->GetHalfSize().x) - (abs((this->GetPosition().x) - (other->GetPosition().x)));
+	overlap.y = (this->GetHalfSize().y + other->GetHalfSize().y) - (abs((this->GetPosition().y) - (other->GetPosition().y)));
+	return overlap;
 }
 
-// Can give the no. objects
+GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
+{
+	if (AABBCollision(other))
+	{
+		const Point2f& overlap = CalcOverlap(other);
+		Point2f pos = (this->GetPosition());
+		Point2f* posPtr = &pos;
+		if (overlap.x > overlap.y || overlap.x == overlap.y)
+		{
+			// resolve vertical
+			// Distance between centres for y
+			float yDiff = (this->GetPosition().y) - (other->GetPosition().y);
+			posPtr->y = posPtr->y + ((yDiff/abs(yDiff)) * overlap.y);
+			this->SetPosition(*posPtr);
+			if (yDiff < 0)
+			{
+				return CollidingSide::SIDE_DOWN;
+			}
+			else
+			{
+				return CollidingSide::SIDE_UP;
+			}
+		}
+		else if (overlap.y > overlap.x)
+		{
+			// resolve horizontal
+			float xDiff = (this->GetPosition().x - (other->GetPosition().x));
+			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * overlap.x);
+			this->SetPosition(*posPtr);
+			if (xDiff > 0)
+			{
+				return CollidingSide::SIDE_RIGHT;
+			}
+			else
+			{
+				return CollidingSide::SIDE_LEFT;
+			}
+		}
+	}
+	return CollidingSide::SIDE_NULL;
+}
+
+
+
+//	Gives the no. objects
 int GameObject::GetObjectCount(GameObject::Type type)
 {
 	int count = 0;

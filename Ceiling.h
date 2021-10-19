@@ -2,11 +2,11 @@
 #include "Play.h"
 #include "GameObject.h"
 
-class LBarrier : public GameObject
+class Ceiling : public GameObject
 {
 public:
-	LBarrier(Point2f pos);
-	~LBarrier() {};
+	Ceiling(Point2f pos);
+	~Ceiling() {};
 
 	static void Spawn();
 

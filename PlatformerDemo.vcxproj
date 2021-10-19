@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ceiling.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LeftBarrier.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="PlayerStateConcrete.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ceiling.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LeftBarrier.h" />

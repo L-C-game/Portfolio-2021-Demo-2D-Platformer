@@ -8,10 +8,10 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetDrawOrder(1);
 	SetStatic(true);
 	this->SetCurrentSpriteId(Play::GetSpriteId("spr_floor"));
-	this->SetHalfSize({(Play::GetSpriteWidth(this->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER, (Play::GetSpriteHeight(this->GetCurrentSpriteId()) / 2) + PIXEL_BUFFER });
+	this->SetHalfSize({(Play::GetSpriteWidth(this->GetCurrentSpriteId()) / 2), (Play::GetSpriteHeight(this->GetCurrentSpriteId()) / 2)});
 }
 
-void Floor::Spawn(GameState& state)
+void Floor::Spawn()
 {
 	if (GameObject::s_vUpdateList.size() == 0)
 	{
