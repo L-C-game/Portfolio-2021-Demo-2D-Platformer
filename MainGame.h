@@ -19,9 +19,9 @@ constexpr int S_DISPLAY_SCALE = 2;
 // Mathematical constants
 const double pi = 3.14159265358979323846;
 
-const float GRAVITY = (4.0f / 60.0f);
-const float MOVEACC = (3.0f / 60.0f);
+const float GRAVITY = (10.0f / 60.0f);
+const float MOVEACC = (6.0f / 60.0f);
 
 const float PIXEL_BUFFER = 2.0f;
-const float MAX_SPEED_RUN = 3.0f;
+const float MAX_SPEED_RUN = 2.0f;
 const float MAX_SPEED_FALL = 5.0f;

@@ -31,7 +31,6 @@ public:
 	void Update(GameState& state) override;
 	void Draw(GameState& state) const override;
 
-
 private:
 	
 	PlayerState* m_pStateCurrent;

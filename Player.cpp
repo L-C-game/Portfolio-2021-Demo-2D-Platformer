@@ -32,6 +32,8 @@ void Player::SetPlayerState(PlayerState& newState)
 void Player::CollisionSystem()
 {
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	std::vector< GameObject* > collisionList;
+	collisionList.clear();
 	for (GameObject* other : oList)
 	{
 		if (!(other->GetType() == GameObject::Type::OBJ_PLAYER))
@@ -39,6 +41,7 @@ void Player::CollisionSystem()
 			GameObject::CollidingSide collidingSide = this->ResolveCollision(other);
 			if (collidingSide != GameObject::CollidingSide::SIDE_NULL)
 			{
+				collisionList.push_back(other);
 				// Switch case which checks what side of the player is colliding with an object
 				// If the logic here becomes bloated it might be best to change it to a design pattern state machine.
    				switch (collidingSide) {
@@ -48,7 +51,8 @@ void Player::CollisionSystem()
 					this->SetVelocity({ this->GetVelocity().x, 0.0f });
 					break;
 				case GameObject::CollidingSide::SIDE_RIGHT:
-					//code
+					//this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
+					//this->SetVelocity({ 0.0f, this->GetVelocity().y });
 					break;
 				case GameObject::CollidingSide::SIDE_DOWN:
 					this->SetIsGrounded(true);
@@ -56,14 +60,17 @@ void Player::CollisionSystem()
 				case GameObject::CollidingSide::SIDE_LEFT:
 					if (this->GetIsLeftFacing())
 					{
-						//this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
-						//this->SetVelocity({ 0.0f, this->GetVelocity().y });
+						this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
+						this->SetVelocity({ 0.0f, this->GetVelocity().y });
 					}
 					break;
 				}
-
 			}
 		}
+	}
+	if (this->GetVelocity().y >= 0 && collisionList.empty())
+	{
+		this->SetIsGrounded(false);
 	}
 }
 

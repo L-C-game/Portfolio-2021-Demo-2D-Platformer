@@ -20,7 +20,6 @@ void Floor::Spawn()
 		{
 			Point2f initialPos = { (S_DISPLAY_WIDTH/2), (S_DISPLAY_HEIGHT - S_HALF_LIMIT) };
 			GameObject* floor = new Floor(initialPos);
-
 		}
 	}
 }

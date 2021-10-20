@@ -12,8 +12,8 @@ public:
 		OBJ_PLAYER,
         OBJ_FLOOR,
         OBJ_LBARRIER,
-        OBJ_RBARRIER,
         OBJ_CEILING,
+        OBJ_PLATFORM,
 		OBJ_ALL = 999
 	};
 
@@ -61,9 +61,11 @@ public:
     Point2f CalcOverlap(GameObject* other);
     CollidingSide ResolveCollision(GameObject* other);
 
-    // Might be able to remove
     void SetStatic(bool isStatic) { m_static = isStatic; }
     bool GetStatic() const { return m_static; };
+
+    void SetSolid(bool isSolid) { m_solid = isSolid; }
+    bool GetSolid() const { return m_solid; };
 
     void SetCurrentSpriteId(int currentSId) { m_currentSId = currentSId; }
     int GetCurrentSpriteId() const { return m_currentSId; };
@@ -114,6 +116,8 @@ protected:
 
     // Is the GameObject fixed in space (independent of forces) or not:
     bool m_static{ false };
+
+    bool m_solid{ true };
 
     int m_currentSId{Play::GetSpriteId("spr_zool_stand_right")};
 

@@ -148,6 +148,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LeftBarrier.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateConcrete.cpp" />
   </ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LeftBarrier.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStateInterface.h" />

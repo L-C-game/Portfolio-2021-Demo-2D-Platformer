@@ -3,6 +3,7 @@
 #include "Floor.h"
 #include "Ceiling.h"
 #include "Player.h"
+#include "Platform.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
 
@@ -19,6 +20,7 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	LBarrier::Spawn();
 	Ceiling::Spawn();
 	Player::Spawn();
+	Platform::Spawn();
 }
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)

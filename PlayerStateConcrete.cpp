@@ -38,6 +38,11 @@ void IdleState::HandleInput(Player* player)
 	{
 		player->SetPlayerState(JumpState::getInstance());
 	}
+
+	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	{
+		player->SetPlayerState(FallState::getInstance());
+	}
 }
 
 void IdleState::SetupBB(Player* player)
@@ -114,9 +119,14 @@ void AccelState::HandleInput(Player* player)
 		player->SetPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
+	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded()))
 	{
 		player->SetPlayerState(JumpState::getInstance());
+	}
+
+	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	{
+		player->SetPlayerState(FallState::getInstance());
 	}
 }
 
@@ -187,6 +197,11 @@ void DeccelState::HandleInput(Player* player)
 	{
 		player->SetPlayerState(JumpState::getInstance());
 	}
+
+	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	{
+		player->SetPlayerState(FallState::getInstance());
+	}
 }
 
 void DeccelState::SetupBB(Player* player)
@@ -250,6 +265,11 @@ void CrouchState::HandleInput(Player* player)
 	{
 		player->SetIsLeftFacing(false);
 	}
+
+	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	{
+		player->SetPlayerState(FallState::getInstance());
+	}
 }
 
 void CrouchState::SetupBB(Player* player)
@@ -303,30 +323,30 @@ void JumpState::HandleInput(Player* player)
 
 	if (Play::KeyDown(VK_LEFT))
 	{
-		if (player->GetVelocity().x >= 0)
+		if (player->GetAcceleration().x >= 0)
 		{
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x - 1),(currentVel.y) };
+			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(true);
-			player->SetVelocity(vel);
+			player->SetAcceleration(acc);
 		}
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
-		if (player->GetVelocity().x <= 0)
+		if (player->GetAcceleration().x <= 0)
 		{
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x + 1),(currentVel.y) };
+			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(false);
-			player->SetVelocity(vel);
+			player->SetAcceleration(acc);
 		}
 	}
 	else
 	{
-		Vector2f currentVel = player->GetVelocity();
-		Vector2f vel = { (0.0f),(currentVel.y) };
-		player->SetVelocity(vel);
+		//float acc = -(player->GetAcceleration().x);
+		player->SetAcceleration({ 0.0f, player->GetAcceleration().y });
 	}
+
 
 	// When the player is no longer holding space and the height he is is above his initial position,
 	// Change to fall state
@@ -377,43 +397,36 @@ void FallState::StateEnter(Player* player)
 
 void FallState::HandleInput(Player* player)
 {
-	Vector2f currentVel = player->GetVelocity();
-	Vector2f vel = { (currentVel.x),(currentVel.y + GRAVITY) };
-	player->SetVelocity(vel);
+	Vector2f currentAcc = player->GetAcceleration();
+	Vector2f acc = { (currentAcc.x),(GRAVITY) };
+	player->SetAcceleration(acc);
 	
 	if (Play::KeyDown(VK_LEFT))
 	{
-		if (player->GetVelocity().x >= 0)
+		if (player->GetAcceleration().x >= 0)
 		{
-			Point2f currentPos = player->GetPosition();
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x - 0.5f),(currentVel.y) };
+			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(true);
-			player->SetVelocity(vel);
+			player->SetAcceleration(acc);
 		}
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
-
-		if (player->GetVelocity().x <= 0)
+		if (player->GetAcceleration().x <= 0)
 		{
-			Point2f currentPos = player->GetPosition();
-			Vector2f currentVel = player->GetVelocity();
-			Vector2f vel = { (currentVel.x + 0.5f),(currentVel.y) };
+			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(false);
-			player->SetVelocity(vel);
+			player->SetAcceleration(acc);
 		}
 	}
 	else
 	{
-		Vector2f currentVel = player->GetVelocity();
-		Vector2f vel = { (0.0f),(currentVel.y) };
-		player->SetVelocity(vel);
+		player->SetAcceleration({ 0.0f, player->GetAcceleration().y });
 	}
 
 	if (player->GetIsGrounded())
 	{
-		player->SetPlayerState(AccelState::getInstance());
+		player->SetPlayerState(IdleState::getInstance());
 	}
 }
 
@@ -440,5 +453,5 @@ void FallState::DrawPlayer(const Player* player, GameState& state) const
 
 void FallState::StateExit(Player* player)
 {
-	player->SetVelocity({ (0.0f), (0.0f) });
+	player->SetVelocity({ player->GetVelocity().x, (0.0f) });
 }
