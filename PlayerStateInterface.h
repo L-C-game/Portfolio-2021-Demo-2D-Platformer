@@ -15,11 +15,11 @@ class PlayerState
 {
 public:
 	// Pure virtual base methods to be overridden by the concrete states
-	virtual void StateEnter(Player* player) = 0;
-	virtual void HandleInput(Player* player) = 0;
-	virtual void SetupBB(Player* player) = 0;
-	virtual void DrawPlayer(const Player* player, GameState& state) const = 0;
-	virtual void StateExit(Player* player) = 0;
+	virtual void StateEnter(Player& player) = 0;
+	virtual void HandleInput(Player& player) = 0;
+	virtual void SetupBB(Player& player) = 0;
+	virtual void DrawPlayer(const Player& player, GameState& state) const = 0;
+	virtual void StateExit(Player& player) = 0;
 
 	// public virtual destructor as this is a base class
 	virtual ~PlayerState(){};

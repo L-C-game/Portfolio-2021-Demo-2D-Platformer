@@ -17,7 +17,8 @@ public:
 
 	// Getters and setters
 	PlayerState* GetPlayerState() const { return m_pStateCurrent; }
-	void SetPlayerState(PlayerState& pStateNew);
+	void SetPlayerState(PlayerState& pState);
+	void SwapPlayerState(PlayerState& pStateNew);
 
 	void SetIsLeftFacing(bool isLeftFacing) { m_isLeftFacing = isLeftFacing; }
 	bool GetIsLeftFacing() const { return m_isLeftFacing; }

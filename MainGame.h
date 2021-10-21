@@ -26,8 +26,8 @@ const double pi = 3.14159265358979323846;
 const float GRAVITY = (15.0f / 60.0f); // Acceleration due to gravity
 const float MOVEACC = (12.0f / 60.0f); // Acceleration when moving
 
-const float MAX_SPEED_RUN = 2.0f; // Maximum horizontal speed
-const float MAX_SPEED_FALL = 5.0f; // Maximum vertical speed
+const float MAX_SPEED_RUN = 3.0f; // Maximum horizontal speed
+const float MAX_SPEED_FALL = 6.0f; // Maximum vertical speed
 
 const float MINIMUM_SPEED_RUN = 0.1f; // A minimum speed, when this is reached the player stops and changes to idle
 

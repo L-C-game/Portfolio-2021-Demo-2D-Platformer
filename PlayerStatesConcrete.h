@@ -5,13 +5,13 @@
 class IdleState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
 
 	// Might have to edit this as we don't want the collision to be pixel perfect as it makes gameplay awkward
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -30,11 +30,11 @@ private:
 class AccelState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -49,11 +49,11 @@ private:
 class DeccelState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -68,11 +68,11 @@ private:
 class CrouchState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -87,11 +87,11 @@ private:
 class JumpState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
@@ -106,11 +106,11 @@ private:
 class FallState : public PlayerState
 {
 public:
-	void StateEnter(Player* player);
-	void HandleInput(Player* player);
-	void SetupBB(Player* player);
-	void DrawPlayer(const Player* player, GameState& state) const;
-	void StateExit(Player* player);
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void SetupBB(Player& player);
+	void DrawPlayer(const Player& player, GameState& state) const;
+	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();

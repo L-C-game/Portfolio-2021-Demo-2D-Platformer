@@ -102,7 +102,7 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 		{
 			// resolve horizontal
 			float xDiff = (this->GetPosition().x - (other->GetPosition().x));
-			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * overlap.x);
+			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + 1));
 			this->SetPosition(*posPtr);
 			if (xDiff > 0)
 			{

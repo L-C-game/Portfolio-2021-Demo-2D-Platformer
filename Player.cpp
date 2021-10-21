@@ -8,8 +8,8 @@ Player::Player(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_PLAYER);
 	SetUpdateOrder(0);
 	SetDrawOrder(0);
-	m_pStateCurrent = &IdleState::getInstance();
 	SetStatic(false);
+
 }
 
 // Spawn player
@@ -18,15 +18,22 @@ void Player::Spawn()
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
 	{
 		Point2f initialPos = { static_cast<float>(S_PIXELS_PER_UNIT_DOUBLE), static_cast<float>(S_DISPLAY_HEIGHT - (S_PIXELS_PER_UNIT_DOUBLE + S_PIXELS_PER_UNIT))};
-		GameObject* player = new Player(initialPos);			
+		GameObject* playerG = new Player(initialPos);	
+		Player* player = static_cast<Player*>(playerG);
+		player->SetPlayerState(IdleState::getInstance());
 	}
 }
 
 void Player::SetPlayerState(PlayerState& newState)
 {
-	m_pStateCurrent->StateExit(this);
 	m_pStateCurrent = &newState;
-	m_pStateCurrent->StateEnter(this);
+}
+
+void Player::SwapPlayerState(PlayerState& newState)
+{
+	m_pStateCurrent->StateExit(*this);
+	m_pStateCurrent = &newState;
+	m_pStateCurrent->StateEnter(*this);
 }
 
 void Player::CollisionSystem()
@@ -87,12 +94,12 @@ void Player::Update(GameState& state)
 	}
 	SetPosition(GetPosition() + GetVelocity());
 
-	m_pStateCurrent->SetupBB(this);
-	m_pStateCurrent->HandleInput(this);
+	m_pStateCurrent->SetupBB(*this);
+	m_pStateCurrent->HandleInput(*this);
 	CollisionSystem();
 }
 
 void Player::Draw(GameState& state) const
 {
-	m_pStateCurrent->DrawPlayer(this, state);
+	m_pStateCurrent->DrawPlayer(*this, state);
 }

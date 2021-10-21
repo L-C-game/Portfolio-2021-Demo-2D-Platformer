@@ -14,59 +14,59 @@ PlayerState& IdleState::getInstance()
 	return singleton;
 }
 
-void IdleState::StateEnter(Player* player)
+void IdleState::StateEnter(Player& player)
 {
 	// Making sure the player comes to a complete stop when idle 
 	// So the velocity doesn't carry over from the previous state
-	player->SetAcceleration({ 0.0f, 0.0f});
-	player->SetVelocity({ 0.0f, 0.0f });
+	player.SetAcceleration({ 0.0f, 0.0f});
+	player.SetVelocity({ 0.0f, 0.0f });
 }
 
-void IdleState::HandleInput(Player* player)
+void IdleState::HandleInput(Player& player)
 {
 	if ((Play::KeyDown(VK_LEFT) && !Play::KeyDown(VK_RIGHT)) || (Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
-		player->SetPlayerState(AccelState::getInstance());
+		player.SwapPlayerState(AccelState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player->SetPlayerState(CrouchState::getInstance());
+		player.SwapPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
+	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded() == true))
 	{
-		player->SetPlayerState(JumpState::getInstance());
+		player.SwapPlayerState(JumpState::getInstance());
 	}
 
-	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	if (!player.GetIsGrounded() && !Play::KeyDown(VK_SPACE))
 	{
-		player->SetPlayerState(FallState::getInstance());
+		player.SwapPlayerState(FallState::getInstance());
 	}
 }
 
-void IdleState::SetupBB(Player* player)
+void IdleState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_right"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_right"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
 	}
 
-	player->SetHalfSize({(Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({(Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
-void IdleState::DrawPlayer(const Player* player, GameState& state) const
+void IdleState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
-void IdleState::StateExit(Player* player)
+void IdleState::StateExit(Player& player)
 {
 
 }
@@ -78,80 +78,80 @@ PlayerState& AccelState::getInstance()
 	return singleton;
 }
 
-void AccelState::StateEnter(Player* player)
+void AccelState::StateEnter(Player& player)
 {
 
 }
 
-void AccelState::HandleInput(Player* player)
+void AccelState::HandleInput(Player& player)
 {
 	// Input handling
 	if (Play::KeyDown(VK_LEFT))
 	{
-		if (player->GetAcceleration().x >= 0)
+		if (player.GetAcceleration().x >= 0)
 		{
-			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& currentAcc = player.GetAcceleration();
 			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
-			player->SetIsLeftFacing(true);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(true);
+			player.SetAcceleration(acc);
 		}
 	}
 
-	if (Play::KeyDown(VK_RIGHT) && (player->GetPosition().x + S_PIXELS_PER_UNIT) < S_DISPLAY_WIDTH)
+	if (Play::KeyDown(VK_RIGHT) && (player.GetPosition().x + S_PIXELS_PER_UNIT) < S_DISPLAY_WIDTH)
 	{
-		if (player->GetAcceleration().x <= 0)
+		if (player.GetAcceleration().x <= 0)
 		{
-			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& currentAcc = player.GetAcceleration();
 			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
-			player->SetIsLeftFacing(false);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(false);
+			player.SetAcceleration(acc);
 		}
 	}
 
 	if ((!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to Deccelerate state
-		player->SetPlayerState(DeccelState::getInstance());
+		player.SwapPlayerState(DeccelState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player->SetPlayerState(CrouchState::getInstance());
+		player.SwapPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded()))
+	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded()))
 	{
-		player->SetPlayerState(JumpState::getInstance());
+		player.SwapPlayerState(JumpState::getInstance());
 	}
 
-	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	if (!player.GetIsGrounded() && !Play::KeyDown(VK_SPACE))
 	{
-		player->SetPlayerState(FallState::getInstance());
+		player.SwapPlayerState(FallState::getInstance());
 	}
 }
 
-void AccelState::SetupBB(Player* player)
+void AccelState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_right_strip_16"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_right_strip_16"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
-void AccelState::DrawPlayer(const Player* player, GameState& state) const
+void AccelState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(RUN_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(RUN_ANIM_SPEED * state.time));
 }
 
-void AccelState::StateExit(Player* player)
+void AccelState::StateExit(Player& player)
 {
 
 }
@@ -163,68 +163,68 @@ PlayerState& DeccelState::getInstance()
 	return singleton;
 }
 
-void DeccelState::StateEnter(Player* player)
+void DeccelState::StateEnter(Player& player)
 {
-	float acc = -(player->GetAcceleration().x);
-	player->SetAcceleration({ acc, player->GetAcceleration().y });
+	float acc = -(player.GetAcceleration().x);
+	player.SetAcceleration({ acc, player.GetAcceleration().y });
 }
 
-void DeccelState::HandleInput(Player* player)
+void DeccelState::HandleInput(Player& player)
 {
 	if (Play::KeyDown(VK_LEFT))
 	{
-		player->SetIsLeftFacing(true);
-		player->SetPlayerState(AccelState::getInstance());
+		player.SetIsLeftFacing(true);
+		player.SwapPlayerState(AccelState::getInstance());
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
-		player->SetIsLeftFacing(false);
-		player->SetPlayerState(AccelState::getInstance());
+		player.SetIsLeftFacing(false);
+		player.SwapPlayerState(AccelState::getInstance());
 	}
 
-	if ((abs(player->GetVelocity().x) <= MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
+	if ((abs(player.GetVelocity().x) <= MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to idle state
-		player->SetPlayerState(IdleState::getInstance());
+		player.SwapPlayerState(IdleState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player->SetPlayerState(CrouchState::getInstance());
+		player.SwapPlayerState(CrouchState::getInstance());
 	}
 
-	if (Play::KeyDown(VK_SPACE) && (player->GetIsGrounded() == true))
+	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded() == true))
 	{
-		player->SetPlayerState(JumpState::getInstance());
+		player.SwapPlayerState(JumpState::getInstance());
 	}
 
-	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	if (!player.GetIsGrounded() && !Play::KeyDown(VK_SPACE))
 	{
-		player->SetPlayerState(FallState::getInstance());
+		player.SwapPlayerState(FallState::getInstance());
 	}
 }
 
-void DeccelState::SetupBB(Player* player)
+void DeccelState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_right"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_right"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_left"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 }
 
-void DeccelState::DrawPlayer(const Player* player, GameState& state) const
+void DeccelState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
-void DeccelState::StateExit(Player* player)
+void DeccelState::StateExit(Player& player)
 {
 
 }
@@ -236,64 +236,64 @@ PlayerState& CrouchState::getInstance()
 	return singleton;
 }
 
-void CrouchState::StateEnter(Player* player)
+void CrouchState::StateEnter(Player& player)
 {
 	// Also don't want any movement to be carried over into the crouch state
-	player->SetAcceleration({ 0.0f, 0.0f });
-	player->SetVelocity({ 0.0f, 0.0f });
+	player.SetAcceleration({ 0.0f, 0.0f });
+	player.SetVelocity({ 0.0f, 0.0f });
 }
 
-void CrouchState::HandleInput(Player* player)
+void CrouchState::HandleInput(Player& player)
 {
 	// Leave crouch state for the relevant input
 	if (!(Play::KeyDown(VK_DOWN)) && (Play::KeyDown(VK_LEFT) || Play::KeyDown(VK_RIGHT)))
 	{
-		player->SetPlayerState(AccelState::getInstance());
+		player.SwapPlayerState(AccelState::getInstance());
 	}
 	else if (!(Play::KeyDown(VK_DOWN)) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
-		player->SetPlayerState(IdleState::getInstance());
+		player.SwapPlayerState(IdleState::getInstance());
 	}
 
 	// Can change facing direction while crouched
 	if ((Play::KeyDown(VK_DOWN)) && Play::KeyDown(VK_LEFT) && !Play::KeyDown(VK_RIGHT))
 	{
-		player->SetIsLeftFacing(true);
+		player.SetIsLeftFacing(true);
 	}
 
 	if ((Play::KeyDown(VK_DOWN)) && Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT))
 	{
-		player->SetIsLeftFacing(false);
+		player.SetIsLeftFacing(false);
 	}
 
-	if (!player->GetIsGrounded() && !Play::KeyDown(VK_SPACE))
+	if (!player.GetIsGrounded() && !Play::KeyDown(VK_SPACE))
 	{
-		player->SetPlayerState(FallState::getInstance());
+		player.SwapPlayerState(FallState::getInstance());
 	}
 }
 
-void CrouchState::SetupBB(Player* player)
+void CrouchState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_right"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_right"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
-void CrouchState::DrawPlayer(const Player* player, GameState& state) const
+void CrouchState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
-void CrouchState::StateExit(Player* player)
+void CrouchState::StateExit(Player& player)
 {
 
 }
@@ -305,46 +305,46 @@ PlayerState& JumpState::getInstance()
 	return singleton;
 }
 
-void JumpState::StateEnter(Player* player)
+void JumpState::StateEnter(Player& player)
 {
-	player->SetIsGrounded(false);
+	player.SetIsGrounded(false);
 	jumpTime = 0;
 }
 
-void JumpState::HandleInput(Player* player)
+void JumpState::HandleInput(Player& player)
 {
 	jumpTime++;
-	if(player->GetVelocity().y == 0)
+	if(player.GetVelocity().y == 0)
 	{
-		Vector2f currentVel = player->GetVelocity();
+		Vector2f currentVel = player.GetVelocity();
 		Vector2f vel = { (currentVel.x),(currentVel.y - 2) };
-		player->SetVelocity(vel);
+		player.SetVelocity(vel);
 	}
 
 	if (Play::KeyDown(VK_LEFT))
 	{
-		if (player->GetAcceleration().x >= 0)
+		if (player.GetAcceleration().x >= 0)
 		{
-			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& currentAcc = player.GetAcceleration();
 			const Vector2f& acc = { -MOVEACC/2, (currentAcc.y) };
-			player->SetIsLeftFacing(true);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(true);
+			player.SetAcceleration(acc);
 		}
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
-		if (player->GetAcceleration().x <= 0)
+		if (player.GetAcceleration().x <= 0)
 		{
-			const Vector2f& currentAcc = player->GetAcceleration();
+			const Vector2f& currentAcc = player.GetAcceleration();
 			const Vector2f& acc = { MOVEACC/2, (currentAcc.y) };
-			player->SetIsLeftFacing(false);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(false);
+			player.SetAcceleration(acc);
 		}
 	}
 	else
 	{
-		//float acc = -(player->GetAcceleration().x);
-		player->SetAcceleration({ 0.0f, player->GetAcceleration().y });
+		//float acc = -(player.GetAcceleration().x);
+		player.SetAcceleration({ 0.0f, player.GetAcceleration().y });
 	}
 
 
@@ -352,33 +352,33 @@ void JumpState::HandleInput(Player* player)
 	// Change to fall state
 	if (!(Play::KeyDown(VK_SPACE)) || jumpTime > jumpDuration)
 	{
-		player->SetPlayerState(FallState::getInstance());
+		player.SwapPlayerState(FallState::getInstance());
 	}
 
 }
 
-void JumpState::SetupBB(Player* player)
+void JumpState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_right"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_right"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
-void JumpState::DrawPlayer(const Player* player, GameState& state) const
+void JumpState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
-void JumpState::StateExit(Player* player)
+void JumpState::StateExit(Player& player)
 {
 
 }
@@ -390,68 +390,68 @@ PlayerState& FallState::getInstance()
 	return singleton;
 }
 
-void FallState::StateEnter(Player* player)
+void FallState::StateEnter(Player& player)
 {
-	player->SetIsGrounded(false);
+	player.SetIsGrounded(false);
 }
 
-void FallState::HandleInput(Player* player)
+void FallState::HandleInput(Player& player)
 {
-	Vector2f currentAcc = player->GetAcceleration();
+	Vector2f currentAcc = player.GetAcceleration();
 	Vector2f acc = { (currentAcc.x),(GRAVITY) };
-	player->SetAcceleration(acc);
+	player.SetAcceleration(acc);
 	
 	if (Play::KeyDown(VK_LEFT))
 	{
-		if (player->GetAcceleration().x >= 0)
+		if (player.GetAcceleration().x >= 0)
 		{
 			const Vector2f& acc = { -MOVEACC/2, (currentAcc.y) };
-			player->SetIsLeftFacing(true);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(true);
+			player.SetAcceleration(acc);
 		}
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
-		if (player->GetAcceleration().x <= 0)
+		if (player.GetAcceleration().x <= 0)
 		{
 			const Vector2f& acc = { MOVEACC/2, (currentAcc.y) };
-			player->SetIsLeftFacing(false);
-			player->SetAcceleration(acc);
+			player.SetIsLeftFacing(false);
+			player.SetAcceleration(acc);
 		}
 	}
 	else
 	{
-		player->SetAcceleration({ 0.0f, player->GetAcceleration().y });
+		player.SetAcceleration({ 0.0f, player.GetAcceleration().y });
 	}
 
-	if (player->GetIsGrounded())
+	if (player.GetIsGrounded())
 	{
-		player->SetPlayerState(IdleState::getInstance());
+		player.SwapPlayerState(IdleState::getInstance());
 	}
 }
 
-void FallState::SetupBB(Player* player)
+void FallState::SetupBB(Player& player)
 {
-	if (!(player->GetIsLeftFacing()))
+	if (!(player.GetIsLeftFacing()))
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_right"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_right"));
 	}
 
-	if (player->GetIsLeftFacing())
+	if (player.GetIsLeftFacing())
 	{
-		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
+		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
+	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
-void FallState::DrawPlayer(const Player* player, GameState& state) const
+void FallState::DrawPlayer(const Player& player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(player.GetCurrentSpriteId(), player.GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
-void FallState::StateExit(Player* player)
+void FallState::StateExit(Player& player)
 {
-	player->SetVelocity({ player->GetVelocity().x, (0.0f) });
+	player.SetVelocity({ player.GetVelocity().x, (0.0f) });
 }
