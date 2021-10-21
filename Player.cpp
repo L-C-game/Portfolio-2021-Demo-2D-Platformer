@@ -17,7 +17,7 @@ void Player::Spawn()
 {
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
 	{
-		Point2f initialPos = { static_cast<float>(S_SCREEN_LIMIT), static_cast<float>(S_DISPLAY_HEIGHT - (S_SCREEN_LIMIT + S_HALF_LIMIT))};
+		Point2f initialPos = { static_cast<float>(S_PIXELS_PER_UNIT_DOUBLE), static_cast<float>(S_DISPLAY_HEIGHT - (S_PIXELS_PER_UNIT_DOUBLE + S_PIXELS_PER_UNIT))};
 		GameObject* player = new Player(initialPos);			
 	}
 }

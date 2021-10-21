@@ -7,7 +7,7 @@ Ceiling::Ceiling(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(3);
 	SetDrawOrder(3);
 	SetStatic(true);
-	this->SetHalfSize({ (S_DISPLAY_WIDTH/2), (S_HALF_LIMIT) });
+	this->SetHalfSize({ (S_DISPLAY_WIDTH/2), (S_PIXELS_PER_UNIT) });
 }
 
 void Ceiling::Spawn()
@@ -15,7 +15,7 @@ void Ceiling::Spawn()
 	// Floor constructor
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_CEILING) < 1)
 	{
-		Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -S_HALF_LIMIT };
+		Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -S_PIXELS_PER_UNIT };
 		GameObject* ceiling = new Ceiling(initialPos);
 
 	}

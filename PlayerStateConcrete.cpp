@@ -57,13 +57,13 @@ void IdleState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
 	}
 
-	player->SetHalfSize({(Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 5.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({(Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
 void IdleState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
 void IdleState::StateExit(Player* player)
@@ -91,18 +91,18 @@ void AccelState::HandleInput(Player* player)
 		if (player->GetAcceleration().x >= 0)
 		{
 			const Vector2f& currentAcc = player->GetAcceleration();
-			const Vector2f& acc = { -2 * MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(true);
 			player->SetAcceleration(acc);
 		}
 	}
 
-	if (Play::KeyDown(VK_RIGHT) && (player->GetPosition().x + S_HALF_LIMIT) < S_DISPLAY_WIDTH)
+	if (Play::KeyDown(VK_RIGHT) && (player->GetPosition().x + S_PIXELS_PER_UNIT) < S_DISPLAY_WIDTH)
 	{
 		if (player->GetAcceleration().x <= 0)
 		{
 			const Vector2f& currentAcc = player->GetAcceleration();
-			const Vector2f& acc = { 2 * MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
 			player->SetIsLeftFacing(false);
 			player->SetAcceleration(acc);
 		}
@@ -142,13 +142,13 @@ void AccelState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 6.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
 void AccelState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(32 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(RUN_ANIM_SPEED * state.time));
 }
 
 void AccelState::StateExit(Player* player)
@@ -182,7 +182,7 @@ void DeccelState::HandleInput(Player* player)
 		player->SetPlayerState(AccelState::getInstance());
 	}
 
-	if ((abs(player->GetVelocity().x) <= 0.1f) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
+	if ((abs(player->GetVelocity().x) <= MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to idle state
 		player->SetPlayerState(IdleState::getInstance());
@@ -216,12 +216,12 @@ void DeccelState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 5.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 }
 
 void DeccelState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
 void DeccelState::StateExit(Player* player)
@@ -284,13 +284,13 @@ void CrouchState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 5.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
 void CrouchState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
 void CrouchState::StateExit(Player* player)
@@ -326,7 +326,7 @@ void JumpState::HandleInput(Player* player)
 		if (player->GetAcceleration().x >= 0)
 		{
 			const Vector2f& currentAcc = player->GetAcceleration();
-			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { -MOVEACC/2, (currentAcc.y) };
 			player->SetIsLeftFacing(true);
 			player->SetAcceleration(acc);
 		}
@@ -336,7 +336,7 @@ void JumpState::HandleInput(Player* player)
 		if (player->GetAcceleration().x <= 0)
 		{
 			const Vector2f& currentAcc = player->GetAcceleration();
-			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { MOVEACC/2, (currentAcc.y) };
 			player->SetIsLeftFacing(false);
 			player->SetAcceleration(acc);
 		}
@@ -369,13 +369,13 @@ void JumpState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 5.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
 void JumpState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
 void JumpState::StateExit(Player* player)
@@ -405,7 +405,7 @@ void FallState::HandleInput(Player* player)
 	{
 		if (player->GetAcceleration().x >= 0)
 		{
-			const Vector2f& acc = { -MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { -MOVEACC/2, (currentAcc.y) };
 			player->SetIsLeftFacing(true);
 			player->SetAcceleration(acc);
 		}
@@ -414,7 +414,7 @@ void FallState::HandleInput(Player* player)
 	{
 		if (player->GetAcceleration().x <= 0)
 		{
-			const Vector2f& acc = { MOVEACC, (currentAcc.y) };
+			const Vector2f& acc = { MOVEACC/2, (currentAcc.y) };
 			player->SetIsLeftFacing(false);
 			player->SetAcceleration(acc);
 		}
@@ -442,13 +442,13 @@ void FallState::SetupBB(Player* player)
 		player->SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
 	}
 
-	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 5.0f), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_BUFFER * 4.0f) });
+	player->SetHalfSize({ (Play::GetSpriteWidth(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player->GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 
 }
 
 void FallState::DrawPlayer(const Player* player, GameState& state) const
 {
-	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(10 * state.time));
+	Play::DrawSprite(player->GetCurrentSpriteId(), player->GetPosition(), static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
 }
 
 void FallState::StateExit(Player* player)
