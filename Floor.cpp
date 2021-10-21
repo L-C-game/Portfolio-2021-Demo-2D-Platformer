@@ -7,7 +7,7 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(1);
 	SetDrawOrder(1);
 	SetStatic(true);
-	this->SetCurrentSpriteId(Play::GetSpriteId("spr_floor"));
+	this->SetCurrentSpriteId(floorpng);
 	this->SetHalfSize({(Play::GetSpriteWidth(this->GetCurrentSpriteId()) / 2), (Play::GetSpriteHeight(this->GetCurrentSpriteId()) / 2)});
 }
 

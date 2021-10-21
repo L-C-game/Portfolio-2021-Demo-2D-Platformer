@@ -6,8 +6,10 @@
 #include "Platform.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
+#include <array>
 
 GameState state;
+PlatformData platData;
 
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
@@ -20,7 +22,13 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	LBarrier::Spawn();
 	Ceiling::Spawn();
 	Player::Spawn();
-	Platform::Spawn();
+
+	std::array<Point2f, platformNumber>platformPos{ { { S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)) }, { S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS)) }, {  S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)) }, { S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS)) } } };
+	
+	for (const Point2f pos : platformPos)
+	{
+		PopulateWorld(pos);
+	}
 }
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
@@ -49,4 +57,9 @@ int MainGameExit( void )
 	Play::DestroyManager();
 	GameObject::DestroyAll();
 	return PLAY_OK;
+}
+
+void PopulateWorld(Point2f platPos)
+{
+	Platform::Spawn(platPos, platData);
 }

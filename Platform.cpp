@@ -9,14 +9,14 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 	SetStatic(true);
 }
 
-void Platform::Spawn()
+void Platform::Spawn(Point2f initialPos, PlatformData& platData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < 1)
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < 5)
 	{
-		Point2f initialPos = { (S_DISPLAY_WIDTH / 2), (S_DISPLAY_HEIGHT - (2 * S_PIXELS_PER_UNIT_DOUBLE)) };
-		GameObject* platformBlue = new Platform(initialPos);
-		platformBlue->SetCurrentSpriteId(Play::GetSpriteId("spr_platform_blue"));
-		platformBlue->SetHalfSize({ (Play::GetSpriteWidth(platformBlue->GetCurrentSpriteId()) / 2), (Play::GetSpriteHeight(platformBlue->GetCurrentSpriteId()) / 2)});
+		GameObject* platform = new Platform(initialPos);
+		int platColour = static_cast<int>(GameObject::RandomNumGen(platBluepng, platYellowpng));
+		platform->SetCurrentSpriteId(platColour);
+		platform->SetHalfSize( platData.HalfSizePlat );
 	}
 }
 

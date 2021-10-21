@@ -49,12 +49,12 @@ void IdleState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_right"));
+		player.SetCurrentSpriteId(zoolIdleRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_stand_left"));
+		player.SetCurrentSpriteId(zoolIdleLpng);
 	}
 
 	player.SetHalfSize({(Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
@@ -134,12 +134,12 @@ void AccelState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_right_strip_16"));
+		player.SetCurrentSpriteId(zoolWalkRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_walk_left_strip_16"));
+		player.SetCurrentSpriteId(zoolWalkLpng);
 	}
 
 	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
@@ -208,12 +208,12 @@ void DeccelState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_right"));
+		player.SetCurrentSpriteId(zoolSkidRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_skid_left"));
+		player.SetCurrentSpriteId(zoolSkidLpng);
 	}
 
 	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
@@ -276,12 +276,12 @@ void CrouchState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_right"));
+		player.SetCurrentSpriteId(zoolCrouchRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_crouch_left"));
+		player.SetCurrentSpriteId(zoolCrouchLpng);
 	}
 
 	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
@@ -361,12 +361,12 @@ void JumpState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_right"));
+		player.SetCurrentSpriteId(zoolJumpRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_jump_left"));
+		player.SetCurrentSpriteId(zoolJumpLpng);
 	}
 
 	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
@@ -434,12 +434,12 @@ void FallState::SetupBB(Player& player)
 {
 	if (!(player.GetIsLeftFacing()))
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_right"));
+		player.SetCurrentSpriteId(zoolFallRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		player.SetCurrentSpriteId(Play::GetSpriteId("spr_zool_fall_left"));
+		player.SetCurrentSpriteId(zoolFallLpng);
 	}
 
 	player.SetHalfSize({ (Play::GetSpriteWidth(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_X_ZOOL), (Play::GetSpriteHeight(player.GetCurrentSpriteId()) / 2) - (PIXEL_EXCESS_Y_ZOOL) });
