@@ -8,7 +8,7 @@ public:
 	Platform(Point2f pos);
 	~Platform() {};
 
-	static void Spawn(Point2f initialPos, PlatformData& platData);
+	static void Spawn(PlatformData& platData);
 
 	// Game Object overrides
 	void Update(GameState& state) override;

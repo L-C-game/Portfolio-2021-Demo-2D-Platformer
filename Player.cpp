@@ -31,9 +31,10 @@ void Player::SetPlayerState(PlayerState& newState)
 
 void Player::SwapPlayerState(PlayerState& newState)
 {
-	m_pStateCurrent->StateExit(*this);
+	Player& playerAddress = *this;
+	m_pStateCurrent->StateExit(playerAddress);
 	m_pStateCurrent = &newState;
-	m_pStateCurrent->StateEnter(*this);
+	m_pStateCurrent->StateEnter(playerAddress);
 }
 
 void Player::CollisionSystem()
@@ -83,6 +84,8 @@ void Player::CollisionSystem()
 
 void Player::Update(GameState& state)
 {
+	Player& playerAddress = *this;
+
 	SetVelocity(GetVelocity() + GetAcceleration());
 	if (abs(GetVelocity().x) >= MAX_SPEED_RUN)
 	{
@@ -94,12 +97,13 @@ void Player::Update(GameState& state)
 	}
 	SetPosition(GetPosition() + GetVelocity());
 
-	m_pStateCurrent->SetupBB(*this);
-	m_pStateCurrent->HandleInput(*this);
+	m_pStateCurrent->SetupBB(playerAddress);
+	m_pStateCurrent->HandleInput(playerAddress);
 	CollisionSystem();
 }
 
 void Player::Draw(GameState& state) const
 {
-	m_pStateCurrent->DrawPlayer(*this, state);
+	const Player& playerAddress = *this;
+	m_pStateCurrent->DrawPlayer(playerAddress, state);
 }

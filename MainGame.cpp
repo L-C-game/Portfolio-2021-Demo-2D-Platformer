@@ -23,11 +23,37 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Ceiling::Spawn();
 	Player::Spawn();
 
-	std::array<Point2f, platformNumber>platformPos{ { { S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)) }, { S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS)) }, {  S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)) }, { S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS)) } } };
+	std::array<PlatformData, platformAmount>platforms
+	{{
+		PlatformData
+		{
+			(platData.pos = {S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS))}),
+			platData.HalfSizePlat,
+			(platData.colour = platBluepng)
+		}, 
+		PlatformData
+		{
+			(platData.pos = {S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			platData.HalfSizePlat,
+			(platData.colour = platGreenpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS))}),
+			platData.HalfSizePlat,
+			(platData.colour = platYellowpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			platData.HalfSizePlat,
+			(platData.colour = platRedpng)
+		}
+	}};
 	
-	for (const Point2f pos : platformPos)
+	for (PlatformData platData : platforms)
 	{
-		PopulateWorld(pos);
+		Platform::Spawn(platData);
 	}
 }
 
@@ -59,7 +85,3 @@ int MainGameExit( void )
 	return PLAY_OK;
 }
 
-void PopulateWorld(Point2f platPos)
-{
-	Platform::Spawn(platPos, platData);
-}

@@ -9,13 +9,12 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 	SetStatic(true);
 }
 
-void Platform::Spawn(Point2f initialPos, PlatformData& platData)
+void Platform::Spawn(PlatformData& platData)
 {
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < 5)
 	{
-		GameObject* platform = new Platform(initialPos);
-		int platColour = static_cast<int>(GameObject::RandomNumGen(platBluepng, platYellowpng));
-		platform->SetCurrentSpriteId(platColour);
+		GameObject* platform = new Platform(platData.pos);
+		platform->SetCurrentSpriteId(platData.colour);
 		platform->SetHalfSize( platData.HalfSizePlat );
 	}
 }

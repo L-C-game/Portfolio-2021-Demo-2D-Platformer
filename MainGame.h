@@ -71,11 +71,11 @@ const int SINGLE_FRAME_ANIM_SPEED = 1;
 const float halfSizeXPlat = 24.0f;
 const float halfSizeYPlat = (S_PIXELS_PER_UNIT / 2) + PIXEL_BUFFER;
 
-const int platformNumber = 4;
+const int platformAmount = 4;
 
 struct PlatformData
 {
+	Point2f pos;
 	Point2f HalfSizePlat{ halfSizeXPlat, halfSizeYPlat };
+	spriteIdInts colour;
 };
-
-void PopulateWorld(Point2f platPos);
