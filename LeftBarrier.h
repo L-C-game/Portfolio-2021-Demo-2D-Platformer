@@ -8,7 +8,7 @@ public:
 	LBarrier(Point2f pos);
 	~LBarrier() {};
 
-	static void Spawn();
+	static void Spawn(GameState& state);
 
 	// Game Object overrides
 	void Update(GameState& state) override;

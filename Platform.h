@@ -13,4 +13,14 @@ public:
 	// Game Object overrides
 	void Update(GameState& state) override;
 	void Draw(GameState& state) const override;
+
+	void SetConstPos(Point2f constPos) { m_constPos = constPos; }
+	Point2f GetConstPos() const { return m_constPos; }
+
+	void SetPlatID(int platID) { m_platID = platID; }
+	int GetPlatID() const { return m_platID; }
+
+private:
+	Point2f m_constPos{ 0.0f, 0.0f };
+	int m_platID{ 0 };
 };

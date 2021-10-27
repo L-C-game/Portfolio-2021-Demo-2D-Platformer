@@ -151,6 +151,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateConcrete.cpp" />
+    <ClCompile Include="RightBarrier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ceiling.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStateInterface.h" />
     <ClInclude Include="PlayerStatesConcrete.h" />
+    <ClInclude Include="RightBarrier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

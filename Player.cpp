@@ -9,7 +9,7 @@ Player::Player(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(0);
 	SetDrawOrder(0);
 	SetStatic(false);
-
+	SetHalfSize({ (ZOOL_SIZE / 2) - (PIXEL_EXCESS_X_ZOOL), (ZOOL_SIZE / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 }
 
 // Spawn player
@@ -17,8 +17,7 @@ void Player::Spawn()
 {
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
 	{
-		Point2f initialPos = { static_cast<float>(S_PIXELS_PER_UNIT_DOUBLE), static_cast<float>(S_DISPLAY_HEIGHT - (S_PIXELS_PER_UNIT_DOUBLE + S_PIXELS_PER_UNIT))};
-		GameObject* playerG = new Player(initialPos);	
+		GameObject* playerG = new Player(initialPlayerPos);	
 		Player* player = static_cast<Player*>(playerG);
 		player->SetPlayerState(IdleState::getInstance());
 	}
@@ -54,13 +53,12 @@ void Player::CollisionSystem()
 				// If the logic here becomes bloated it might be best to change it to a design pattern state machine.
    				switch (collidingSide) {
 				case GameObject::CollidingSide::SIDE_UP:
-					// Code
 					this->SetAcceleration({ this->GetAcceleration().x, GRAVITY });
 					this->SetVelocity({ this->GetVelocity().x, 0.0f });
 					break;
 				case GameObject::CollidingSide::SIDE_RIGHT:
-					//this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
-					//this->SetVelocity({ 0.0f, this->GetVelocity().y });
+					this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
+					this->SetVelocity({ 0.0f, this->GetVelocity().y });
 					break;
 				case GameObject::CollidingSide::SIDE_DOWN:
 					this->SetIsGrounded(true);
@@ -97,9 +95,36 @@ void Player::Update(GameState& state)
 	}
 	SetPosition(GetPosition() + GetVelocity());
 
-	m_pStateCurrent->SetupBB(playerAddress);
 	m_pStateCurrent->HandleInput(playerAddress);
 	CollisionSystem();
+
+	CentreCameraOnPlayer(state);
+}
+
+void Player::CentreCameraOnPlayer(GameState& state)
+{
+	state.camera.pos.x = (this->GetPosition().x + ZOOL_SIZE / 2) - (S_DISPLAY_WIDTH/2);
+	state.camera.pos.y = (this->GetPosition().y + ZOOL_SIZE / 2) - (S_DISPLAY_HEIGHT * THREE_QUARTERS);
+
+	if (state.camera.pos.x < 0)
+	{
+		state.camera.pos.x = 0.0f;
+	}
+
+	if (state.camera.pos.y < 0)
+	{
+		state.camera.pos.y = LEVEL_HEIGHT + state.camera.height;
+	}
+
+	if (state.camera.pos.x > (LEVEL_WIDTH - state.camera.width))
+	{
+		state.camera.pos.x = LEVEL_WIDTH - state.camera.width;
+	}
+
+	if (state.camera.pos.y > (LEVEL_HEIGHT - state.camera.height))
+	{
+		state.camera.pos.y = 0.0f;
+	}
 }
 
 void Player::Draw(GameState& state) const

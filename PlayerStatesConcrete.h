@@ -9,7 +9,7 @@ public:
 	void HandleInput(Player& player);
 
 	// Might have to edit this as we don't want the collision to be pixel perfect as it makes gameplay awkward
-	void SetupBB(Player& player);
+	//void SetupBB(Player& player);
 	void DrawPlayer(const Player& player, GameState& state) const;
 	void StateExit(Player& player);
 
@@ -27,7 +27,7 @@ private:
 	//std::string m_name{ "Idle" };
 };
 
-class AccelState : public PlayerState
+class WalkState : public PlayerState
 {
 public:
 	void StateEnter(Player& player);
@@ -39,14 +39,14 @@ public:
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
-	AccelState() {}
+	WalkState() {}
 	// Prevents the singleton from being cloned
-	AccelState(const AccelState& other) = delete;
+	WalkState(const WalkState& other) = delete;
 	// Prevents the singleton from being assigned
-	void operator=(const AccelState&) = delete;
+	void operator=(const WalkState&) = delete;
 };
 
-class DeccelState : public PlayerState
+class SkidState : public PlayerState
 {
 public:
 	void StateEnter(Player& player);
@@ -58,11 +58,11 @@ public:
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
-	DeccelState() {}
+	SkidState() {}
 	// Prevents the singleton from being cloned
-	DeccelState(const DeccelState& other) = delete;
+	SkidState(const SkidState& other) = delete;
 	// Prevents the singleton from being assigned
-	void operator=(const DeccelState&) = delete;
+	void operator=(const SkidState&) = delete;
 };
 
 class CrouchState : public PlayerState

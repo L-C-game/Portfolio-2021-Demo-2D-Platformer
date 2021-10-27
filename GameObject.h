@@ -13,7 +13,9 @@ public:
         OBJ_FLOOR,
         OBJ_LBARRIER,
         OBJ_CEILING,
+        OBJ_RBARRIER,
         OBJ_PLATFORM,
+        OBJ_CAMERA,
 		OBJ_ALL = 999
 	};
 
@@ -34,12 +36,6 @@ public:
 	virtual void Draw(GameState& state) const = 0;
 
 	static float RandomNumGen(int min, int max);
-
-    //void SetOldPosition(Point2f posOld) { m_posOld = posOld; }
-    Point2f GetOldPosition() const { return m_posOld; };
-
-    //void SetOldVelocity(Vector2f velOld) { m_velOld = velOld; }
-    Vector2f GetOldVelocity() const { return m_velOld; };
 
 	void SetPosition(Point2f pos) { m_pos = pos; }
 	Point2f GetPosition() const { return m_pos; };
@@ -66,9 +62,6 @@ public:
 
     void SetSolid(bool isSolid) { m_solid = isSolid; }
     bool GetSolid() const { return m_solid; };
-
-    void SetCurrentSpriteId(int currentSId) { m_currentSId = currentSId; }
-    int GetCurrentSpriteId() const { return m_currentSId; };
 
     // Type specific getters and setters
     void SetActive(bool isActive) { m_active = isActive; }
@@ -98,32 +91,32 @@ public:
     bool AABBCollision(GameObject* other);
 
 protected:
-
+    // Comparing if object a has a greater draw order than object b
     static bool DrawOrder(const GameObject* a, const GameObject* b) { return a->m_drawOrder > b->m_drawOrder; }
     static bool UpdateOrder(const GameObject* a, const GameObject* b) { return a->m_updateOrder > b->m_updateOrder; }
 
+    // Enum class variables
     Type m_type{ Type::OBJ_NULL };
     CollidingSide m_side{ CollidingSide::SIDE_NULL };
+
+    // Decides if the GameObject should be deleted or not
     bool m_active{ true };
-    Point2f m_posOld{ 0.0f, 0.0f };
+
+    // Movement member variables
     Point2f m_pos{ 0.0f, 0.0f };
-    Vector2f m_velOld{ 0.0f, 0.0f };
     Vector2f m_velocity{ 0.0f, 0.0f };
     Vector2f m_acceleration{ 0.0f, 0.0f };
 
-    //Setting up game objects with AABB's
+    // Setting up game objects with AABB's
     Point2f m_halfSize{ 0.0f, 0.0f }; // Half the width and half the height of the object
 
     // Is the GameObject fixed in space (independent of forces) or not:
     bool m_static{ false };
-
     bool m_solid{ true };
 
-    int m_currentSId{Play::GetSpriteId("spr_zool_stand_right")};
-
-    int spriteId{ -1 };
     float m_rot{ 0.0f };
 
+    // Set the order of update and draw
     int m_drawOrder{ 0 };
     int m_updateOrder{ 0 };
 

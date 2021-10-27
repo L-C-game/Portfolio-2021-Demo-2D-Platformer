@@ -2,6 +2,7 @@
 #include "LeftBarrier.h"
 #include "Floor.h"
 #include "Ceiling.h"
+#include "RightBarrier.h"
 #include "Player.h"
 #include "Platform.h"
 #define PLAY_IMPLEMENTATION
@@ -17,35 +18,38 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
+
 	// Spawn game world
 	Floor::Spawn();
-	LBarrier::Spawn();
-	Ceiling::Spawn();
+	LBarrier::Spawn(state);
+	Ceiling::Spawn(state);
+	RBarrier::Spawn(state);
 	Player::Spawn();
 
+	// Platform data as an array of structs
 	std::array<PlatformData, platformAmount>platforms
 	{{
 		PlatformData
 		{
-			(platData.pos = {S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS))}),
+			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER), ((S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)))}),
 			platData.HalfSizePlat,
 			(platData.colour = platBluepng)
 		}, 
 		PlatformData
 		{
-			(platData.pos = {S_DISPLAY_WIDTH * QUARTER, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			(platData.pos = {LEVEL_WIDTH / 2, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
 			platData.HalfSizePlat,
 			(platData.colour = platGreenpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * THREE_QUARTERS))}),
+			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
 			platData.HalfSizePlat,
 			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			(platData.pos = {LEVEL_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
 			platData.HalfSizePlat,
 			(platData.colour = platRedpng)
 		}

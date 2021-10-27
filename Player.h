@@ -28,13 +28,15 @@ public:
 
 	void CollisionSystem();
 
+	void CentreCameraOnPlayer(GameState& state);
+
 	// Game Object overrides
 	void Update(GameState& state) override;
 	void Draw(GameState& state) const override;
 
 private:
 	
-	PlayerState* m_pStateCurrent;
+	PlayerState* m_pStateCurrent{nullptr};
 	bool m_isLeftFacing{ false };
 	bool m_isGrounded{ true };
 };

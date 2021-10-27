@@ -1,16 +1,20 @@
 #pragma once
 #include "Play.h"
 #include "GameObject.h"
+// Camera object header
 
-class Ceiling : public GameObject
+class Camera : public GameObject
 {
-public:
-	Ceiling(Point2f pos);
-	~Ceiling() {};
+public: 
+	Camera(Point2f pos);
+	~Camera() {};
 
-	static void Spawn(GameState& state);
+	static void Spawn();
 
 	// Game Object overrides
 	void Update(GameState& state) override;
 	void Draw(GameState& state) const override;
+
+private:
 };
+
