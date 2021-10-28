@@ -39,18 +39,20 @@ void Player::SwapPlayerState(PlayerState& newState)
 void Player::CollisionSystem()
 {
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	// To store which objects collide with the player
 	std::vector< GameObject* > collisionList;
 	collisionList.clear();
+
 	for (GameObject* other : oList)
 	{
 		if (!(other->GetType() == GameObject::Type::OBJ_PLAYER))
 		{
+			// Resolve collison and return which side of the player has collided
 			GameObject::CollidingSide collidingSide = this->ResolveCollision(other);
 			if (collidingSide != GameObject::CollidingSide::SIDE_NULL)
 			{
 				collisionList.push_back(other);
-				// Switch case which checks what side of the player is colliding with an object
-				// If the logic here becomes bloated it might be best to change it to a design pattern state machine.
+
    				switch (collidingSide) {
 				case GameObject::CollidingSide::SIDE_UP:
 					this->SetAcceleration({ this->GetAcceleration().x, GRAVITY });
@@ -84,6 +86,7 @@ void Player::Update(GameState& state)
 {
 	Player& playerAddress = *this;
 
+	// Velocity taking into account acceleration and constraining the velocity within the max speed (inclusive)
 	SetVelocity(GetVelocity() + GetAcceleration());
 	if (abs(GetVelocity().x) >= MAX_SPEED_RUN)
 	{
@@ -95,16 +98,20 @@ void Player::Update(GameState& state)
 	}
 	SetPosition(GetPosition() + GetVelocity());
 
+	//Sets the state depending on the input
 	m_pStateCurrent->HandleInput(playerAddress);
+
 	CollisionSystem();
 
 	CentreCameraOnPlayer(state);
 }
 
+// Sets up the camera position, constrained within the bounds of the level
 void Player::CentreCameraOnPlayer(GameState& state)
 {
+	// Setting the position of the camera wrt the player
 	state.camera.pos.x = (this->GetPosition().x + ZOOL_SIZE / 2) - (S_DISPLAY_WIDTH/2);
-	state.camera.pos.y = (this->GetPosition().y + ZOOL_SIZE / 2) - (S_DISPLAY_HEIGHT * THREE_QUARTERS);
+	state.camera.pos.y = (this->GetPosition().y + ZOOL_SIZE / 2) - (S_DISPLAY_HEIGHT * THREE_QUARTERS + S_PIXELS_PER_UNIT);
 
 	if (state.camera.pos.x < 0)
 	{

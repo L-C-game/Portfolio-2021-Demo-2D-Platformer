@@ -7,21 +7,21 @@
 constexpr float S_PIXELS_PER_UNIT = 16.0f; // Each unit in zool is 16x16
 constexpr float S_PIXELS_PER_UNIT_DOUBLE = 32.0f; // 2x a single unit
 
-const int ZOOL_SIZE = 48;
+constexpr int ZOOL_SIZE = 48;
 
 // Resolution constants
 constexpr int S_DISPLAY_WIDTH = 640;
 constexpr int S_DISPLAY_HEIGHT = 360;
 constexpr int S_DISPLAY_SCALE = 2;
 
-const int LEVEL_WIDTH = 1920;
-const int LEVEL_HEIGHT = 640;
+constexpr int LEVEL_WIDTH = 1920;
+constexpr int LEVEL_HEIGHT = 640;
 
 // Mathematical constants
-const double pi = 3.14159265358979323846;
+constexpr double pi = 3.14159265358979323846;
 
-const float QUARTER = 0.25f;
-const float THREE_QUARTERS = 0.75f;
+constexpr float QUARTER = 0.25f;
+constexpr float THREE_QUARTERS = 0.75f;
 
 // Sprite ID's
 const enum spriteIdInts
@@ -49,29 +49,29 @@ const enum spriteIdInts
 };
 
 // Movement constants
-const float GRAVITY = (20.0f / 60.0f); // Acceleration due to gravity
-const float MOVEACC = (15.0f / 60.0f); // Acceleration when moving
+constexpr float GRAVITY = (20.0f / 60.0f); // Acceleration due to gravity
+constexpr float MOVEACC = (45.0f / 60.0f); // Acceleration when moving
 
-const int MAX_SPEED_RUN = 5; // Maximum horizontal speed
-const int MAX_SPEED_FALL = 7; // Maximum vertical speed
+constexpr int MAX_SPEED_RUN = 5; // Maximum horizontal speed
+constexpr int MAX_SPEED_FALL = 7; // Maximum vertical speed
 
-const float MINIMUM_SPEED_RUN = 0.5f; // A minimum speed, when this is reached the player stops and changes to idle
+constexpr float MINIMUM_SPEED_RUN = 0.5f; // A minimum speed, when this is reached the player stops and changes to idle
 
 // The excess pixels on the zool sprites
-const int PIXEL_EXCESS_X_ZOOL = 10;
-const int PIXEL_EXCESS_Y_ZOOL = 8;
+constexpr int PIXEL_EXCESS_X_ZOOL = 10;
+constexpr int PIXEL_EXCESS_Y_ZOOL = 8;
 
-const int PIXEL_BUFFER = 2;
+constexpr int PIXEL_BUFFER = 2;
 
 // Run animation speed
-const int RUN_ANIM_SPEED = 32;
-const int SINGLE_FRAME_ANIM_SPEED = 1;
+constexpr int RUN_ANIM_SPEED = 32;
+constexpr int SINGLE_FRAME_ANIM_SPEED = 1;
 
 //Platform data and functions to populate world with platforms
-const float halfSizeXPlat = 24.0f;
-const float halfSizeYPlat = (S_PIXELS_PER_UNIT / 2) + PIXEL_BUFFER;
+constexpr float halfSizeXPlat = 24.0f;
+constexpr float halfSizeYPlat = (S_PIXELS_PER_UNIT / 2) + PIXEL_BUFFER;
 
-const int platformAmount = 4;
+constexpr int platformAmount = 4;
 
 const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH/2), static_cast<float>(S_DISPLAY_HEIGHT/2) };
 
@@ -79,8 +79,8 @@ const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH/2), static
 struct Camera
 {
 	Point2f pos{ 0.0f, 0.0f };
-	float width{ S_DISPLAY_WIDTH };
-	float height{ S_DISPLAY_HEIGHT };
+	const float width{ S_DISPLAY_WIDTH };
+	const float height{ S_DISPLAY_HEIGHT };
 };
 
 // Using a struct as the base access is public

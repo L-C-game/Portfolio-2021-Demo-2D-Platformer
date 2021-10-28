@@ -320,7 +320,6 @@ void JumpState::HandleInput(Player& player)
 	}
 	else
 	{
-		//float acc = -(player.GetAcceleration().x);
 		player.SetAcceleration({ 0.0f, player.GetAcceleration().y });
 	}
 
