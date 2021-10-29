@@ -32,8 +32,8 @@ public:
 	GameObject(Point2f pos);
 	virtual ~GameObject();
 
-	virtual void Update(GameState& state) = 0;
-	virtual void Draw(GameState& state) const = 0;
+	virtual void Update(GameState& gameState) = 0;
+	virtual void Draw(GameState& gameState) const = 0;
 
 	static float RandomNumGen(int min, int max);
 
@@ -85,8 +85,8 @@ public:
     static std::vector< GameObject* > GetTypeList(GameObject::Type type);
 
     // Update, draw and free memory methods for all objects, called in main game
-    static void UpdateAll(GameState& state);
-    static void DrawAll(GameState& state);
+    static void UpdateAll(GameState& gameState);
+    static void DrawAll(GameState& gameState);
     static void DestroyAll();
     bool AABBCollision(GameObject* other);
 

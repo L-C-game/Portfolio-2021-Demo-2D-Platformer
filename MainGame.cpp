@@ -9,7 +9,7 @@
 #include "Play.h"
 #include <array>
 
-GameState state;
+GameState gameState;
 PlatformData platData;
 
 // The entry point for a Windows program
@@ -21,38 +21,50 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 
 	// Spawn game world
 	Floor::Spawn();
-	LBarrier::Spawn(state);
-	Ceiling::Spawn(state);
-	RBarrier::Spawn(state);
+	LBarrier::Spawn(gameState);
+	Ceiling::Spawn(gameState);
+	RBarrier::Spawn(gameState);
 	Player::Spawn();
 
 	// Platform data as an array of structs
-	std::array<PlatformData, platformAmount>platforms
+	std::array<PlatformData, PLATFORM_AMOUNT>platforms
 	{{
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER), ((S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER)))}),
+			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * NINE_TENTHS)}),
+			platData.HalfSizePlat,
+			(platData.colour = platPinkpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER), (LEVEL_HEIGHT * FOUR_FIFTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platBluepng)
 		}, 
 		PlatformData
 		{
-			(platData.pos = {LEVEL_WIDTH / 2, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
-			platData.HalfSizePlat,
-			(platData.colour = platGreenpng)
-		},
-		PlatformData
-		{
-			(platData.pos = {S_DISPLAY_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * SEVEN_TENTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {LEVEL_WIDTH * THREE_QUARTERS, (S_DISPLAY_HEIGHT - (S_DISPLAY_HEIGHT * QUARTER))}),
+			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER) , (LEVEL_HEIGHT * THREE_FIFTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platRedpng)
-		}
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT / 2)}),
+			platData.HalfSizePlat,
+			(platData.colour = platGreenpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), (LEVEL_HEIGHT / 2)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
 	}};
 	
 	for (PlatformData platData : platforms)
@@ -65,12 +77,17 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 bool MainGameUpdate( float elapsedTime )
 {
 	// Keeping track of the elapsed time 
-	state.time += elapsedTime;
+	gameState.time += elapsedTime;
 	Play::DrawBackground();
-	GameObject::DrawAll(state);
+
+	GameObject::DrawAll(gameState);
+
+	Play::DrawFontText("font24px", "SCORE: " + std::to_string(gameState.score),
+		{ S_DISPLAY_WIDTH * FIFTH,  S_DISPLAY_HEIGHT * TENTH}, Play::CENTRE);
+
 	Play::PresentDrawingBuffer();
 
-	GameObject::UpdateAll(state);
+	GameObject::UpdateAll(gameState);
 
 	// Allows the player to easily exit the game
 	return Play::KeyDown( VK_ESCAPE );

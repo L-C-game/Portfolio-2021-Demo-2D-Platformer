@@ -26,17 +26,23 @@ public:
 	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
 	bool GetIsGrounded() const { return m_isGrounded; }
 
+	void SetJumpTimer(int jumpTimer) { m_jumpTimer = jumpTimer; }
+	int GetJumpTimer() const { return m_jumpTimer; }
+
 	void CollisionSystem();
 
-	void CentreCameraOnPlayer(GameState& state);
+	void CentreCameraOnPlayer(GameState& gameState);
 
 	// Game Object overrides
-	void Update(GameState& state) override;
-	void Draw(GameState& state) const override;
+	void Update(GameState& gameState) override;
+	void Draw(GameState& gameState) const override;
 
 private:
 	
 	PlayerState* m_pStateCurrent{nullptr};
 	bool m_isLeftFacing{ false };
 	bool m_isGrounded{ true };
+
+	// time elasped since entering jump state in frames
+	int m_jumpTimer{ 0 };
 };

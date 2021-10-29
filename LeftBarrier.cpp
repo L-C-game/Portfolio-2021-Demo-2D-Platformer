@@ -9,16 +9,16 @@ LBarrier::LBarrier(Point2f pos) : GameObject(pos)
 	this->SetHalfSize({(ZOOL_SIZE), (LEVEL_HEIGHT/2)});
 }
 
-void LBarrier::Spawn(GameState& state)
+void LBarrier::Spawn(GameState& gameState)
 {
 	// Left barrier constructor
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_LBARRIER) < 1)
 	{
 		Point2f initialPos = { -(ZOOL_SIZE), (LEVEL_HEIGHT/2) };
-		GameObject* lBarrier = new LBarrier(initialPos - state.camera.pos);
+		GameObject* lBarrier = new LBarrier(initialPos - gameState.camera.pos);
 	}
 }
 
-void LBarrier::Update(GameState& state) {}
+void LBarrier::Update(GameState& gameState) {}
 
-void LBarrier::Draw(GameState& state) const {}
+void LBarrier::Draw(GameState& gameState) const {}

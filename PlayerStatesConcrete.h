@@ -10,7 +10,7 @@ public:
 
 	// Might have to edit this as we don't want the collision to be pixel perfect as it makes gameplay awkward
 	//void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
@@ -32,8 +32,7 @@ class WalkState : public PlayerState
 public:
 	void StateEnter(Player& player);
 	void HandleInput(Player& player);
-	void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
@@ -51,8 +50,7 @@ class SkidState : public PlayerState
 public:
 	void StateEnter(Player& player);
 	void HandleInput(Player& player);
-	void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
@@ -70,8 +68,7 @@ class CrouchState : public PlayerState
 public:
 	void StateEnter(Player& player);
 	void HandleInput(Player& player);
-	void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
@@ -89,8 +86,7 @@ class JumpState : public PlayerState
 public:
 	void StateEnter(Player& player);
 	void HandleInput(Player& player);
-	void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 
@@ -108,8 +104,7 @@ class FallState : public PlayerState
 public:
 	void StateEnter(Player& player);
 	void HandleInput(Player& player);
-	void SetupBB(Player& player);
-	void DrawPlayer(const Player& player, GameState& state) const;
+	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
 
 	// Controls access to the singleton instance, 

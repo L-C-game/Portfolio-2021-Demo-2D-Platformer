@@ -166,6 +166,9 @@
     <ClInclude Include="PlayerStatesConcrete.h" />
     <ClInclude Include="RightBarrier.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Platformer2D.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

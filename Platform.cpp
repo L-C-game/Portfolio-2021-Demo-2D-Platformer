@@ -12,7 +12,7 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 
 void Platform::Spawn(PlatformData& platData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < 5)
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < (PLATFORM_AMOUNT + 1))
 	{
 		GameObject* platformG = new Platform(platData.pos);
 		platformG->SetHalfSize( platData.HalfSizePlat );
@@ -21,12 +21,12 @@ void Platform::Spawn(PlatformData& platData)
 	}
 }
 
-void Platform::Update(GameState& state)
+void Platform::Update(GameState& gameState)
 {
-	this->SetPosition(this->GetConstPos() - state.camera.pos);
+	this->SetPosition(this->GetConstPos());
 }
 
-void Platform::Draw(GameState& state) const
+void Platform::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(this->GetPlatID(), this->GetPosition() - state.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(this->GetPlatID(), this->GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

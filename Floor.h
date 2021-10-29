@@ -11,8 +11,8 @@ public:
 	static void Spawn();
 
 	// Game Object overrides
-	void Update(GameState& state) override;
-	void Draw(GameState& state) const override;
+	void Update(GameState& gameState) override;
+	void Draw(GameState& gameState) const override;
 
 	void SetConstPos(Point2f constPos) { m_constPos = constPos; }
 	Point2f GetConstPos() const { return m_constPos; }

@@ -19,19 +19,18 @@ void Floor::Spawn()
 		// Floor constructor
 		if (GameObject::GetObjectCount(GameObject::Type::OBJ_FLOOR) < 1)
 		{
-			Point2f initialPos = { ((LEVEL_WIDTH)/ 2), (S_DISPLAY_HEIGHT + ZOOL_SIZE) };
+			Point2f initialPos = { ((LEVEL_WIDTH)/ 2), FLOOR_Y };
 			GameObject* floor = new Floor(initialPos);
 		}
 	}
 }
 
-void Floor::Update(GameState& state)
+void Floor::Update(GameState& gameState)
 {
-	Point2f transformPos = { this->GetConstPos().x, this->GetConstPos().y - state.camera.pos.y };
-	this->SetPosition(transformPos);
+	this->SetPosition(this->GetConstPos());
 }
 
-void Floor::Draw(GameState& state) const
+void Floor::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(floorpng, this->GetPosition() - state.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * state.time));
+	Play::DrawSprite(floorpng, this->GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

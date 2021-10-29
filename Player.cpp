@@ -82,10 +82,8 @@ void Player::CollisionSystem()
 	}
 }
 
-void Player::Update(GameState& state)
+void Player::Update(GameState& gameState)
 {
-	Player& playerAddress = *this;
-
 	// Velocity taking into account acceleration and constraining the velocity within the max speed (inclusive)
 	SetVelocity(GetVelocity() + GetAcceleration());
 	if (abs(GetVelocity().x) >= MAX_SPEED_RUN)
@@ -99,43 +97,44 @@ void Player::Update(GameState& state)
 	SetPosition(GetPosition() + GetVelocity());
 
 	//Sets the state depending on the input
+	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
 
 	CollisionSystem();
 
-	CentreCameraOnPlayer(state);
+	CentreCameraOnPlayer(gameState);
 }
 
 // Sets up the camera position, constrained within the bounds of the level
-void Player::CentreCameraOnPlayer(GameState& state)
+void Player::CentreCameraOnPlayer(GameState& gameState)
 {
 	// Setting the position of the camera wrt the player
-	state.camera.pos.x = (this->GetPosition().x + ZOOL_SIZE / 2) - (S_DISPLAY_WIDTH/2);
-	state.camera.pos.y = (this->GetPosition().y + ZOOL_SIZE / 2) - (S_DISPLAY_HEIGHT * THREE_QUARTERS + S_PIXELS_PER_UNIT);
+	gameState.camera.pos.x = (this->GetPosition().x) - (gameState.camera.width / 2);
+	gameState.camera.pos.y = (this->GetPosition().y) - (gameState.camera.height / 2);
 
-	if (state.camera.pos.x < 0)
+	if (gameState.camera.pos.x < 0)
 	{
-		state.camera.pos.x = 0.0f;
+		gameState.camera.pos.x = 0.0f;
 	}
 
-	if (state.camera.pos.y < 0)
+	if (gameState.camera.pos.y < 0)
 	{
-		state.camera.pos.y = LEVEL_HEIGHT + state.camera.height;
+		gameState.camera.pos.y = 0.0f;
 	}
 
-	if (state.camera.pos.x > (LEVEL_WIDTH - state.camera.width))
+	if (gameState.camera.pos.x > (LEVEL_WIDTH - gameState.camera.width))
 	{
-		state.camera.pos.x = LEVEL_WIDTH - state.camera.width;
+		gameState.camera.pos.x = LEVEL_WIDTH - gameState.camera.width;
 	}
 
-	if (state.camera.pos.y > (LEVEL_HEIGHT - state.camera.height))
+	if (gameState.camera.pos.y > (LEVEL_HEIGHT - gameState.camera.height))
 	{
-		state.camera.pos.y = 0.0f;
+		gameState.camera.pos.y = LEVEL_HEIGHT - gameState.camera.height;
 	}
 }
 
-void Player::Draw(GameState& state) const
+void Player::Draw(GameState& gameState) const
 {
 	const Player& playerAddress = *this;
-	m_pStateCurrent->DrawPlayer(playerAddress, state);
+	m_pStateCurrent->DrawPlayer(playerAddress, gameState);
 }

@@ -21,13 +21,13 @@ GameObject::~GameObject()
 	s_vUpdateList.erase(std::find(s_vUpdateList.begin(), s_vUpdateList.end(), this));
 }
 
-void GameObject::UpdateAll(GameState & state)
+void GameObject::UpdateAll(GameState& gameState)
 {
 	std::sort(s_vUpdateList.begin(), s_vUpdateList.end(), GameObject::UpdateOrder);
 
 	for (int n = 0; unsigned(n) < s_vUpdateList.size(); n++)
 	{
-		s_vUpdateList[n]->Update(state);
+		s_vUpdateList[n]->Update(gameState);
 
 		if (!s_vUpdateList[n]->m_active)
 		{
@@ -36,13 +36,13 @@ void GameObject::UpdateAll(GameState & state)
 	}
 }
 
-void GameObject::DrawAll(GameState & state)
+void GameObject::DrawAll(GameState& gameState)
 {
 	std::sort(s_vDrawList.begin(), s_vDrawList.end(), GameObject::DrawOrder);
 
 	for (int n = 0; unsigned(n) < s_vDrawList.size(); n++)
 	{
-		s_vDrawList[n]->Draw(state);
+		s_vDrawList[n]->Draw(gameState);
 	}
 }
 
