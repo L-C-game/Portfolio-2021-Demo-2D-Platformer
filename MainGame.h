@@ -42,14 +42,18 @@ const enum spriteIdInts
 	nullpng = -1,
 	fontMedpng,
 	fontBigpng,
+	fivepointpng,
 	floorpng,
 	healthpng,
+	blockbreakpng,
+	blockpng,
 	platBluepng,
 	platGreenpng,
 	platPinkpng,
 	platRedpng,
 	platSpecialpng,
 	platYellowpng,
+	tenpointpng,
 	zoolCrouchLpng,
 	zoolCrouchRpng,
 	zoolFallLpng,
@@ -73,9 +77,9 @@ constexpr int JUMP_SPEED{ 4 }; // The speed of Jumping upwards
 // Maximum jump duration in seconds
 constexpr int JUMP_DURATION{ 30 };
 
-constexpr float MAX_SPEED_RUN{ 4 }; // Maximum horizontal speed
-constexpr int MAX_SPEED_FALL{ 7 }; // Maximum vertical speed
-
+// Min and max speed constants
+constexpr float MAX_SPEED_RUN{ 3.5 }; // Maximum horizontal speed
+constexpr int MAX_SPEED_FALL{ 7 }; // Maximum vertical speed (can fall faster than he can run)
 constexpr float MINIMUM_SPEED_RUN{ 0.25f }; // A minimum speed, when this is reached the player stops and changes to idle
 
 // The excess pixels on the zool sprites
@@ -87,12 +91,26 @@ constexpr int PIXEL_BUFFER{ 2 };
 // Run animation speed
 constexpr int RUN_ANIM_SPEED{ 32 };
 constexpr int SINGLE_FRAME_ANIM_SPEED{ 1 };
+constexpr int BLOCK_BREAK_ANIM_SPEED{ 12 };
 
 //Platform data and functions to populate world with platforms
-constexpr float HALF_SIZEPLAT_X{ 24.0f };
-constexpr float HALF_SIZEPLAT_Y{ 10.0f };
+constexpr float HALF_SIZE_PLAT_X{ 24.0f };
+constexpr float HALF_SIZE_PLAT_Y{ 10.0f };
+
+constexpr float HALF_SIZE_PICKUP{ 16.0f };
+
+constexpr float HALF_SIZE_BLOCK{ 16.0f };
 
 constexpr int PLATFORM_AMOUNT{ 6 };
+
+constexpr int PICKUP_AMOUNT{ 4 };
+
+constexpr int BLOCK_AMOUNT{ 1 };
+
+constexpr int FIVE_POINTS{ 5 };
+constexpr int TEN_POINTS{ 10 };
+
+constexpr int BLOCK_DURATION{ 30 };
 
 const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * THIRD), static_cast<float>(LEVEL_HEIGHT - 5 * ZOOL_SIZE) } ;
 
@@ -116,8 +134,26 @@ struct GameState
 struct PlatformData
 {
 	Point2f pos{0.0f, 0.0f};
-	Point2f HalfSizePlat{ HALF_SIZEPLAT_X, HALF_SIZEPLAT_Y };
+	Point2f HalfSizePlat{ HALF_SIZE_PLAT_X, HALF_SIZE_PLAT_Y };
 	spriteIdInts colour{nullpng};
 };
+
+struct PickUpData
+{
+	Point2f pos{ 0.0f, 0.0f };
+	Point2f HalfSizePickUp{ HALF_SIZE_PICKUP, HALF_SIZE_PICKUP };
+	spriteIdInts pickupSprite{ nullpng };
+	int pointValue{ 0 };
+
+};
+
+struct BlockData
+{
+	Point2f pos{ 0.0f, 0.0f };
+	Point2f HalfSizeBlock{ HALF_SIZE_BLOCK, HALF_SIZE_BLOCK };
+	spriteIdInts blockSprite{ nullpng };
+
+};
+
 
 

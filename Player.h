@@ -29,7 +29,7 @@ public:
 	void SetJumpTimer(int jumpTimer) { m_jumpTimer = jumpTimer; }
 	int GetJumpTimer() const { return m_jumpTimer; }
 
-	void CollisionSystem();
+	void CollisionSystem(GameState& gameState);
 
 	void CentreCameraOnPlayer(GameState& gameState);
 

@@ -5,12 +5,16 @@
 #include "RightBarrier.h"
 #include "Player.h"
 #include "Platform.h"
+#include "Pickup.h"
+#include "Block.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
 #include <array>
 
 GameState gameState;
 PlatformData platData;
+PickUpData pickUpData;
+BlockData blockData;
 
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
@@ -70,6 +74,58 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	for (PlatformData platData : platforms)
 	{
 		Platform::Spawn(platData);
+	}
+
+	std::array<PickUpData, PICKUP_AMOUNT>pickUps
+	{ {
+		PickUpData
+		{
+			(pickUpData.pos = {S_DISPLAY_WIDTH * FOUR_FIFTHS, LEVEL_HEIGHT - ( 2 * ZOOL_SIZE)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = fivepointpng),
+			(pickUpData.pointValue = FIVE_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = fivepointpng),
+			(pickUpData.pointValue = FIVE_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = tenpointpng),
+			(pickUpData.pointValue = TEN_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(S_DISPLAY_WIDTH / 2), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = fivepointpng),
+			(pickUpData.pointValue = FIVE_POINTS)
+		}
+	} };
+
+	for (PickUpData pickUpData : pickUps)
+	{
+		Pickup::Spawn(pickUpData);
+	}
+
+	std::array<BlockData, BLOCK_AMOUNT>blockArray
+	{ {
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - 2 * HALF_SIZE_BLOCK))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		}
+	} };
+
+	for (BlockData blockData : blockArray)
+	{
+		Block::Spawn(blockData);
 	}
 }
 

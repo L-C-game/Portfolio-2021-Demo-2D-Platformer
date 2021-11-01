@@ -15,7 +15,8 @@ public:
         OBJ_CEILING,
         OBJ_RBARRIER,
         OBJ_PLATFORM,
-        OBJ_CAMERA,
+        OBJ_PICKUP,
+        OBJ_BLOCK,
 		OBJ_ALL = 999
 	};
 
@@ -62,6 +63,9 @@ public:
 
     void SetSolid(bool isSolid) { m_solid = isSolid; }
     bool GetSolid() const { return m_solid; };
+
+    void SetIsCollectable(bool isCollectable) { m_collectable = isCollectable; }
+    bool GetIsCollectable() const { return m_collectable; };
 
     // Type specific getters and setters
     void SetActive(bool isActive) { m_active = isActive; }
@@ -113,6 +117,7 @@ protected:
     // Is the GameObject fixed in space (independent of forces) or not:
     bool m_static{ false };
     bool m_solid{ true };
+    bool m_collectable{ false };
 
     float m_rot{ 0.0f };
 

@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "PlayerStatesConcrete.h"
+#include "Pickup.h"
+#include "Block.h"
 
 Player::Player(Point2f pos) : GameObject(pos)
 {
@@ -36,13 +38,14 @@ void Player::SwapPlayerState(PlayerState& newState)
 	m_pStateCurrent->StateEnter(playerAddress);
 }
 
-void Player::CollisionSystem()
+void Player::CollisionSystem(GameState& gameState)
 {
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
 	// To store which objects collide with the player
 	std::vector< GameObject* > collisionList;
 	collisionList.clear();
 
+	// Check if any of the GameObjects have collided with the player
 	for (GameObject* other : oList)
 	{
 		if (!(other->GetType() == GameObject::Type::OBJ_PLAYER))
@@ -73,9 +76,37 @@ void Player::CollisionSystem()
 					}
 					break;
 				}
+
+				if (other->GetIsCollectable())
+				{
+
+					for (GameObject* other : collisionList)
+					{
+						Pickup* pickUp = static_cast<Pickup*>(other);
+						for (Pickup* pickUp : pickUp->pickUps)
+						{
+							gameState.score += pickUp->GetPointValue();
+							pickUp->SetActive(false);
+						}
+					}
+				}
+
+				if (other->GetType() == GameObject::Type::OBJ_BLOCK)
+				{
+					for (GameObject* other : collisionList)
+					{
+						Block* block = static_cast<Block*>(other);
+						for (Block* block : block->blocks)
+						{
+							block->BreakBlock();
+						}
+					}
+				}
+
 			}
 		}
 	}
+
 	if (this->GetVelocity().y >= 0 && collisionList.empty())
 	{
 		this->SetIsGrounded(false);
@@ -100,7 +131,7 @@ void Player::Update(GameState& gameState)
 	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
 
-	CollisionSystem();
+	CollisionSystem(gameState);
 
 	CentreCameraOnPlayer(gameState);
 }

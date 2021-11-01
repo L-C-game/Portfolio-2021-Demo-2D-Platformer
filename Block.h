@@ -1,0 +1,55 @@
+#pragma once
+#include "GameObject.h"
+class Block :public GameObject
+{
+public:
+	enum class BlockState
+	{
+		NULL_STATE =-1,
+		STABLE_STATE,
+		BREAK_STATE
+	};
+
+	Block(Point2f pos);
+
+	~Block() 
+	{
+		blocks.erase(std::find(blocks.begin(), blocks.end(), this));
+	};
+	// Game Object overrides
+	void Update(GameState& gameState) override;
+	void Draw(GameState& gameState) const override;
+
+	static void Spawn(BlockData& blockData);
+
+	std::vector< Block*> blocks;
+
+	void SetConstPos(Point2f constPos) { m_constPos = constPos; }
+	Point2f GetConstPos() const { return m_constPos; }
+
+	void SetTimer(int timer) { m_timer = timer; }
+	int GetTimer() const { return m_timer; }
+
+	void SetBlockID(int blockID) { m_blockID = blockID; }
+	int GetBlockID() const { return m_blockID; }
+
+	void SetAnimSpeed(int animSpeed) { m_animSpeed = animSpeed; }
+	int GetAnimSpeed() const { return m_animSpeed; }
+
+	void SetBlockState(BlockState blockState) { m_state = blockState; }
+	BlockState GetBlockState() const { return m_state; }
+
+	void BreakBlock();
+	void RemoveBlock();
+
+	void UpdateStable();
+	void UpdateBreak();
+
+private:
+	Point2f m_constPos{ 0.0f, 0.0f };
+	int m_timer{ 0 };
+	int m_blockID{ 0 };
+	int m_animSpeed{ SINGLE_FRAME_ANIM_SPEED };
+	BlockState m_state{BlockState::STABLE_STATE};
+};
+
