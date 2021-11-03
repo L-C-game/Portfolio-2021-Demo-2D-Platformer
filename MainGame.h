@@ -4,8 +4,8 @@
 
 // Important constants
 //Screen constants
-constexpr float S_PIXELS_PER_UNIT{ 16.0f }; // Each unit in zool is 16x16
-constexpr float S_PIXELS_PER_UNIT_DOUBLE{ 32.0f }; // 2x a single unit
+constexpr int S_PIXELS_PER_UNIT{ 16 }; // Each unit in zool is 16x16
+constexpr int S_PIXELS_PER_UNIT_DOUBLE{ 32 }; // 2x a single unit
 
 constexpr int ZOOL_SIZE{ 48 };
 
@@ -18,7 +18,7 @@ constexpr int LEVEL_WIDTH{ 1920 };
 constexpr int LEVEL_HEIGHT{ 1080 };
 
 // Floor position, for placing platforms wrt the floor
-constexpr int FLOOR_Y = (LEVEL_HEIGHT - ZOOL_SIZE);
+constexpr int FLOOR_Y = (LEVEL_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE);
 
 // Mathematical constants
 constexpr double pi{ 3.14159265358979323846 };
@@ -45,6 +45,7 @@ const enum spriteIdInts
 	fivepointpng,
 	floorpng,
 	healthpng,
+	halfhealth,
 	blockbreakpng,
 	blockpng,
 	platBluepng,
@@ -53,6 +54,7 @@ const enum spriteIdInts
 	platRedpng,
 	platSpecialpng,
 	platYellowpng,
+	spikespng,
 	tenpointpng,
 	zoolCrouchLpng,
 	zoolCrouchRpng,
@@ -70,12 +72,28 @@ const enum spriteIdInts
 	zoolWalkRpng,
 };
 
+const enum updateOrder
+{
+	FLOOR_UPDATE = 8,
+	PLAYER_UPDATE = 7,
+	LBARRIER_UPDATE = 6,
+	CEILING_UPDATE = 5,
+	RBARRIER_UPDATE = 4,
+	PLATFORM_UPDATE = 3,
+	PICKUP_UPDATE = 2,
+	BLOCK_UPDATE = 1,
+	SPIKE_UPDATE = 0,
+};
+
 // Movement constants
 constexpr float GRAVITY{ (30.0f / 60.0f) }; // Acceleration due to gravity
 constexpr float MOVE_ACC{ (45.0f / 60.0f) }; // Acceleration when moving
+constexpr float STUN_ACC{(90.0f / 60.0f)};
 constexpr int JUMP_SPEED{ 4 }; // The speed of Jumping upwards
 // Maximum jump duration in seconds
 constexpr int JUMP_DURATION{ 30 };
+constexpr int I_FRAMES_DURATION{ 15 };
+constexpr int BLINK_DURATION{ 3 };
 
 // Min and max speed constants
 constexpr float MAX_SPEED_RUN{ 3.5 }; // Maximum horizontal speed
@@ -97,22 +115,22 @@ constexpr int BLOCK_BREAK_ANIM_SPEED{ 12 };
 constexpr float HALF_SIZE_PLAT_X{ 24.0f };
 constexpr float HALF_SIZE_PLAT_Y{ 10.0f };
 
-constexpr float HALF_SIZE_PICKUP{ 16.0f };
-
-constexpr float HALF_SIZE_BLOCK{ 16.0f };
+constexpr float HALF_SIZE_SMALL_OBJ{ 8.0f };
 
 constexpr int PLATFORM_AMOUNT{ 6 };
 
 constexpr int PICKUP_AMOUNT{ 4 };
-
-constexpr int BLOCK_AMOUNT{ 1 };
-
 constexpr int FIVE_POINTS{ 5 };
 constexpr int TEN_POINTS{ 10 };
 
+constexpr int BLOCK_AMOUNT{ 1 };
 constexpr int BLOCK_DURATION{ 30 };
 
-const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * THIRD), static_cast<float>(LEVEL_HEIGHT - 5 * ZOOL_SIZE) } ;
+constexpr int SPIKE_AMOUNT{ 1 };
+
+const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * THIRD), static_cast<float>(LEVEL_HEIGHT - 2 * ZOOL_SIZE) } ;
+constexpr int MAX_HEALTH_PLAYER{ 6 };
+constexpr int MIN_HEALTH_PLAYER{ 1 };
 
 // Camera struct 
 struct Camera
@@ -128,6 +146,7 @@ struct GameState
 	// The time elapsed in the game
 	float time{ 0.0f };
 	int score{ 0 };
+	int health{ 0 };
 	Camera camera;
 };
 
@@ -141,19 +160,20 @@ struct PlatformData
 struct PickUpData
 {
 	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizePickUp{ HALF_SIZE_PICKUP, HALF_SIZE_PICKUP };
+	Point2f HalfSizePickUp{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
 	spriteIdInts pickupSprite{ nullpng };
 	int pointValue{ 0 };
-
 };
 
 struct BlockData
 {
 	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizeBlock{ HALF_SIZE_BLOCK, HALF_SIZE_BLOCK };
+	Point2f HalfSizeBlock{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
 	spriteIdInts blockSprite{ nullpng };
-
 };
 
-
-
+struct SpikeData
+{
+	Point2f pos{ 0.0f, 0.0f };
+	Point2f HalfSizeSpike{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
+};

@@ -87,7 +87,7 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 			// resolve vertical
 			// Distance between centres for y
 			float yDiff = (this->GetPosition().y) - (other->GetPosition().y);
-			posPtr->y = posPtr->y + ((yDiff/abs(yDiff)) * overlap.y);
+			posPtr->y = posPtr->y + ((yDiff/abs(yDiff)) * (overlap.y));
 			this->SetPosition(*posPtr);
 			if (yDiff < 0)
 			{
@@ -116,8 +116,6 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 	}
 	return CollidingSide::SIDE_NULL;
 }
-
-
 
 //	Gives the no. objects
 int GameObject::GetObjectCount(GameObject::Type type)
@@ -157,7 +155,6 @@ std::vector< GameObject* > GameObject::GetTypeList(GameObject::Type type)
 
 	return typeList;
 }
-
 
 void GameObject::DestroyAll()
 {

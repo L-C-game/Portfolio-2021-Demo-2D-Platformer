@@ -26,8 +26,29 @@ public:
 	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
 	bool GetIsGrounded() const { return m_isGrounded; }
 
+	void SetHealth(int health) { m_health = health; }
+	int GetHealth() const { return m_health; }
+
+	void SetPlayerID(int playerID) { m_playerID = playerID; }
+	int GetPlayerID() const { return m_playerID; }
+
+	void SetAnimSpeed(int animSpeed) { m_animSpeed = animSpeed; }
+	int GetAnimSpeed() const { return m_animSpeed; }
+
 	void SetJumpTimer(int jumpTimer) { m_jumpTimer = jumpTimer; }
 	int GetJumpTimer() const { return m_jumpTimer; }
+
+	void SetIsHurt(bool isHurt) { m_isHurt = isHurt; }
+	bool GetIsHurt() const { return m_isHurt; }
+
+	void SetiFramesTimer(int iFramesTimer) { m_iFramesTimer = iFramesTimer; }
+	int GetiFramesTimer() const { return m_iFramesTimer; }
+
+	void SetIsBlinking(bool isBlinking) { m_isBlinking = isBlinking; }
+	bool GetIsBlinking() const { return m_isBlinking; }
+
+	void SetBlinkTimer(int blinkTimer) { m_blinkTimer = blinkTimer; }
+	int GetBlinkTimer() const { return m_blinkTimer; }
 
 	void CollisionSystem(GameState& gameState);
 
@@ -42,7 +63,17 @@ private:
 	PlayerState* m_pStateCurrent{nullptr};
 	bool m_isLeftFacing{ false };
 	bool m_isGrounded{ true };
+	int m_health{ MAX_HEALTH_PLAYER };
+	bool m_isHurt{ false };
+	int m_playerID{ zoolIdleRpng };
+	int m_animSpeed{ SINGLE_FRAME_ANIM_SPEED };
 
 	// time elasped since entering jump state in frames
 	int m_jumpTimer{ 0 };
+	// invincibility frames timer
+	int m_iFramesTimer{ 0 };
+
+	// Way to blink the sprite
+	int m_isBlinking{ false };
+	int m_blinkTimer{ 0 };
 };

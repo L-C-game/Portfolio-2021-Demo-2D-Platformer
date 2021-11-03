@@ -37,22 +37,31 @@ void IdleState::HandleInput(Player& player)
 	{
 		player.SwapPlayerState(FallState::getInstance());
 	}
+
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void IdleState::DrawPlayer(const Player& player, GameState& gameState) const
+void IdleState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolIdleRpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolIdleRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolIdleLpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolIdleLpng);
 	}
+}
+
+void IdleState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void IdleState::StateExit(Player& player)
@@ -69,7 +78,6 @@ PlayerState& WalkState::getInstance()
 
 void WalkState::StateEnter(Player& player)
 {
-
 }
 
 void WalkState::HandleInput(Player& player)
@@ -117,22 +125,31 @@ void WalkState::HandleInput(Player& player)
 	{
 		player.SwapPlayerState(FallState::getInstance());
 	}
+
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void WalkState::DrawPlayer(const Player& player, GameState& gameState) const
+void WalkState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(RUN_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolWalkRpng, { correctedX, correctedY }, static_cast<int>(RUN_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolWalkRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolWalkLpng, { correctedX, correctedY }, static_cast<int>(RUN_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolWalkLpng);
 	}
+}
+
+void WalkState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void WalkState::StateExit(Player& player)
@@ -186,22 +203,31 @@ void SkidState::HandleInput(Player& player)
 	{
 		player.SwapPlayerState(FallState::getInstance());
 	}
+
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void SkidState::DrawPlayer(const Player& player, GameState& gameState) const
+void SkidState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolSkidRpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolSkidRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolSkidLpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolSkidLpng);
 	}
+}
+
+void SkidState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void SkidState::StateExit(Player& player)
@@ -246,22 +272,30 @@ void CrouchState::HandleInput(Player& player)
 		player.SetIsLeftFacing(false);
 	}
 
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void CrouchState::DrawPlayer(const Player& player, GameState& gameState) const
+void CrouchState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolCrouchRpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolCrouchRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolCrouchLpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolCrouchLpng);
 	}
+}
+
+void CrouchState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void CrouchState::StateExit(Player& player)
@@ -318,7 +352,6 @@ void JumpState::HandleInput(Player& player)
 		player.SetAcceleration({ 0.0f, player.GetAcceleration().y });
 	}
 
-
 	// When the player is no longer holding space and the height he is is above his initial position,
 	// Change to fall state
 	if ((!(Play::KeyDown(VK_SPACE)) || player.GetJumpTimer() > JUMP_DURATION))
@@ -326,22 +359,30 @@ void JumpState::HandleInput(Player& player)
 		player.SwapPlayerState(FallState::getInstance());
 	}
 
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void JumpState::DrawPlayer(const Player& player, GameState& gameState) const
+void JumpState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolJumpRpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolJumpRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolJumpLpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolJumpLpng);
 	}
+}
+
+void JumpState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void JumpState::StateExit(Player& player)
@@ -394,25 +435,125 @@ void FallState::HandleInput(Player& player)
 	{
 		player.SwapPlayerState(IdleState::getInstance());
 	}
+
+	if (player.GetIsHurt())
+	{
+		player.SwapPlayerState(HurtState::getInstance());
+	}
 }
 
-void FallState::DrawPlayer(const Player& player, GameState& gameState) const
+void FallState::SetupBB(Player& player)
 {
-	float correctedX = player.GetPosition().x - gameState.camera.pos.x;
-	float correctedY = player.GetPosition().y - gameState.camera.pos.y;
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
-		Play::DrawSprite(zoolFallRpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolFallRpng);
 	}
 
 	if (player.GetIsLeftFacing())
 	{
-		Play::DrawSprite(zoolFallLpng, { correctedX, correctedY }, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+		player.SetPlayerID(zoolFallLpng);
 	}
+}
+
+void FallState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
 }
 
 void FallState::StateExit(Player& player)
 {
 	player.SetVelocity({ player.GetVelocity().x, (0.0f) });
+	player.SetIsGrounded(true);
 }
+
+// Controls access to the singleton instance, 
+PlayerState& HurtState::getInstance()
+{
+	static HurtState singleton;
+	return singleton;
+}
+
+void HurtState::StateEnter(Player& player)
+{
+	player.SetiFramesTimer(0);
+	player.SetBlinkTimer(0);
+	player.SetIsGrounded(true);
+	player.SetAcceleration({ 0.0f, player.GetAcceleration().y });
+}
+
+void HurtState::HandleInput(Player& player)
+{
+	player.SetiFramesTimer(player.GetiFramesTimer() + 1);
+	player.SetBlinkTimer(player.GetBlinkTimer() + 1);
+
+	if (player.GetAcceleration().x <= 0 && player.GetiFramesTimer() < I_FRAMES_DURATION)
+	{
+		if (!player.GetIsLeftFacing())
+		{
+			const Vector2f& acc = { -STUN_ACC * 2, -STUN_ACC * TENTH };
+			player.SetAcceleration(acc);
+			player.SetIsLeftFacing(false);
+		}
+
+		if (player.GetIsLeftFacing())
+		{
+			const Vector2f& acc = { STUN_ACC * 2, -STUN_ACC * TENTH };
+			player.SetAcceleration(acc);
+			player.SetIsLeftFacing(true);
+		}
+	}
+
+	if (player.GetiFramesTimer() >= I_FRAMES_DURATION)
+	{
+		player.SwapPlayerState(IdleState::getInstance());
+	}
+
+	if (!player.GetIsBlinking() && player.GetBlinkTimer() >= BLINK_DURATION)
+	{
+		player.SetIsBlinking(true);
+		player.SetBlinkTimer(0);
+	}
+
+	if (player.GetIsBlinking() && player.GetBlinkTimer() >= BLINK_DURATION)
+	{
+		player.SetIsBlinking(false);
+		player.SetBlinkTimer(0);
+	}
+}
+
+void HurtState::StateExit(Player& player)
+{
+	player.SetIsHurt(false);
+	player.SetAcceleration({ 0.0f, 0.0f });
+}
+
+void HurtState::SetupBB(Player& player)
+{
+	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+
+	if (!(player.GetIsLeftFacing()))
+	{
+		player.SetPlayerID(zoolJumpRpng);
+	}
+
+	if (player.GetIsLeftFacing())
+	{
+		player.SetPlayerID(zoolJumpLpng);
+	}
+}
+
+void HurtState::DrawPlayer(const Player& player, GameState& gameState) const
+{
+	if (!player.GetIsBlinking())
+	{
+		Play::DrawSprite(player.GetPlayerID(), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time));
+	}
+	
+	if (player.GetIsBlinking())
+	{
+		Play::DrawSpriteTransparent(Play::GetSpriteName(player.GetPlayerID()), player.GetPosition() - gameState.camera.pos, static_cast<int>(player.GetAnimSpeed() * gameState.time), 0.0f);
+	}
+}
+

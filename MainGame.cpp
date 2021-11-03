@@ -7,6 +7,7 @@
 #include "Platform.h"
 #include "Pickup.h"
 #include "Block.h"
+#include "Spike.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
 #include <array>
@@ -15,6 +16,7 @@ GameState gameState;
 PlatformData platData;
 PickUpData pickUpData;
 BlockData blockData;
+SpikeData spikeData;
 
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
@@ -31,11 +33,11 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Player::Spawn();
 
 	// Platform data as an array of structs
-	std::array<PlatformData, PLATFORM_AMOUNT>platforms
+	std::array<PlatformData, PLATFORM_AMOUNT>platformArray
 	{{
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * NINE_TENTHS)}),
+			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * NINE_TENTHS - HALF_SIZE_SMALL_OBJ)}),
 			platData.HalfSizePlat,
 			(platData.colour = platPinkpng)
 		},
@@ -71,44 +73,44 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 		},
 	}};
 	
-	for (PlatformData platData : platforms)
+	for (PlatformData platData : platformArray)
 	{
 		Platform::Spawn(platData);
 	}
 
-	std::array<PickUpData, PICKUP_AMOUNT>pickUps
+	std::array<PickUpData, PICKUP_AMOUNT>pickUpArray
 	{ {
 		PickUpData
 		{
-			(pickUpData.pos = {S_DISPLAY_WIDTH * FOUR_FIFTHS, LEVEL_HEIGHT - ( 2 * ZOOL_SIZE)}),
+			(pickUpData.pos = {S_DISPLAY_WIDTH * FOUR_FIFTHS, LEVEL_HEIGHT - ( 2 * ZOOL_SIZE - S_PIXELS_PER_UNIT)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
 			(pickUpData.pointValue = FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			(pickUpData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - S_PIXELS_PER_UNIT))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
 			(pickUpData.pointValue = FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			(pickUpData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - HALF_SIZE_SMALL_OBJ))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = tenpointpng),
 			(pickUpData.pointValue = TEN_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH / 2), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE))}),
+			(pickUpData.pos = {(S_DISPLAY_WIDTH / 2), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - S_PIXELS_PER_UNIT))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
 			(pickUpData.pointValue = FIVE_POINTS)
 		}
 	} };
 
-	for (PickUpData pickUpData : pickUps)
+	for (PickUpData pickUpData : pickUpArray)
 	{
 		Pickup::Spawn(pickUpData);
 	}
@@ -117,7 +119,7 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	{ {
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - 2 * HALF_SIZE_BLOCK))}),
+			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		}
@@ -127,10 +129,24 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	{
 		Block::Spawn(blockData);
 	}
+
+	std::array<SpikeData, SPIKE_AMOUNT>spikeArray
+	{ {
+		SpikeData
+		{
+			(spikeData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE) - (S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		}
+	} };
+
+	for (SpikeData spikeData : spikeArray)
+	{
+		Spike::Spawn(spikeData);
+	}
 }
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
-bool MainGameUpdate( float elapsedTime )
+bool MainGameUpdate(float elapsedTime)
 {
 	// Keeping track of the elapsed time 
 	gameState.time += elapsedTime;
@@ -139,7 +155,20 @@ bool MainGameUpdate( float elapsedTime )
 	GameObject::DrawAll(gameState);
 
 	Play::DrawFontText("font24px", "SCORE: " + std::to_string(gameState.score),
-		{ S_DISPLAY_WIDTH * FIFTH,  S_DISPLAY_HEIGHT * TENTH}, Play::CENTRE);
+		{ S_DISPLAY_WIDTH * FIFTH,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+
+	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	for (GameObject* gameObject : oList)
+	{
+		if (gameObject->GetType() == GameObject::Type::OBJ_PLAYER)
+		{
+			Player* player = static_cast<Player*>(gameObject);
+			gameState.health = player->GetHealth();
+		}
+	}
+
+	Play::DrawFontText("font24px", "HEALTH: " + std::to_string(gameState.health),
+		{ S_DISPLAY_WIDTH * FOUR_FIFTHS,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
 
 	Play::PresentDrawingBuffer();
 

@@ -12,7 +12,7 @@ public:
 	//void SetupBB(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 	//std::string GetName() const { return m_name; };
@@ -34,7 +34,7 @@ public:
 	void HandleInput(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -52,7 +52,7 @@ public:
 	void HandleInput(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -70,7 +70,7 @@ public:
 	void HandleInput(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -88,7 +88,7 @@ public:
 	void HandleInput(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -106,7 +106,7 @@ public:
 	void HandleInput(Player& player);
 	void DrawPlayer(const Player& player, GameState& gameState) const;
 	void StateExit(Player& player);
-
+	void SetupBB(Player& player);
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -115,4 +115,22 @@ private:
 	FallState(const FallState& other) = delete;
 	// Prevents the singleton from being assigned
 	void operator=(const FallState&) = delete;
+};
+
+class HurtState : public PlayerState
+{
+public:
+	void StateEnter(Player& player);
+	void HandleInput(Player& player);
+	void DrawPlayer(const Player& player, GameState& gameState) const;
+	void StateExit(Player& player);
+	void SetupBB(Player& player);
+	// Controls access to the singleton instance, 
+	static PlayerState& getInstance();
+private:
+	HurtState() {}
+	// Prevents the singleton from being cloned
+	HurtState(const HurtState& other) = delete;
+	// Prevents the singleton from being assigned
+	void operator=(const HurtState&) = delete;
 };

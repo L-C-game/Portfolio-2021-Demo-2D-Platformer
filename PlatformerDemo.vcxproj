@@ -154,6 +154,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStateConcrete.cpp" />
     <ClCompile Include="RightBarrier.cpp" />
+    <ClCompile Include="Spike.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="PlayerStateInterface.h" />
     <ClInclude Include="PlayerStatesConcrete.h" />
     <ClInclude Include="RightBarrier.h" />
+    <ClInclude Include="Spike.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Platformer2D.cd" />

@@ -17,6 +17,7 @@ public:
         OBJ_PLATFORM,
         OBJ_PICKUP,
         OBJ_BLOCK,
+        OBJ_SPIKE,
 		OBJ_ALL = 999
 	};
 

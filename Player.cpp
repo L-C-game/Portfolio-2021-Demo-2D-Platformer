@@ -103,6 +103,14 @@ void Player::CollisionSystem(GameState& gameState)
 					}
 				}
 
+				if (other->GetType() == GameObject::Type::OBJ_SPIKE)
+				{
+					if (this->GetHealth() >= MIN_HEALTH_PLAYER && !this->GetIsHurt())
+					{
+						this->SetHealth(this->GetHealth() - 1);
+						this->SetIsHurt(true);
+					}
+				}
 			}
 		}
 	}
@@ -130,7 +138,7 @@ void Player::Update(GameState& gameState)
 	//Sets the state depending on the input
 	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
-
+	m_pStateCurrent->SetupBB(playerAddress);
 	CollisionSystem(gameState);
 
 	CentreCameraOnPlayer(gameState);
