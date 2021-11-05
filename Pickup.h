@@ -9,7 +9,6 @@ public:
 
 	~Pickup() 
 	{
-		pickUps.erase(std::find(pickUps.begin(), pickUps.end(), this));
 		SetActive(false);
 	};
 
@@ -18,8 +17,6 @@ public:
 	void Draw(GameState& gameState) const override;
 
 	static void Spawn(PickUpData& pickupData);
-
-	std::vector< Pickup*> pickUps;
 
 	void SetConstPos(Point2f constPos) { m_constPos = constPos; }
 	Point2f GetConstPos() const { return m_constPos; }

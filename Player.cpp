@@ -21,12 +21,12 @@ void Player::Spawn()
 	{
 		GameObject* playerG = new Player(initialPlayerPos);
 		Player* player = static_cast<Player*>(playerG);
-		player->SetPlayerState();
+		player->SetInitialPlayerState();
 		player->SetActive(true);
 	}
 }
 
-void Player::SetPlayerState()
+void Player::SetInitialPlayerState()
 {
 	PlayerState& newState = IdleState::getInstance();
 	m_pStateCurrent = &newState;
@@ -81,28 +81,18 @@ void Player::CollisionSystem(GameState& gameState)
 
 				if (other->GetIsCollectable())
 				{
-					for (GameObject* other : collisionList)
+					if (other->GetType() == GameObject::Type::OBJ_PICKUP)
 					{
 						Pickup* pickUp = static_cast<Pickup*>(other);
-						for (Pickup* pickUp : pickUp->pickUps)
-						{
-							pickUp->SetConsumed(true);
-							SetScore(pickUp->GetPointValue() + GetScore());
-
-						}
+						SetScore(pickUp->GetPointValue() + GetScore());
+						pickUp->SetActive(false);
 					}
 				}
 
 				if (other->GetType() == GameObject::Type::OBJ_BLOCK)
 				{
-					for (GameObject* other : collisionList)
-					{
-						Block* block = static_cast<Block*>(other);
-						for (Block* block : block->blocks)
-						{
-							block->SetBlockState(Block::BlockState::BREAK_STATE);
-						}
-					}
+					Block* block = static_cast<Block*>(other);
+					block->SetBlockState(Block::BlockState::BREAK_STATE);
 				}
 
 				if (other->GetType() == GameObject::Type::OBJ_SPIKE)
@@ -110,7 +100,14 @@ void Player::CollisionSystem(GameState& gameState)
 					if (GetHealth() >= MIN_HEALTH_PLAYER && !GetIsHurt())
 					{
 						SetHealth(GetHealth() - 1);
-						SetIsHurt(true);
+						if (GetHealth() != 0)
+						{
+							SetIsHurt(true);
+						}
+						else 
+						{
+							SetInitialPlayerState();
+						}
 					}
 				}
 			}

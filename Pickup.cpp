@@ -9,12 +9,11 @@ Pickup::Pickup(Point2f pos) : GameObject(pos)
 	SetStatic(true);
 	SetConstPos(pos);
 	SetIsCollectable(true);
-	pickUps.push_back(this);
 }
 
 void Pickup::Spawn(PickUpData& pickupData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PICKUP) < (PICKUP_AMOUNT + 1))
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PICKUP) < (PICKUP_AMOUNT))
 	{
 		GameObject* pickupG = new Pickup(pickupData.pos);
 		pickupG->SetHalfSize(pickupData.HalfSizePickUp);

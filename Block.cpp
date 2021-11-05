@@ -9,13 +9,12 @@ Block::Block(Point2f pos) : GameObject(pos)
 	SetStatic(true);
 	SetSolid(true);
 	SetConstPos(pos);
-	blocks.push_back(this);
 	SetBlockState(BlockState::STABLE_STATE);
 }
 
 void Block::Spawn(BlockData& blockData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_BLOCK) < (BLOCK_AMOUNT + 1))
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_BLOCK) < (BLOCK_AMOUNT))
 	{
 		GameObject* blockG = new Block(blockData.pos);
 		blockG->SetHalfSize(blockData.HalfSizeBlock);

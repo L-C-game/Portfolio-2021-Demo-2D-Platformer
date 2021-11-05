@@ -11,7 +11,6 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetConstPos(pos);
 }
 
-
 void Floor::Spawn()
 {
 	if (GameObject::s_vUpdateList.size() == 0)

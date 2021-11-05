@@ -15,7 +15,6 @@ public:
 
 	~Block() 
 	{
-		blocks.erase(std::find(blocks.begin(), blocks.end(), this));
 		SetActive(false);
 	};
 	// Game Object overrides
@@ -23,8 +22,6 @@ public:
 	void Draw(GameState& gameState) const override;
 
 	static void Spawn(BlockData& blockData);
-
-	std::vector< Block*> blocks;
 
 	void SetConstPos(Point2f constPos) { m_constPos = constPos; }
 	Point2f GetConstPos() const { return m_constPos; }

@@ -12,7 +12,7 @@ Spike::Spike(Point2f pos) : GameObject(pos)
 
 void Spike::Spawn(SpikeData& platData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_SPIKE) < (SPIKE_AMOUNT + 1))
+	if (GameObject::GetObjectCount(GameObject::Type::OBJ_SPIKE) < (SPIKE_AMOUNT))
 	{
 		GameObject* spikeG = new Spike(platData.pos);
 		spikeG->SetHalfSize(platData.HalfSizeSpike);

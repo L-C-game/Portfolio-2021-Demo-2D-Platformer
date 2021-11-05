@@ -47,23 +47,7 @@ bool MainGameUpdate(float elapsedTime)
 		break;
 	case GameStatusState::GAMEOVER_STATE:
 		GameOverStateUpdate(gameState);
-		//GameObject::UpdateAll(gameState);
 		break;
-	}
-
-	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
-	for (GameObject* o : oList)
-	{
-		if (o->GetConsumed())
-		{
-			o->SetActive(false);
-		}
-
-		//if (o->GetType() == GameObject::Type::OBJ_PLAYER)
-		//{
-		//	Player* player = static_cast<Player*>(o);
-		//	player->CentreCameraOnPlayer(gameState);
-		//}
 	}
 
 	Play::PresentDrawingBuffer();
@@ -126,7 +110,6 @@ void PlayStateUpdate(GameState& gameState)
 			{
 				Player* player = static_cast<Player*>(gameObject);
 				player->SetPosition(initialPlayerPos);
-				player->SetPlayerState();
 				player->SetHealth(6);
 				player->SetScore(0);
 			}
@@ -222,7 +205,7 @@ void PlaySpawnAll(GameState& gameState)
 		{
 			(pickUpData.pos = {S_DISPLAY_WIDTH * FOUR_FIFTHS, LEVEL_HEIGHT - (2 * ZOOL_SIZE - S_PIXELS_PER_UNIT)}),
 			pickUpData.HalfSizePickUp,
-			(pickUpData.pickupSprite = tenpointpng),
+			(pickUpData.pickupSprite = fivepointpng),
 			(pickUpData.pointValue = FIVE_POINTS)
 		},
 		PickUpData
