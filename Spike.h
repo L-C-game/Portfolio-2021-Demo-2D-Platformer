@@ -5,7 +5,10 @@ class Spike :public GameObject
 {
 public:
 	Spike(Point2f pos);
-	~Spike() {};
+	~Spike() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn(SpikeData& spikeData);
 

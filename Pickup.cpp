@@ -21,15 +21,16 @@ void Pickup::Spawn(PickUpData& pickupData)
 		Pickup* pickup = static_cast<Pickup*>(pickupG);
 		pickup->SetPointValue(pickupData.pointValue);
 		pickup->SetPickUpID(pickupData.pickupSprite);
+		pickup->SetActive(true);
 	}
 }
 
 void Pickup::Update(GameState& gameState)
 {
-	this->SetPosition(this->GetConstPos());
+	SetPosition(GetConstPos());
 }
 
 void Pickup::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(GetPickUpID(), this->GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(GetPickUpID(), GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

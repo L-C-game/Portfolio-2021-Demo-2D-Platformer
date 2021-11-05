@@ -110,6 +110,7 @@ constexpr int PIXEL_BUFFER{ 2 };
 constexpr int RUN_ANIM_SPEED{ 32 };
 constexpr int SINGLE_FRAME_ANIM_SPEED{ 1 };
 constexpr int BLOCK_BREAK_ANIM_SPEED{ 12 };
+constexpr int BLOCK_REAPPEAR{ 48 };
 
 //Platform data and functions to populate world with platforms
 constexpr float HALF_SIZE_PLAT_X{ 24.0f };
@@ -117,18 +118,18 @@ constexpr float HALF_SIZE_PLAT_Y{ 10.0f };
 
 constexpr float HALF_SIZE_SMALL_OBJ{ 8.0f };
 
-constexpr int PLATFORM_AMOUNT{ 6 };
+constexpr int PLATFORM_AMOUNT{ 7 };
 
-constexpr int PICKUP_AMOUNT{ 4 };
+constexpr int PICKUP_AMOUNT{ 6 };
 constexpr int FIVE_POINTS{ 5 };
 constexpr int TEN_POINTS{ 10 };
 
-constexpr int BLOCK_AMOUNT{ 1 };
-constexpr int BLOCK_DURATION{ 30 };
+constexpr int BLOCK_AMOUNT{ 8 };
+//constexpr int BLOCK_DURATION{ 60 };
 
-constexpr int SPIKE_AMOUNT{ 1 };
+constexpr int SPIKE_AMOUNT{ 8 };
 
-const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * THIRD), static_cast<float>(LEVEL_HEIGHT - 2 * ZOOL_SIZE) } ;
+const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * TWO_FIFTHS), static_cast<float>(LEVEL_HEIGHT - 2 * ZOOL_SIZE) } ;
 constexpr int MAX_HEALTH_PLAYER{ 6 };
 constexpr int MIN_HEALTH_PLAYER{ 1 };
 
@@ -154,7 +155,7 @@ struct PlatformData
 {
 	Point2f pos{0.0f, 0.0f};
 	Point2f HalfSizePlat{ HALF_SIZE_PLAT_X, HALF_SIZE_PLAT_Y };
-	spriteIdInts colour{nullpng};
+	spriteIdInts colour{ nullpng };
 };
 
 struct PickUpData
@@ -177,3 +178,22 @@ struct SpikeData
 	Point2f pos{ 0.0f, 0.0f };
 	Point2f HalfSizeSpike{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
 };
+
+enum class GameStatusState
+{
+	// Need to add title state
+	TITLE_STATE = 0,
+	PLAY_STATE,
+	GAMEOVER_STATE
+};
+
+static GameStatusState m_gameStatusState{ GameStatusState::TITLE_STATE };
+
+static void SetGameStatusState(GameStatusState gameStatusState) { m_gameStatusState = gameStatusState; }
+static GameStatusState GetGameStatusState() { return m_gameStatusState; }
+
+void TitleStateUpdate(GameState& gameState);
+void PlayStateUpdate(GameState& gameState);
+void GameOverStateUpdate(GameState& gameState);
+
+void PlaySpawnAll(GameState& gameState);

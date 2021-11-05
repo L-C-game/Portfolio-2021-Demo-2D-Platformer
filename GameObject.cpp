@@ -51,19 +51,26 @@ float GameObject::RandomNumGen(int min, int max)
 	return static_cast<float>((std::rand() % ((max - min) + 1)) + min);
 }
 
-bool GameObject::AABBCollision( GameObject* other)
+bool GameObject::AABBCollision(GameObject* other)
 {
-	if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
+	if (other->GetSolid() && this->GetSolid())
+	{
+		if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
+		{
+			return false;
+		}
+
+		if (abs((this->GetPosition().y) - (other->GetPosition().y)) > (this->GetHalfSize().y + other->GetHalfSize().y))
+		{
+			return false;
+		}
+
+		return true;
+	}
+	else
 	{
 		return false;
 	}
-
-	if (abs((this->GetPosition().y) - (other->GetPosition().y)) > (this->GetHalfSize().y + other->GetHalfSize().y))
-	{
-		return false;
-	}
-
-	return true;
 }
 
 // Might want to change to giving 2 game objects if the collision moves to it's own file
@@ -102,7 +109,7 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 		{
 			// resolve horizontal
 			float xDiff = (this->GetPosition().x - (other->GetPosition().x));
-			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + 1));
+			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + PIXEL_BUFFER));
 			this->SetPosition(*posPtr);
 			if (xDiff > 0)
 			{

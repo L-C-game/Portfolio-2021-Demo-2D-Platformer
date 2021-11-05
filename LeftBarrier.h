@@ -6,7 +6,10 @@ class LBarrier : public GameObject
 {
 public:
 	LBarrier(Point2f pos);
-	~LBarrier() {};
+	~LBarrier() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn(GameState& gameState);
 

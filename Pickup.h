@@ -10,6 +10,7 @@ public:
 	~Pickup() 
 	{
 		pickUps.erase(std::find(pickUps.begin(), pickUps.end(), this));
+		SetActive(false);
 	};
 
 	// Game Object overrides

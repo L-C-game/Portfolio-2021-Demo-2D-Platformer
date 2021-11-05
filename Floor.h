@@ -6,7 +6,10 @@ class Floor : public GameObject
 {
 public: 
 	Floor(Point2f pos);
-	~Floor() {};
+	~Floor() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn();
 

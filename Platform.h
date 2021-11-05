@@ -6,7 +6,10 @@ class Platform : public GameObject
 {
 public:
 	Platform(Point2f pos);
-	~Platform() {};
+	~Platform() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn(PlatformData& platData);
 

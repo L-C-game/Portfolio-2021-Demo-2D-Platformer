@@ -6,7 +6,10 @@ class Ceiling : public GameObject
 {
 public:
 	Ceiling(Point2f pos);
-	~Ceiling() {};
+	~Ceiling() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn(GameState& gameState);
 

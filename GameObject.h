@@ -68,6 +68,9 @@ public:
     void SetIsCollectable(bool isCollectable) { m_collectable = isCollectable; }
     bool GetIsCollectable() const { return m_collectable; };
 
+    void SetConsumed(bool consumed) { m_consumed = consumed; }
+    bool GetConsumed() const { return m_consumed; };
+
     // Type specific getters and setters
     void SetActive(bool isActive) { m_active = isActive; }
     bool GetActive() const { return m_active; };
@@ -119,6 +122,7 @@ protected:
     bool m_static{ false };
     bool m_solid{ true };
     bool m_collectable{ false };
+    bool m_consumed{ false };
 
     float m_rot{ 0.0f };
 

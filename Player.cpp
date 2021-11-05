@@ -19,14 +19,16 @@ void Player::Spawn()
 {
 	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
 	{
-		GameObject* playerG = new Player(initialPlayerPos);	
+		GameObject* playerG = new Player(initialPlayerPos);
 		Player* player = static_cast<Player*>(playerG);
-		player->SetPlayerState(IdleState::getInstance());
+		player->SetPlayerState();
+		player->SetActive(true);
 	}
 }
 
-void Player::SetPlayerState(PlayerState& newState)
+void Player::SetPlayerState()
 {
+	PlayerState& newState = IdleState::getInstance();
 	m_pStateCurrent = &newState;
 }
 
@@ -51,42 +53,42 @@ void Player::CollisionSystem(GameState& gameState)
 		if (!(other->GetType() == GameObject::Type::OBJ_PLAYER))
 		{
 			// Resolve collison and return which side of the player has collided
-			GameObject::CollidingSide collidingSide = this->ResolveCollision(other);
+			GameObject::CollidingSide collidingSide = ResolveCollision(other);
 			if (collidingSide != GameObject::CollidingSide::SIDE_NULL)
 			{
 				collisionList.push_back(other);
 
    				switch (collidingSide) {
 				case GameObject::CollidingSide::SIDE_UP:
-					this->SetAcceleration({ this->GetAcceleration().x, GRAVITY });
-					this->SetVelocity({ this->GetVelocity().x, 0.0f });
+					SetAcceleration({ GetAcceleration().x, GRAVITY });
+					SetVelocity({ GetVelocity().x, 0.0f });
 					break;
 				case GameObject::CollidingSide::SIDE_RIGHT:
-					this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
-					this->SetVelocity({ 0.0f, this->GetVelocity().y });
+					SetAcceleration({ 0.0f, GetAcceleration().y });
+					SetVelocity({ 0.0f, GetVelocity().y });
 					break;
 				case GameObject::CollidingSide::SIDE_DOWN:
-					this->SetIsGrounded(true);
+					SetIsGrounded(true);
 					break;
 				case GameObject::CollidingSide::SIDE_LEFT:
-					if (this->GetIsLeftFacing())
+					if (GetIsLeftFacing())
 					{
-						this->SetAcceleration({ 0.0f, this->GetAcceleration().y });
-						this->SetVelocity({ 0.0f, this->GetVelocity().y });
+						SetAcceleration({ 0.0f, GetAcceleration().y });
+						SetVelocity({ 0.0f, GetVelocity().y });
 					}
 					break;
 				}
 
 				if (other->GetIsCollectable())
 				{
-
 					for (GameObject* other : collisionList)
 					{
 						Pickup* pickUp = static_cast<Pickup*>(other);
 						for (Pickup* pickUp : pickUp->pickUps)
 						{
-							gameState.score += pickUp->GetPointValue();
-							pickUp->SetActive(false);
+							pickUp->SetConsumed(true);
+							SetScore(pickUp->GetPointValue() + GetScore());
+
 						}
 					}
 				}
@@ -98,26 +100,26 @@ void Player::CollisionSystem(GameState& gameState)
 						Block* block = static_cast<Block*>(other);
 						for (Block* block : block->blocks)
 						{
-							block->BreakBlock();
+							block->SetBlockState(Block::BlockState::BREAK_STATE);
 						}
 					}
 				}
 
 				if (other->GetType() == GameObject::Type::OBJ_SPIKE)
 				{
-					if (this->GetHealth() >= MIN_HEALTH_PLAYER && !this->GetIsHurt())
+					if (GetHealth() >= MIN_HEALTH_PLAYER && !GetIsHurt())
 					{
-						this->SetHealth(this->GetHealth() - 1);
-						this->SetIsHurt(true);
+						SetHealth(GetHealth() - 1);
+						SetIsHurt(true);
 					}
 				}
 			}
 		}
 	}
 
-	if (this->GetVelocity().y >= 0 && collisionList.empty())
+	if (GetVelocity().y >= 0 && collisionList.empty())
 	{
-		this->SetIsGrounded(false);
+		SetIsGrounded(false);
 	}
 }
 
@@ -148,8 +150,8 @@ void Player::Update(GameState& gameState)
 void Player::CentreCameraOnPlayer(GameState& gameState)
 {
 	// Setting the position of the camera wrt the player
-	gameState.camera.pos.x = (this->GetPosition().x) - (gameState.camera.width / 2);
-	gameState.camera.pos.y = (this->GetPosition().y) - (gameState.camera.height / 2);
+	gameState.camera.pos.x = (GetPosition().x) - (gameState.camera.width / 2);
+	gameState.camera.pos.y = (GetPosition().y) - (gameState.camera.height / 2);
 
 	if (gameState.camera.pos.x < 0)
 	{

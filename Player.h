@@ -10,14 +10,17 @@ class Player : public GameObject
 public:
 	Player(Point2f pos);
 
-	~Player() {}
+	~Player() 
+	{
+		SetActive(false);
+	}
 
 	// Spawning the player
 	static void Spawn();
 
 	// Getters and setters
 	PlayerState* GetPlayerState() const { return m_pStateCurrent; }
-	void SetPlayerState(PlayerState& pState);
+	void SetPlayerState();
 	void SwapPlayerState(PlayerState& pStateNew);
 
 	void SetIsLeftFacing(bool isLeftFacing) { m_isLeftFacing = isLeftFacing; }
@@ -28,6 +31,9 @@ public:
 
 	void SetHealth(int health) { m_health = health; }
 	int GetHealth() const { return m_health; }
+
+	void SetScore(int score) { m_score = score; }
+	int GetScore() const { return m_score; }
 
 	void SetPlayerID(int playerID) { m_playerID = playerID; }
 	int GetPlayerID() const { return m_playerID; }
@@ -67,6 +73,7 @@ private:
 	bool m_isHurt{ false };
 	int m_playerID{ zoolIdleRpng };
 	int m_animSpeed{ SINGLE_FRAME_ANIM_SPEED };
+	int m_score{ 0 };
 
 	// time elasped since entering jump state in frames
 	int m_jumpTimer{ 0 };

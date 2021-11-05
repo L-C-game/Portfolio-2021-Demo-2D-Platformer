@@ -7,7 +7,8 @@ public:
 	{
 		NULL_STATE =-1,
 		STABLE_STATE,
-		BREAK_STATE
+		BREAK_STATE,
+		BROKEN_STATE
 	};
 
 	Block(Point2f pos);
@@ -15,6 +16,7 @@ public:
 	~Block() 
 	{
 		blocks.erase(std::find(blocks.begin(), blocks.end(), this));
+		SetActive(false);
 	};
 	// Game Object overrides
 	void Update(GameState& gameState) override;
@@ -39,11 +41,13 @@ public:
 	void SetBlockState(BlockState blockState) { m_state = blockState; }
 	BlockState GetBlockState() const { return m_state; }
 
-	void BreakBlock();
-	void RemoveBlock();
+	void StableDraw(GameState& gameState) const;
+	void BreakDraw(GameState& gameState) const;
+	void BrokenDraw(GameState& gameState) const;
 
 	void UpdateStable();
 	void UpdateBreak();
+	void UpdateBroken();
 
 private:
 	Point2f m_constPos{ 0.0f, 0.0f };

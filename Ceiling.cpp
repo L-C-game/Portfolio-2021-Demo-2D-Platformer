@@ -17,7 +17,7 @@ void Ceiling::Spawn(GameState& gameState)
 	{
 		Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -ZOOL_SIZE };
 		GameObject* ceiling = new Ceiling(initialPos - gameState.camera.pos);
-
+		ceiling->SetActive(true);
 	}
 }
 

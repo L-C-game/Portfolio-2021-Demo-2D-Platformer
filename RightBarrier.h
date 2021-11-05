@@ -6,7 +6,10 @@ class RBarrier : public GameObject
 {
 public:
 	RBarrier(Point2f pos);
-	~RBarrier() {};
+	~RBarrier() 
+	{
+		SetActive(false);
+	};
 
 	static void Spawn(GameState& gameState);
 

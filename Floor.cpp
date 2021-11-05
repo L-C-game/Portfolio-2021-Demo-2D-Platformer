@@ -7,7 +7,7 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(1);
 	SetDrawOrder(1);
 	SetStatic(true);
-	this->SetHalfSize({(Play::GetSpriteWidth(floorpng) / 2), (Play::GetSpriteHeight(floorpng) / 2)});
+	SetHalfSize({(Play::GetSpriteWidth(floorpng) / 2), (Play::GetSpriteHeight(floorpng) / 2)});
 	SetConstPos(pos);
 }
 
@@ -21,16 +21,17 @@ void Floor::Spawn()
 		{
 			Point2f initialPos = { ((LEVEL_WIDTH)/ 2), FLOOR_Y };
 			GameObject* floor = new Floor(initialPos);
+			floor->SetActive(true);
 		}
 	}
 }
 
 void Floor::Update(GameState& gameState)
 {
-	this->SetPosition(this->GetConstPos());
+	SetPosition(GetConstPos());
 }
 
 void Floor::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(floorpng, this->GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(floorpng, GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

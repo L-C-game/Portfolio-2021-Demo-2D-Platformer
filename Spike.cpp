@@ -16,15 +16,16 @@ void Spike::Spawn(SpikeData& platData)
 	{
 		GameObject* spikeG = new Spike(platData.pos);
 		spikeG->SetHalfSize(platData.HalfSizeSpike);
+		spikeG->SetActive(true);
 	}
 }
 
 void Spike::Update(GameState& gameState)
 {
-	this->SetPosition(this->GetConstPos());
+	SetPosition(GetConstPos());
 }
 
 void Spike::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(spikespng, this->GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(spikespng, GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }
