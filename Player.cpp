@@ -8,8 +8,8 @@
 Player::Player(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_PLAYER);
-	SetUpdateOrder(0);
-	SetDrawOrder(0);
+	SetUpdateOrder(updateOrder::UPDATE_ORDER_PLAYER);
+	SetDrawOrder(drawOrder::DRAW_ORDER_PLAYER);
 	SetStatic(false);
 	SetHalfSize({ (ZOOL_SIZE / 2) - (PIXEL_EXCESS_X_ZOOL), (ZOOL_SIZE / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 }
@@ -40,6 +40,16 @@ void Player::SwapPlayerState(PlayerState& newState)
 	m_pStateCurrent->StateEnter(playerAddress);
 }
 
+void Player::ResetPlayer()
+{
+	SetPosition(initialPlayerPos);
+	SetHealth(MAX_HEALTH_PLAYER);
+	SetScore(0);
+	SetAcceleration({ 0.0f, 0.0f });
+	SetVelocity({ 0.0f, 0.0f });
+	SwapPlayerState(IdleState::getInstance());
+}
+
 void Player::CollisionSystem(GameState& gameState)
 {
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
@@ -56,27 +66,31 @@ void Player::CollisionSystem(GameState& gameState)
 			GameObject::CollidingSide collidingSide = ResolveCollision(other);
 			if (collidingSide != GameObject::CollidingSide::SIDE_NULL)
 			{
-				collisionList.push_back(other);
+				if (other->GetSolid())
+				{
+					collisionList.push_back(other);
+				
 
-   				switch (collidingSide) {
-				case GameObject::CollidingSide::SIDE_UP:
-					SetAcceleration({ GetAcceleration().x, GRAVITY });
-					SetVelocity({ GetVelocity().x, 0.0f });
-					break;
-				case GameObject::CollidingSide::SIDE_RIGHT:
-					SetAcceleration({ 0.0f, GetAcceleration().y });
-					SetVelocity({ 0.0f, GetVelocity().y });
-					break;
-				case GameObject::CollidingSide::SIDE_DOWN:
-					SetIsGrounded(true);
-					break;
-				case GameObject::CollidingSide::SIDE_LEFT:
-					if (GetIsLeftFacing())
-					{
+					switch (collidingSide) {
+					case GameObject::CollidingSide::SIDE_UP:
+						SetAcceleration({ GetAcceleration().x, GRAVITY });
+						SetVelocity({ GetVelocity().x, 0.0f });
+						break;
+					case GameObject::CollidingSide::SIDE_RIGHT:
 						SetAcceleration({ 0.0f, GetAcceleration().y });
 						SetVelocity({ 0.0f, GetVelocity().y });
+						break;
+					case GameObject::CollidingSide::SIDE_DOWN:
+						SetIsGrounded(true);
+						break;
+					case GameObject::CollidingSide::SIDE_LEFT:
+						if (GetIsLeftFacing())
+						{
+							SetAcceleration({ 0.0f, GetAcceleration().y });
+							SetVelocity({ 0.0f, GetVelocity().y });
+						}
+						break;
 					}
-					break;
 				}
 
 				if (other->GetIsCollectable())
@@ -92,7 +106,10 @@ void Player::CollisionSystem(GameState& gameState)
 				if (other->GetType() == GameObject::Type::OBJ_BLOCK)
 				{
 					Block* block = static_cast<Block*>(other);
-					block->SetBlockState(Block::BlockState::BREAK_STATE);
+					if (block->GetBlockState() == Block::BlockState::STABLE_STATE)
+					{
+						block->SetBlockState(Block::BlockState::BREAK_STATE); 
+					}
 				}
 
 				if (other->GetType() == GameObject::Type::OBJ_SPIKE)
@@ -106,7 +123,7 @@ void Player::CollisionSystem(GameState& gameState)
 						}
 						else 
 						{
-							SetInitialPlayerState();
+							SwapPlayerState(IdleState::getInstance());
 						}
 					}
 				}

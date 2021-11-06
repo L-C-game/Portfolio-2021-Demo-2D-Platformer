@@ -4,7 +4,7 @@
 LBarrier::LBarrier(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_LBARRIER);
-	SetUpdateOrder(2);
+	SetUpdateOrder(updateOrder::UPDATE_ORDER_LBARRIER);
 	SetStatic(true);
 	SetHalfSize({(ZOOL_SIZE), (LEVEL_HEIGHT/2)});
 }

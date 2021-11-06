@@ -4,8 +4,8 @@
 Block::Block(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_BLOCK);
-	SetUpdateOrder(7);
-	SetDrawOrder(7);
+	SetUpdateOrder(updateOrder::UPDATE_ORDER_BLOCK);
+	SetDrawOrder(drawOrder::DRAW_ORDER_BLOCK);
 	SetStatic(true);
 	SetSolid(true);
 	SetConstPos(pos);
@@ -45,8 +45,6 @@ void Block::Update(GameState& gameState)
 
 void Block::UpdateStable() 
 {
-	SetTimer(0);
-	SetSolid(true);
 	SetHalfSize({ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ });
 	SetAnimSpeed(0);
 }
@@ -59,8 +57,9 @@ void Block::UpdateBreak()
 
 	if (GetTimer() >= 2 * BLOCK_BREAK_ANIM_SPEED)
 	{
-		SetBlockState(BlockState::BROKEN_STATE);
+		SetTimer(0);
 		SetSolid(false);
+		SetBlockState(BlockState::BROKEN_STATE);
 	}
 }
 
@@ -68,8 +67,10 @@ void Block::UpdateBroken()
 {
 	SetTimer(GetTimer() + 1);
 
-	if (GetTimer() >= BLOCK_REAPPEAR)
+	if (GetTimer() >= 2 * BLOCK_REAPPEAR)
 	{
+		SetSolid(true);
+		SetTimer(0);
 		SetBlockState(BlockState::STABLE_STATE);
 	}
 }

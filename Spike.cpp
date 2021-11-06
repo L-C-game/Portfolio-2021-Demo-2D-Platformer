@@ -4,8 +4,8 @@
 Spike::Spike(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_SPIKE);
-	SetUpdateOrder(8);
-	SetDrawOrder(8);
+	SetUpdateOrder(updateOrder::UPDATE_ORDER_SPIKE);
+	SetDrawOrder(drawOrder::DRAW_ORDER_SPIKE);
 	SetStatic(true);
 	SetConstPos(pos);
 }

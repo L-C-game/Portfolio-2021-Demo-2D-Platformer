@@ -4,11 +4,12 @@
 Pickup::Pickup(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_PICKUP);
-	SetUpdateOrder(6);
-	SetDrawOrder(6);
+	SetUpdateOrder(updateOrder::UPDATE_ORDER_PICKUP);
+	SetDrawOrder(drawOrder::DRAW_ORDER_PICKUP);
 	SetStatic(true);
 	SetConstPos(pos);
 	SetIsCollectable(true);
+	SetSolid(false);
 }
 
 void Pickup::Spawn(PickUpData& pickupData)

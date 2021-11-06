@@ -103,21 +103,8 @@ void PlayStateUpdate(GameState& gameState)
 
 	if (gameState.health == 0)
 	{
-		std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
-		for (GameObject* gameObject : oList)
-		{
-			if (gameObject->GetType() == GameObject::Type::OBJ_PLAYER)
-			{
-				Player* player = static_cast<Player*>(gameObject);
-				player->SetPosition(initialPlayerPos);
-				player->SetHealth(6);
-				player->SetScore(0);
-			}
-		}
-
 		SetGameStatusState(GameStatusState::GAMEOVER_STATE);
 	}
-
 }
 
 void GameOverStateUpdate(GameState& gameState)
@@ -126,6 +113,16 @@ void GameOverStateUpdate(GameState& gameState)
 	if (Play::KeyPressed(VK_RETURN))
 	{
 		SetGameStatusState(GameStatusState::TITLE_STATE);
+	}
+
+	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	for (GameObject* gameObject : oList)
+	{
+		if (gameObject->GetType() == GameObject::Type::OBJ_PLAYER)
+		{
+			Player* player = static_cast<Player*>(gameObject);
+			player->ResetPlayer();
+		}
 	}
 
 	Play::DrawFontText("font36px", "GAME OVER",
@@ -192,6 +189,18 @@ void PlaySpawnAll(GameState& gameState)
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS - (S_DISPLAY_WIDTH * QUARTER) / 2), S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * THREE_QUARTERS * THIRD)}),
+			platData.HalfSizePlat,
+			(platData.colour = platPinkpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {((S_DISPLAY_WIDTH / 2) - (S_DISPLAY_WIDTH * QUARTER) / 2), (S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * QUARTER) / 2)}),
+			platData.HalfSizePlat,
+			(platData.colour = platBluepng)
+		}
 	} };
 
 	for (PlatformData platData : platformArray)

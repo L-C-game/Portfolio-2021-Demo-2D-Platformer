@@ -53,24 +53,17 @@ float GameObject::RandomNumGen(int min, int max)
 
 bool GameObject::AABBCollision(GameObject* other)
 {
-	if (other->GetSolid() && this->GetSolid())
-	{
-		if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
-		{
-			return false;
-		}
-
-		if (abs((this->GetPosition().y) - (other->GetPosition().y)) > (this->GetHalfSize().y + other->GetHalfSize().y))
-		{
-			return false;
-		}
-
-		return true;
-	}
-	else
+	if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
 	{
 		return false;
 	}
+
+	if (abs((this->GetPosition().y) - (other->GetPosition().y)) > (this->GetHalfSize().y + other->GetHalfSize().y))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 // Might want to change to giving 2 game objects if the collision moves to it's own file
@@ -91,11 +84,15 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 		Point2f* posPtr = &pos;
 		if (overlap.x > overlap.y || overlap.x == overlap.y)
 		{
-			// resolve vertical
-			// Distance between centres for y
 			float yDiff = (this->GetPosition().y) - (other->GetPosition().y);
-			posPtr->y = posPtr->y + ((yDiff/abs(yDiff)) * (overlap.y));
-			this->SetPosition(*posPtr);
+			if (other->GetSolid())
+			{
+				// resolve vertical
+				// Distance between centres for y
+				posPtr->y = posPtr->y + ((yDiff / abs(yDiff)) * (overlap.y));
+				this->SetPosition(*posPtr);
+			}
+
 			if (yDiff < 0)
 			{
 				return CollidingSide::SIDE_DOWN;
@@ -107,10 +104,14 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 		}
 		else if (overlap.y > overlap.x)
 		{
-			// resolve horizontal
 			float xDiff = (this->GetPosition().x - (other->GetPosition().x));
-			posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + PIXEL_BUFFER));
-			this->SetPosition(*posPtr);
+			// resolve horizontal
+			if (other->GetSolid())
+			{
+				posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + PIXEL_BUFFER));
+				this->SetPosition(*posPtr);
+			}
+
 			if (xDiff > 0)
 			{
 				return CollidingSide::SIDE_RIGHT;

@@ -26,7 +26,7 @@ constexpr double pi{ 3.14159265358979323846 };
 // These constants are useful for the placements of items and platforms
 constexpr float QUARTER{ 0.25f };
 constexpr float THREE_QUARTERS{ 0.75f };
-constexpr float THIRD{ 1 / 3 };
+constexpr float THIRD{ 0.333333333333f };
 constexpr float TENTH{ 0.1f };
 constexpr float FIFTH{ 0.2f };
 constexpr float THREE_TENTHS{ 0.3f };
@@ -74,15 +74,25 @@ const enum spriteIdInts
 
 const enum updateOrder
 {
-	FLOOR_UPDATE = 8,
-	PLAYER_UPDATE = 7,
-	LBARRIER_UPDATE = 6,
-	CEILING_UPDATE = 5,
-	RBARRIER_UPDATE = 4,
-	PLATFORM_UPDATE = 3,
-	PICKUP_UPDATE = 2,
-	BLOCK_UPDATE = 1,
-	SPIKE_UPDATE = 0,
+	UPDATE_ORDER_PLAYER,
+	UPDATE_ORDER_FLOOR,
+	UPDATE_ORDER_LBARRIER,
+	UPDATE_ORDER_CEILING,
+	UPDATE_ORDER_RBARRIER,
+	UPDATE_ORDER_PLATFORM,
+	UPDATE_ORDER_PICKUP,
+	UPDATE_ORDER_BLOCK,
+	UPDATE_ORDER_SPIKE,
+};
+
+const enum drawOrder
+{
+	DRAW_ORDER_PLAYER,
+	DRAW_ORDER_FLOOR,
+	DRAW_ORDER_PLATFORM,
+	DRAW_ORDER_PICKUP,
+	DRAW_ORDER_BLOCK,
+	DRAW_ORDER_SPIKE,
 };
 
 // Movement constants
@@ -118,7 +128,7 @@ constexpr float HALF_SIZE_PLAT_Y{ 10.0f };
 
 constexpr float HALF_SIZE_SMALL_OBJ{ 8.0f };
 
-constexpr int PLATFORM_AMOUNT{ 7 };
+constexpr int PLATFORM_AMOUNT{ 9 };
 
 constexpr int PICKUP_AMOUNT{ 6 };
 constexpr int FIVE_POINTS{ 5 };

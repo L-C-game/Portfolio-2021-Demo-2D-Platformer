@@ -56,6 +56,8 @@ public:
 	void SetBlinkTimer(int blinkTimer) { m_blinkTimer = blinkTimer; }
 	int GetBlinkTimer() const { return m_blinkTimer; }
 
+	void ResetPlayer();
+
 	void CollisionSystem(GameState& gameState);
 
 	void CentreCameraOnPlayer(GameState& gameState);
