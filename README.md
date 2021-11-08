@@ -7,3 +7,7 @@ Utilises the State and Singleton patterns (Meyer's singleton) for the player's s
 Created a simple Physics system; employs AABB collision and collision resolution, gravity, acceleration.
 
 This platformer demo was created as part of the Sumo Digital Academy internship. 
+
+PlayBuffer is the intellectual property of Sumo Digital Academy. 
+Zool is the intellectual property of Sumo Digital.
+
