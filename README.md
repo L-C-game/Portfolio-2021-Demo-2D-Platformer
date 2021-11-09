@@ -41,7 +41,7 @@ Source Control: Initially Visual Studio, later SourceTree
 
 
 ## Launch
-- To launch the project; download the Repository code, open and build the solution in Visual Studio.
+To launch the project; download the Repository code, open and build the solution in Visual Studio.
 
 
 ## Functionality
