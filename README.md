@@ -1,4 +1,7 @@
-# Title "Zool in Demoland"
+# 2D Platformer Demo "Zool in Demoland"
+
+![CoverPicture](https://user-images.githubusercontent.com/67602355/141008157-f2909b20-ce17-4609-8e7d-bd164e82b71a.png)
+
 _________________________________________________________________________________________________________
 PlayBuffer is the intellectual property of Sumo Digital Academy. 
 
