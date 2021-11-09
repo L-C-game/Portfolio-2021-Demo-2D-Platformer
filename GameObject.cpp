@@ -1,3 +1,10 @@
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+
+	This code is adapted from the game object class that was provided during the SWiCS tutorials
+*/
+
 #include "Play.h"
 #include "GameObject.h"
 
@@ -108,7 +115,7 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 			// resolve horizontal
 			if (other->GetSolid())
 			{
-				posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + PIXEL_BUFFER));
+				posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + (PIXEL_BUFFER / 2)));
 				this->SetPosition(*posPtr);
 			}
 

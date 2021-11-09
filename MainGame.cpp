@@ -1,3 +1,8 @@
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+*/
+
 #include "MainGame.h"
 #include "LeftBarrier.h"
 #include "Floor.h"
@@ -181,26 +186,62 @@ void PlaySpawnAll(GameState& gameState)
 		{
 			(platData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), (LEVEL_HEIGHT / 2)}),
 			platData.HalfSizePlat,
-			(platData.colour = platSpecialpng)
+			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
 			(platData.pos = {(S_DISPLAY_WIDTH * 2), (LEVEL_HEIGHT / 2)}),
 			platData.HalfSizePlat,
-			(platData.colour = platSpecialpng)
+			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS - (S_DISPLAY_WIDTH * QUARTER) / 2), S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * THREE_QUARTERS * THIRD)}),
+			(platData.pos = {((S_DISPLAY_WIDTH / 2) - (S_DISPLAY_WIDTH * QUARTER)), (S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * QUARTER))}),
 			platData.HalfSizePlat,
 			(platData.colour = platPinkpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {((S_DISPLAY_WIDTH / 2) - (S_DISPLAY_WIDTH * QUARTER) / 2), (S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * QUARTER) / 2)}),
+			(platData.pos = {(S_DISPLAY_WIDTH / 2), (S_DISPLAY_HEIGHT)}),
 			platData.HalfSizePlat,
 			(platData.colour = platBluepng)
-		}
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH/ 2 + S_DISPLAY_WIDTH * QUARTER), (S_DISPLAY_HEIGHT)}),
+			platData.HalfSizePlat,
+			(platData.colour = platRedpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH * QUARTER)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH / 2)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH * THREE_QUARTERS)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
+		PlatformData
+		{
+			(platData.pos = {(S_DISPLAY_WIDTH * 2), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			platData.HalfSizePlat,
+			(platData.colour = platSpecialpng)
+		},
 	} };
 
 	for (PlatformData platData : platformArray)
@@ -252,6 +293,261 @@ void PlaySpawnAll(GameState& gameState)
 			(pickUpData.pickupSprite = fivepointpng),
 			(pickUpData.pointValue = FIVE_POINTS)
 		},
+
+
+		// Easter egg for Zool's 30year anniversary next year
+		// START OF Z
+		PickUpData
+		{
+			(pickUpData.pos = {Z_LEFT_X, (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {Z_MIDDLE_X, (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {Z_RIGHT_X, (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData
+		{
+			(pickUpData.pos = {Z_DIAGONAL_LEFT_X, (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {Z_DIAGONAL_RIGHT_X, (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData
+		{
+			(pickUpData.pos = {Z_LEFT_X, (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(Z_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(Z_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		// END OF Z
+		// START OF O 
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_FIRST_MIDDLE_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_FIRST_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		// END OF O
+		// START OF O 
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_SECOND_MIDDLE_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_SECOND_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		// END OF O
+		// START OF L
+		PickUpData 
+		{
+			(pickUpData.pos = {(L_LEFT_X), (LETTER_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(L_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(L_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData 
+		{
+			(pickUpData.pos = {(L_LEFT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(L_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(L_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = THIRTY_POINTS)
+		},
+		// END OF L
 	} };
 
 	for (PickUpData pickUpData : pickUpArray)
@@ -309,6 +605,56 @@ void PlaySpawnAll(GameState& gameState)
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
+
+		// Second section of falling blocks
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - ( 2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+				BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT * THREE_QUARTERS + (S_PIXELS_PER_UNIT_DOUBLE)) + (2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
+		BlockData
+		{
+			(blockData.pos = {(S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT * THREE_QUARTERS + (S_PIXELS_PER_UNIT_DOUBLE)) + (2 * ZOOL_SIZE))}),
+			blockData.HalfSizeBlock,
+			(blockData.blockSprite = blockpng),
+		},
 	} };
 
 	for (BlockData blockData : blockArray)
@@ -356,6 +702,48 @@ void PlaySpawnAll(GameState& gameState)
 		SpikeData
 		{
 			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+
+		// Second set of spikes
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + S_DISPLAY_WIDTH * QUARTER), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * QUARTER) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2)), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS)), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			spikeData.HalfSizeSpike
+		},
+		SpikeData
+		{
+			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 	} };

@@ -1,3 +1,8 @@
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+*/
+
 // Implementation of the player class
 #include "GameObject.h"
 #include "Player.h"

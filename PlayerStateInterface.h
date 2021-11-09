@@ -1,5 +1,10 @@
-// Abstract base class for the PlayerState to inherit from
-// This is the interface that will enforce the methods into the concrete states
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+	Abstract base class for the PlayerState to inherit from
+	This is the interface that will enforce the methods into the concrete states
+*/
+
 
 #pragma once
 #include "Player.h"

@@ -1,7 +1,12 @@
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+*/
+
 #include "PlayerStatesConcrete.h"
 #include "GameObject.h"
 
-// IdleStatePlay::GetSpriteHeight(player.GetCurrentSpriteId())
+
 PlayerState& IdleState::getInstance()
 {
 	static IdleState singleton;

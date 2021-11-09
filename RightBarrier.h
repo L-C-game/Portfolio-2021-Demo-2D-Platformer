@@ -1,3 +1,8 @@
+/*
+	Author: Laura Mary Clarke 2020
+	GitHub: L-C-game
+*/
+
 #pragma once
 #include "Play.h"
 #include "GameObject.h"
