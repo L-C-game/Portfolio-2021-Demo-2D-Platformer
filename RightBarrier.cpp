@@ -10,7 +10,6 @@ RBarrier::RBarrier(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_RBARRIER);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_RBARRIER);
-	SetStatic(true);
 	SetHalfSize({ (ZOOL_SIZE), (LEVEL_HEIGHT / 2) });
 }
 

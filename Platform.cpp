@@ -11,7 +11,6 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_PLATFORM);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_PLATFORM);
 	SetDrawOrder(drawOrder::DRAW_ORDER_PLATFORM);
-	SetStatic(true);
 	SetConstPos(pos);
 }
 

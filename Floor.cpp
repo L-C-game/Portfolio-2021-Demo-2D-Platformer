@@ -11,7 +11,6 @@ Floor::Floor(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_FLOOR);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_FLOOR);
 	SetDrawOrder(drawOrder::DRAW_ORDER_FLOOR);
-	SetStatic(true);
 	SetHalfSize({(Play::GetSpriteWidth(floorpng) / 2), (Play::GetSpriteHeight(floorpng) / 2)});
 	SetConstPos(pos);
 }

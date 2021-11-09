@@ -7,7 +7,6 @@
 #pragma once
 #include "Play.h"
 
-// Important constants
 //Screen constants
 constexpr int S_PIXELS_PER_UNIT{ 16 }; // Each unit in zool is 16x16
 constexpr int S_PIXELS_PER_UNIT_DOUBLE{ 32 }; // 2x a single unit
@@ -141,38 +140,42 @@ constexpr int FIVE_POINTS{ 5 };
 constexpr int TEN_POINTS{ 10 };
 constexpr int THIRTY_POINTS{ 30 };
 
+// Positions for the ZOOL easter egg pickups, here for easier modification
+// X positions
 // Z 
-constexpr float Z_LEFT_X{ 640 + S_DISPLAY_WIDTH * QUARTER }; // Z_LEFT_X
-constexpr float Z_MIDDLE_X{ 664 + S_DISPLAY_WIDTH * QUARTER }; // Z_MIDDLE_X
-constexpr float Z_RIGHT_X{ 688 + S_DISPLAY_WIDTH * QUARTER }; // Z_RIGHT_X
-constexpr float Z_DIAGONAL_LEFT_X{ 656 + S_DISPLAY_WIDTH * QUARTER }; // Z_DIAGONAL_LEFT_X
-constexpr float Z_DIAGONAL_RIGHT_X{ 672 + S_DISPLAY_WIDTH * QUARTER }; // Z_DIAGONAL_RIGHT_X
+constexpr float Z_LEFT_X{ 640 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float Z_MIDDLE_X{ 664 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float Z_RIGHT_X{ 688 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float Z_DIAGONAL_LEFT_X{ 656 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float Z_DIAGONAL_RIGHT_X{ 672 + S_DISPLAY_WIDTH * QUARTER };
 
 // O_FIRST
-constexpr float O_FIRST_LEFT_X{ 752 + S_DISPLAY_WIDTH * QUARTER }; // O_FIRST_LEFT_X
-constexpr float O_FIRST_MIDDLE_X{ 776 + S_DISPLAY_WIDTH * QUARTER }; // O_FIRST_MIDDLE_X
-constexpr float O_FIRST_RIGHT_X{ 800 + S_DISPLAY_WIDTH * QUARTER }; // O_FIRST_RIGHT_X
+constexpr float O_FIRST_LEFT_X{ 752 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float O_FIRST_MIDDLE_X{ 776 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float O_FIRST_RIGHT_X{ 800 + S_DISPLAY_WIDTH * QUARTER };
 
 // O_SECOND 
-constexpr float O_SECOND_LEFT_X{ 880 + S_DISPLAY_WIDTH * QUARTER }; // O_SECOND_LEFT_X
-constexpr float O_SECOND_MIDDLE_X{ 904 + S_DISPLAY_WIDTH * QUARTER }; // O_SECOND_MIDDLE_X
-constexpr float O_SECOND_RIGHT_X{ 928 + S_DISPLAY_WIDTH * QUARTER }; // O_SECOND_RIGHT_X
+constexpr float O_SECOND_LEFT_X{ 880 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float O_SECOND_MIDDLE_X{ 904 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float O_SECOND_RIGHT_X{ 928 + S_DISPLAY_WIDTH * QUARTER };
 
 // L 
-constexpr float L_LEFT_X{ 1008 + S_DISPLAY_WIDTH * QUARTER }; // L_LEFT_X
-constexpr float L_MIDDLE_X{ 1032 + S_DISPLAY_WIDTH * QUARTER }; // L_MIDDLE_X
-constexpr float L_RIGHT_X{ 1056 + S_DISPLAY_WIDTH * QUARTER };// L_RIGHT_X
+constexpr float L_LEFT_X{ 1008 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float L_MIDDLE_X{ 1032 + S_DISPLAY_WIDTH * QUARTER };
+constexpr float L_RIGHT_X{ 1056 + S_DISPLAY_WIDTH * QUARTER };
 
+// Y positions
 // Letter height
-constexpr float LETTER_TOP_Y{ 366 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) }; // 
+constexpr float LETTER_TOP_Y{ 366 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) }; 
 constexpr float LETTER_MIDDLE_TOP_Y{ 414 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) };
 constexpr float LETTER_MIDDLE_BOTTOM_Y{ 390 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) };
 constexpr float LETTER_BOTTOM_Y{ 438 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) };
 
-constexpr int BLOCK_AMOUNT{ 16 };
 
+constexpr int BLOCK_AMOUNT{ 16 };
 constexpr int SPIKE_AMOUNT{ 16 };
 
+// Player constants
 const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * TWO_FIFTHS), static_cast<float>(LEVEL_HEIGHT - 2 * ZOOL_SIZE) } ;
 constexpr int MAX_HEALTH_PLAYER{ 6 };
 constexpr int MIN_HEALTH_PLAYER{ 1 };
@@ -231,6 +234,7 @@ enum class GameStatusState
 	GAMEOVER_STATE
 };
 
+// GameStatus state variables and functions
 static GameStatusState m_gameStatusState{ GameStatusState::TITLE_STATE };
 
 static void SetGameStatusState(GameStatusState gameStatusState) { m_gameStatusState = gameStatusState; }

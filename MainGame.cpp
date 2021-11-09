@@ -143,9 +143,9 @@ void GameOverStateUpdate(GameState& gameState)
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
 }
 
+// Setting up the Game world in a data oriented way
 void PlaySpawnAll(GameState& gameState)
 {
-	// Spawn game world
 	Floor::Spawn();
 	Player::Spawn();
 

@@ -10,7 +10,6 @@ Ceiling::Ceiling(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_CEILING);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_CEILING);
-	SetStatic(true);
 	this->SetHalfSize({ (S_DISPLAY_WIDTH/2), (S_PIXELS_PER_UNIT) });
 }
 

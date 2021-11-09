@@ -11,7 +11,6 @@ Spike::Spike(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_SPIKE);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_SPIKE);
 	SetDrawOrder(drawOrder::DRAW_ORDER_SPIKE);
-	SetStatic(true);
 	SetConstPos(pos);
 }
 

@@ -1,6 +1,11 @@
 /*
 	Author: Laura Mary Clarke 2020
 	GitHub: L-C-game
+
+	The block has 3 states:
+	Stable - The initial state before the player collides with the block, animation speed is 0
+	Breaking - Transition to this state is triggered by the collision between the player and the block
+	broken
 */
 
 #include "GameObject.h"
@@ -11,7 +16,6 @@ Block::Block(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_BLOCK);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_BLOCK);
 	SetDrawOrder(drawOrder::DRAW_ORDER_BLOCK);
-	SetStatic(true);
 	SetSolid(true);
 	SetConstPos(pos);
 	SetBlockState(BlockState::STABLE_STATE);

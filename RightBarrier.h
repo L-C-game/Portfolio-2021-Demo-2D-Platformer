@@ -1,6 +1,8 @@
 /*
 	Author: Laura Mary Clarke 2020
 	GitHub: L-C-game
+
+	Right world barrier
 */
 
 #pragma once

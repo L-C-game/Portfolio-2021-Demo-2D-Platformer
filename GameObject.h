@@ -60,12 +60,11 @@ public:
     void SetHalfSize(Point2f halfSize) { m_halfSize = halfSize; }
     Point2f GetHalfSize() const { return m_halfSize; };
 
-    // Work out overlap
+    // Work out overlap of the collision
     Point2f CalcOverlap(GameObject* other);
-    CollidingSide ResolveCollision(GameObject* other);
 
-    void SetStatic(bool isStatic) { m_static = isStatic; }
-    bool GetStatic() const { return m_static; };
+    // Resolve the collision
+    CollidingSide ResolveCollision(GameObject* other);
 
     void SetSolid(bool isSolid) { m_solid = isSolid; }
     bool GetSolid() const { return m_solid; };
@@ -83,6 +82,7 @@ public:
     void SetType(Type type) { m_type = type; }
     Type GetType() const { return m_type; };
 
+    // Function to set and get the side of the player that is colliding with an object
     void SetSide(CollidingSide side) { m_side = side; }
     CollidingSide GetSide() const { return m_side; };
 
@@ -123,9 +123,9 @@ protected:
     // Setting up game objects with AABB's
     Point2f m_halfSize{ 0.0f, 0.0f }; // Half the width and half the height of the object
 
-    // Is the GameObject fixed in space (independent of forces) or not:
-    bool m_static{ false };
+    // Decides if the GameObject will cause the player to experience collision resolution or not.
     bool m_solid{ true };
+
     bool m_collectable{ false };
     bool m_consumed{ false };
 

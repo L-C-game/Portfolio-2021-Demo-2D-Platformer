@@ -15,7 +15,6 @@ Player::Player(Point2f pos) : GameObject(pos)
 	SetType(Type::OBJ_PLAYER);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_PLAYER);
 	SetDrawOrder(drawOrder::DRAW_ORDER_PLAYER);
-	SetStatic(false);
 	SetHalfSize({ (ZOOL_SIZE / 2) - (PIXEL_EXCESS_X_ZOOL), (ZOOL_SIZE / 2) - (PIXEL_EXCESS_Y_ZOOL) });
 }
 
@@ -37,7 +36,7 @@ void Player::SetInitialPlayerState()
 	m_pStateCurrent = &newState;
 }
 
-void Player::SwapPlayerState(PlayerState& newState)
+void Player::SetPlayerState(PlayerState& newState)
 {
 	Player& playerAddress = *this;
 	m_pStateCurrent->StateExit(playerAddress);
@@ -52,7 +51,7 @@ void Player::ResetPlayer()
 	SetScore(0);
 	SetAcceleration({ 0.0f, 0.0f });
 	SetVelocity({ 0.0f, 0.0f });
-	SwapPlayerState(IdleState::getInstance());
+	SetPlayerState(IdleState::getInstance());
 }
 
 void Player::CollisionSystem(GameState& gameState)
@@ -128,7 +127,7 @@ void Player::CollisionSystem(GameState& gameState)
 						}
 						else 
 						{
-							SwapPlayerState(IdleState::getInstance());
+							SetPlayerState(IdleState::getInstance());
 						}
 					}
 				}

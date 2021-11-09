@@ -25,8 +25,9 @@ public:
 
 	// Getters and setters
 	PlayerState* GetPlayerState() const { return m_pStateCurrent; }
+	// Sets the Initial state of the player
 	void SetInitialPlayerState();
-	void SwapPlayerState(PlayerState& pStateNew);
+	void SetPlayerState(PlayerState& pStateNew);
 
 	void SetIsLeftFacing(bool isLeftFacing) { m_isLeftFacing = isLeftFacing; }
 	bool GetIsLeftFacing() const { return m_isLeftFacing; }
@@ -61,8 +62,10 @@ public:
 	void SetBlinkTimer(int blinkTimer) { m_blinkTimer = blinkTimer; }
 	int GetBlinkTimer() const { return m_blinkTimer; }
 
+	// Resets the player to the start of the map with full health and 0 points
 	void ResetPlayer();
 
+	// Handles the specific behaviour when the player collides with particular objects
 	void CollisionSystem(GameState& gameState);
 
 	void CentreCameraOnPlayer(GameState& gameState);
@@ -87,7 +90,7 @@ private:
 	// invincibility frames timer
 	int m_iFramesTimer{ 0 };
 
-	// Way to blink the sprite
+	// Variables to blink the sprite
 	int m_isBlinking{ false };
 	int m_blinkTimer{ 0 };
 };

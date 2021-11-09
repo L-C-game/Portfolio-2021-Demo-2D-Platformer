@@ -25,27 +25,27 @@ void IdleState::HandleInput(Player& player)
 {
 	if ((Play::KeyDown(VK_LEFT) && !Play::KeyDown(VK_RIGHT)) || (Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
-		player.SwapPlayerState(WalkState::getInstance());
+		player.SetPlayerState(WalkState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player.SwapPlayerState(CrouchState::getInstance());
+		player.SetPlayerState(CrouchState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded()))
 	{
-		player.SwapPlayerState(JumpState::getInstance());
+		player.SetPlayerState(JumpState::getInstance());
 	}
 
 	if (!player.GetIsGrounded())
 	{
-		player.SwapPlayerState(FallState::getInstance());
+		player.SetPlayerState(FallState::getInstance());
 	}
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -113,27 +113,27 @@ void WalkState::HandleInput(Player& player)
 	if ((!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to Deccelerate state
-		player.SwapPlayerState(SkidState::getInstance());
+		player.SetPlayerState(SkidState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player.SwapPlayerState(CrouchState::getInstance());
+		player.SetPlayerState(CrouchState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded()))
 	{
-		player.SwapPlayerState(JumpState::getInstance());
+		player.SetPlayerState(JumpState::getInstance());
 	}
 
 	if (!player.GetIsGrounded())
 	{
-		player.SwapPlayerState(FallState::getInstance());
+		player.SetPlayerState(FallState::getInstance());
 	}
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -180,38 +180,38 @@ void SkidState::HandleInput(Player& player)
 	if (Play::KeyDown(VK_LEFT))
 	{
 		player.SetIsLeftFacing(true);
-		player.SwapPlayerState(WalkState::getInstance());
+		player.SetPlayerState(WalkState::getInstance());
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
 		player.SetIsLeftFacing(false);
-		player.SwapPlayerState(WalkState::getInstance());
+		player.SetPlayerState(WalkState::getInstance());
 	}
 
 	if ((abs(player.GetVelocity().x) <= MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to idle state
-		player.SwapPlayerState(IdleState::getInstance());
+		player.SetPlayerState(IdleState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_DOWN))
 	{
-		player.SwapPlayerState(CrouchState::getInstance());
+		player.SetPlayerState(CrouchState::getInstance());
 	}
 
 	if (Play::KeyDown(VK_SPACE) && (player.GetIsGrounded()))
 	{
-		player.SwapPlayerState(JumpState::getInstance());
+		player.SetPlayerState(JumpState::getInstance());
 	}
 
 	if (!player.GetIsGrounded() && player.GetVelocity().y <= 0.0f)
 	{
-		player.SwapPlayerState(FallState::getInstance());
+		player.SetPlayerState(FallState::getInstance());
 	}
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -259,11 +259,11 @@ void CrouchState::HandleInput(Player& player)
 	// Leave crouch state for the relevant input
 	if (!(Play::KeyDown(VK_DOWN)) && (Play::KeyDown(VK_LEFT) || Play::KeyDown(VK_RIGHT)))
 	{
-		player.SwapPlayerState(WalkState::getInstance());
+		player.SetPlayerState(WalkState::getInstance());
 	}
 	else if (!(Play::KeyDown(VK_DOWN)) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)))
 	{
-		player.SwapPlayerState(IdleState::getInstance());
+		player.SetPlayerState(IdleState::getInstance());
 	}
 
 	// Can change facing direction while crouched
@@ -279,7 +279,7 @@ void CrouchState::HandleInput(Player& player)
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -361,12 +361,12 @@ void JumpState::HandleInput(Player& player)
 	// Change to fall state
 	if ((!(Play::KeyDown(VK_SPACE)) || player.GetJumpTimer() > JUMP_DURATION))
 	{
-		player.SwapPlayerState(FallState::getInstance());
+		player.SetPlayerState(FallState::getInstance());
 	}
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -438,12 +438,12 @@ void FallState::HandleInput(Player& player)
 
 	if (player.GetIsGrounded())
 	{
-		player.SwapPlayerState(IdleState::getInstance());
+		player.SetPlayerState(IdleState::getInstance());
 	}
 
 	if (player.GetIsHurt())
 	{
-		player.SwapPlayerState(HurtState::getInstance());
+		player.SetPlayerState(HurtState::getInstance());
 	}
 }
 
@@ -512,7 +512,7 @@ void HurtState::HandleInput(Player& player)
 
 	if (player.GetiFramesTimer() >= I_FRAMES_DURATION)
 	{
-		player.SwapPlayerState(IdleState::getInstance());
+		player.SetPlayerState(IdleState::getInstance());
 	}
 
 	if (!player.GetIsBlinking() && player.GetBlinkTimer() >= BLINK_DURATION)
