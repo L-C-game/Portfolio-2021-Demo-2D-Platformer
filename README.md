@@ -45,10 +45,15 @@ To launch the project; download the Repository code, open and build the solution
 
 
 ## Functionality
+
+### OOP Design
+### State Pattern
+#### Meyer's singleton
+### AABB collision
  
 
 ## Project status 
-
+The project is ongoing. 
 
 ## Sources
 
