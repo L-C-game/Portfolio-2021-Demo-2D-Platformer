@@ -4,7 +4,8 @@
 
 	The block has 3 states:
 	Stable - The initial state before the player collides with the block, animation speed is 0
-	Breaking - Transition to this state is triggered by the collision between the player and the block
+	Breaking - Transition to this state is triggered by the collision between the player and the block.
+	The breaking animation
 	broken
 */
 
