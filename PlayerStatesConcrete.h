@@ -19,6 +19,9 @@
 	By using the State design pattern, each of the states are more self contained but also share methods that are relevant to all of them,
 	this helps avoid repeating code.
 
+	Each of the states have entry and exit methods which allow for sounds to be played and flags and other variables to be reset.
+
+
 */
 
 #pragma once
@@ -33,7 +36,7 @@ public:
 
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 
@@ -52,7 +55,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -70,7 +73,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -88,7 +91,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -106,7 +109,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -124,7 +127,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:
@@ -142,7 +145,7 @@ public:
 	void HandleInput(Player& player) override;
 	void DrawPlayer(const Player& player, GameState& gameState) const override;
 	void StateExit(Player& player) override;
-	void SetupBB(Player& player) override;
+	void SetupAnim(Player& player) override;
 	// Controls access to the singleton instance, 
 	static PlayerState& getInstance();
 private:

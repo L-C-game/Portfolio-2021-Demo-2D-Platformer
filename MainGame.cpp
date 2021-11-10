@@ -13,6 +13,8 @@
 #include "Pickup.h"
 #include "Block.h"
 #include "Spike.h"
+#include "Health.h"
+#include "UltimateToken.h"
 #define PLAY_IMPLEMENTATION
 #include "Play.h"
 #include <array>
@@ -22,6 +24,7 @@ PlatformData platData;
 PickUpData pickUpData;
 BlockData blockData;
 SpikeData spikeData;
+HealthData healthData;
 
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
@@ -29,6 +32,8 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
+
+	Play::StartAudioLoop("untitled");
 }
 
 // Called by the PlayBuffer once for each frame of the game (60 times a second!)
@@ -52,6 +57,9 @@ bool MainGameUpdate(float elapsedTime)
 		break;
 	case GameStatusState::GAMEOVER_STATE:
 		GameOverStateUpdate(gameState);
+		break;
+	case GameStatusState::WIN_STATE:
+		WinStateUpdate(gameState);
 		break;
 	}
 
@@ -100,6 +108,13 @@ void PlayStateUpdate(GameState& gameState)
 			Player* player = static_cast<Player*>(gameObject);
 			gameState.health = player->GetHealth();
 			gameState.score = player->GetScore();
+
+			if (player->GetHasUltimate())
+			{
+				Play::StopAudioLoop("untitled");
+				Play::StartAudioLoop("HET");
+				SetGameStatusState(GameStatusState::WIN_STATE);
+			}
 		}
 	}
 
@@ -108,6 +123,8 @@ void PlayStateUpdate(GameState& gameState)
 
 	if (gameState.health == 0)
 	{
+		Play::StopAudioLoop("untitled");
+		Play::StartAudioLoop("weirdWavvyThing");
 		SetGameStatusState(GameStatusState::GAMEOVER_STATE);
 	}
 }
@@ -117,6 +134,8 @@ void GameOverStateUpdate(GameState& gameState)
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
+		Play::StopAudioLoop("weirdWavvyThing");
+		Play::StartAudioLoop("untitled");
 		SetGameStatusState(GameStatusState::TITLE_STATE);
 	}
 
@@ -143,11 +162,45 @@ void GameOverStateUpdate(GameState& gameState)
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
 }
 
+void WinStateUpdate(GameState& gameState)
+{
+
+	if (Play::KeyPressed(VK_RETURN))
+	{
+		Play::StopAudioLoop("HET");
+		Play::StartAudioLoop("untitled");
+		SetGameStatusState(GameStatusState::TITLE_STATE);
+	}
+
+	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
+	for (GameObject* gameObject : oList)
+	{
+		if (gameObject->GetType() == GameObject::Type::OBJ_PLAYER)
+		{
+			Player* player = static_cast<Player*>(gameObject);
+			player->ResetPlayer();
+		}
+	}
+
+	Play::DrawFontText("font36px", "YOU WIN!",
+		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+
+	Play::DrawFontText("font24px", "FINAL SCORE: " + std::to_string(gameState.score),
+		{ S_DISPLAY_WIDTH / 2 ,  S_DISPLAY_HEIGHT * TWO_FIFTHS }, Play::CENTRE);
+
+	Play::DrawFontText("font24px", "PRESS RETURN/ENTER TO RETRY!",
+		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT / 2 }, Play::CENTRE);
+
+	Play::DrawFontText("font24px", "PRESS ESCAPE TO QUIT.",
+		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
+}
+
 // Setting up the Game world in a data oriented way
 void PlaySpawnAll(GameState& gameState)
 {
 	Floor::Spawn();
 	Player::Spawn();
+	UltimateToken::Spawn();
 
 	// Platform data as an array of structs
 	std::array<PlatformData, PLATFORM_AMOUNT>platformArray
@@ -643,7 +696,7 @@ void PlaySpawnAll(GameState& gameState)
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
-				BlockData
+		BlockData
 		{
 			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT * THREE_QUARTERS + (S_PIXELS_PER_UNIT_DOUBLE)) + (2 * ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
@@ -751,6 +804,25 @@ void PlaySpawnAll(GameState& gameState)
 	for (SpikeData spikeData : spikeArray)
 	{
 		Spike::Spawn(spikeData);
+	}
+
+	std::array<HealthData, HEALTH_AMOUNT>healthArray
+	{ {
+		HealthData
+		{
+			(healthData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE + S_PIXELS_PER_UNIT))}),
+			healthData.HalfSizeHealth
+		},
+		HealthData
+		{
+			(healthData.pos = {(S_DISPLAY_WIDTH * QUARTER + HALF_SIZE_SMALL_OBJ) , (LEVEL_HEIGHT * THREE_FIFTHS - S_PIXELS_PER_UNIT)}),
+			healthData.HalfSizeHealth
+		},
+	} };
+
+	for (HealthData healthData : healthArray)
+	{
+		Health::Spawn(healthData);
 	}
 
 	LBarrier::Spawn(gameState);

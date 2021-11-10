@@ -9,6 +9,8 @@
 #include "PlayerStatesConcrete.h"
 #include "Pickup.h"
 #include "Block.h"
+#include "Health.h"
+#include "UltimateToken.h"
 
 Player::Player(Point2f pos) : GameObject(pos)
 {
@@ -52,6 +54,7 @@ void Player::ResetPlayer()
 	SetAcceleration({ 0.0f, 0.0f });
 	SetVelocity({ 0.0f, 0.0f });
 	SetPlayerState(IdleState::getInstance());
+	SetHasUltimate(false);
 }
 
 void Player::CollisionSystem(GameState& gameState)
@@ -101,6 +104,7 @@ void Player::CollisionSystem(GameState& gameState)
 				{
 					if (other->GetType() == GameObject::Type::OBJ_PICKUP)
 					{
+						Play::PlayAudio("pickUp");
 						Pickup* pickUp = static_cast<Pickup*>(other);
 						SetScore(pickUp->GetPointValue() + GetScore());
 						pickUp->SetActive(false);
@@ -112,6 +116,7 @@ void Player::CollisionSystem(GameState& gameState)
 					Block* block = static_cast<Block*>(other);
 					if (block->GetBlockState() == Block::BlockState::STABLE_STATE)
 					{
+						Play::PlayAudio("blockBreak");
 						block->SetBlockState(Block::BlockState::BREAK_STATE); 
 					}
 				}
@@ -123,6 +128,7 @@ void Player::CollisionSystem(GameState& gameState)
 						SetHealth(GetHealth() - 1);
 						if (GetHealth() != 0)
 						{
+							Play::PlayAudio("hitPlayer");
 							SetIsHurt(true);
 						}
 						else 
@@ -130,6 +136,25 @@ void Player::CollisionSystem(GameState& gameState)
 							SetPlayerState(IdleState::getInstance());
 						}
 					}
+				}
+
+				if (other->GetType() == GameObject::Type::OBJ_HEALTH)
+				{
+					if (GetHealth() < MAX_HEALTH_PLAYER)
+					{
+						Health* health = static_cast<Health*>(other);
+						SetHealth(GetHealth() + 1);
+						Play::PlayAudio("heal");
+						health->SetActive(false);
+						
+					}
+				}
+
+				if (other->GetType() == GameObject::Type::OBJ_ULTIMATE)
+				{
+					UltimateToken* ultimateToken = static_cast<UltimateToken*>(other);
+					SetHasUltimate(true);
+					ultimateToken->SetActive(false);
 				}
 			}
 		}
@@ -158,7 +183,7 @@ void Player::Update(GameState& gameState)
 	//Sets the state depending on the input
 	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
-	m_pStateCurrent->SetupBB(playerAddress);
+	m_pStateCurrent->SetupAnim(playerAddress);
 	CollisionSystem(gameState);
 
 	CentreCameraOnPlayer(gameState);

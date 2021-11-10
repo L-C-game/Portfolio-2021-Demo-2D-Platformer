@@ -1,6 +1,8 @@
 /*
 	Author: Laura Mary Clarke 2020
 	GitHub: L-C-game
+
+	Definitions of the playerstate concrete methods.
 */
 
 #include "PlayerStatesConcrete.h"
@@ -49,7 +51,7 @@ void IdleState::HandleInput(Player& player)
 	}
 }
 
-void IdleState::SetupBB(Player& player)
+void IdleState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
@@ -112,7 +114,6 @@ void WalkState::HandleInput(Player& player)
 
 	if ((!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
-		// If the player presses neither of L and R set to Deccelerate state
 		player.SetPlayerState(SkidState::getInstance());
 	}
 
@@ -137,7 +138,7 @@ void WalkState::HandleInput(Player& player)
 	}
 }
 
-void WalkState::SetupBB(Player& player)
+void WalkState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(RUN_ANIM_SPEED);
 
@@ -215,7 +216,7 @@ void SkidState::HandleInput(Player& player)
 	}
 }
 
-void SkidState::SetupBB(Player& player)
+void SkidState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
@@ -283,7 +284,7 @@ void CrouchState::HandleInput(Player& player)
 	}
 }
 
-void CrouchState::SetupBB(Player& player)
+void CrouchState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
@@ -319,6 +320,7 @@ void JumpState::StateEnter(Player& player)
 {
 	player.SetIsGrounded(true);
 	player.SetJumpTimer(0);
+	Play::PlayAudio("jump");
 }
 
 void JumpState::HandleInput(Player& player)
@@ -370,7 +372,7 @@ void JumpState::HandleInput(Player& player)
 	}
 }
 
-void JumpState::SetupBB(Player& player)
+void JumpState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
@@ -447,7 +449,7 @@ void FallState::HandleInput(Player& player)
 	}
 }
 
-void FallState::SetupBB(Player& player)
+void FallState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 
@@ -534,7 +536,7 @@ void HurtState::StateExit(Player& player)
 	player.SetAcceleration({ 0.0f, 0.0f });
 }
 
-void HurtState::SetupBB(Player& player)
+void HurtState::SetupAnim(Player& player)
 {
 	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
 

@@ -49,7 +49,6 @@ const enum spriteIdInts
 	fivepointpng,
 	floorpng,
 	healthpng,
-	halfhealth,
 	blockbreakpng,
 	blockpng,
 	platBluepng,
@@ -59,6 +58,7 @@ const enum spriteIdInts
 	platSpecialpng,
 	platYellowpng,
 	spikespng,
+	ultimateTokenpng,
 	tenpointpng,
 	thirtypointpng,
 	zoolCrouchLpng,
@@ -88,6 +88,8 @@ const enum updateOrder
 	UPDATE_ORDER_PICKUP,
 	UPDATE_ORDER_BLOCK,
 	UPDATE_ORDER_SPIKE,
+	UPDATE_ORDER_HEALTH,
+	UPDATE_ORDER_ULTIMATE,
 };
 
 const enum drawOrder
@@ -98,6 +100,8 @@ const enum drawOrder
 	DRAW_ORDER_PICKUP,
 	DRAW_ORDER_BLOCK,
 	DRAW_ORDER_SPIKE,
+	DRAW_ORDER_HEALTH,
+	DRAW_ORDER_ULTIMATE,
 };
 
 // Movement constants
@@ -124,6 +128,7 @@ constexpr int PIXEL_BUFFER{ 2 };
 // Run animation speed
 constexpr int RUN_ANIM_SPEED{ 32 };
 constexpr int SINGLE_FRAME_ANIM_SPEED{ 1 };
+constexpr int TWO_FRAME_ANIM_SPEED{6};
 constexpr int BLOCK_BREAK_ANIM_SPEED{ 12 };
 constexpr int BLOCK_REAPPEAR{ 48 };
 
@@ -174,6 +179,9 @@ constexpr float LETTER_BOTTOM_Y{ 438 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_
 
 constexpr int BLOCK_AMOUNT{ 16 };
 constexpr int SPIKE_AMOUNT{ 16 };
+
+// Health pickup constants
+const int HEALTH_AMOUNT{ 2 };
 
 // Player constants
 const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * TWO_FIFTHS), static_cast<float>(LEVEL_HEIGHT - 2 * ZOOL_SIZE) } ;
@@ -226,11 +234,18 @@ struct SpikeData
 	Point2f HalfSizeSpike{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
 };
 
+struct HealthData
+{
+	Point2f pos{ 0.0f, 0.0f };
+	Point2f HalfSizeHealth{ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ };
+};
+
 enum class GameStatusState
 {
 	// Need to add title state
 	TITLE_STATE = 0,
 	PLAY_STATE,
+	WIN_STATE,
 	GAMEOVER_STATE
 };
 
@@ -243,5 +258,6 @@ static GameStatusState GetGameStatusState() { return m_gameStatusState; }
 void TitleStateUpdate(GameState& gameState);
 void PlayStateUpdate(GameState& gameState);
 void GameOverStateUpdate(GameState& gameState);
+void WinStateUpdate(GameState& gameState);
 
 void PlaySpawnAll(GameState& gameState);

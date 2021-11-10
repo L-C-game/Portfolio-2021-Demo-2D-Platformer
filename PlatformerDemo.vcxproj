@@ -147,6 +147,7 @@
     <ClCompile Include="Ceiling.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Health.cpp" />
     <ClCompile Include="LeftBarrier.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Pickup.cpp" />
@@ -155,12 +156,14 @@
     <ClCompile Include="PlayerStateConcrete.cpp" />
     <ClCompile Include="RightBarrier.cpp" />
     <ClCompile Include="Spike.cpp" />
+    <ClCompile Include="UltimateToken.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Ceiling.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Health.h" />
     <ClInclude Include="LeftBarrier.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Pickup.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="PlayerStatesConcrete.h" />
     <ClInclude Include="RightBarrier.h" />
     <ClInclude Include="Spike.h" />
+    <ClInclude Include="UltimateToken.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Platformer2D.cd" />

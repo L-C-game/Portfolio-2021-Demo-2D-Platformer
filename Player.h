@@ -62,6 +62,9 @@ public:
 	void SetBlinkTimer(int blinkTimer) { m_blinkTimer = blinkTimer; }
 	int GetBlinkTimer() const { return m_blinkTimer; }
 
+	void SetHasUltimate(bool hasUltimate) { m_hasUltimate = hasUltimate; }
+	bool GetHasUltimate() const { return m_hasUltimate; }
+
 	// Resets the player to the start of the map with full health and 0 points
 	void ResetPlayer();
 
@@ -93,4 +96,7 @@ private:
 	// Variables to blink the sprite
 	int m_isBlinking{ false };
 	int m_blinkTimer{ 0 };
+
+	// Boolean for ultimate pickup
+	bool m_hasUltimate{ false };
 };

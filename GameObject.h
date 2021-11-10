@@ -23,6 +23,8 @@ public:
         OBJ_PICKUP,
         OBJ_BLOCK,
         OBJ_SPIKE,
+        OBJ_HEALTH,
+        OBJ_ULTIMATE,
 		OBJ_ALL = 999
 	};
 
@@ -71,9 +73,6 @@ public:
 
     void SetIsCollectable(bool isCollectable) { m_collectable = isCollectable; }
     bool GetIsCollectable() const { return m_collectable; };
-
-    void SetConsumed(bool consumed) { m_consumed = consumed; }
-    bool GetConsumed() const { return m_consumed; };
 
     // Type specific getters and setters
     void SetActive(bool isActive) { m_active = isActive; }
@@ -127,7 +126,6 @@ protected:
     bool m_solid{ true };
 
     bool m_collectable{ false };
-    bool m_consumed{ false };
 
     float m_rot{ 0.0f };
 
