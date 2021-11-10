@@ -1,13 +1,13 @@
 # 2D Platformer Demo "Zool in Demoland"
 
-![CoverPicture](https://user-images.githubusercontent.com/67602355/141008157-f2909b20-ce17-4609-8e7d-bd164e82b71a.png)
+![CoverPicture](https://user-images.githubusercontent.com/67602355/141100308-4c5b13c6-65bf-43ab-afee-fdd92707f5d5.png)
 
 _________________________________________________________________________________________________________
 PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the
 
 Creative Commons Attribution-No Derivatives 4.0 International Public License.
 
-Zool Redimensioned (© 2021 Sumo Digital, Sumo Digital Academy)
+Zool Redimensioned (Â© 2021 Sumo Digital, Sumo Digital Academy)
 _________________________________________________________________________________________________________
 
 ## Table of contents
