@@ -81,14 +81,17 @@ http://lazyfoo.net/SDL_tutorials/lesson21/index.php
 
 ### PlayBuffer
 Creative Commons Attribution-No Derivatives 4.0 International Public License
+
 Sumo Digital Academy 
 
 ### Music 
 CC0 License 
+
 https://opengameart.org/users/celestialghost8
 
 ### Sound effects
 Created using Bfxr
+
 https://www.bfxr.net/
 
 
