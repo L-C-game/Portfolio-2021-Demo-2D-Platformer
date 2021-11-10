@@ -28,7 +28,7 @@ This platformer demo was created as part of the Sumo Digital Academy internship.
 - To create a simple 2D game that implements the State Design Pattern as the Player's FSM.
 
 ## General Information
-"Zool in DemoLand" is a 2D platformer, the game consists of a title state, play state and gameover state.
+"Zool in DemoLand" is a 2D platformer, the game consists of a title state, play state, win state and gameover state.
 
 The player's FSM was created using the State design pattern and Meyer's singleton to ensure that there
 was only a single instance of each state.
@@ -53,13 +53,15 @@ To launch the project; download the Repository code, open and build the solution
 
 ## Functionality
 
-### OOP Design
-
 ### State Pattern
 
 #### Meyer's singleton
 
 ### AABB collision
+
+### Camera
+A simple camera was implemented by creating a camera struct as part of the GameState and setting that camera to be centred on the player. 
+All of the objects then must be drawn relative to the camera's position.
  
 ## Project status 
 The project is ongoing. 
