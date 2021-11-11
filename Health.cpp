@@ -20,6 +20,7 @@ void Health::Spawn(HealthData& healthData)
 void Health::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void Health::Draw(GameState& gameState) const

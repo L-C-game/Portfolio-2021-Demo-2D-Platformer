@@ -54,7 +54,7 @@ void Player::ResetPlayer()
 	SetHasUltimate(false);
 }
 
-void Player::CollisionSystem(GameState& gameState)
+void Player::CollisionSystem()
 {
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
 	// To store which objects collide with the player
@@ -181,7 +181,7 @@ void Player::Update(GameState& gameState)
 	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
 	m_pStateCurrent->SetupAnim(playerAddress);
-	CollisionSystem(gameState);
+	CollisionSystem();
 
 	CentreCameraOnPlayer(gameState);
 }

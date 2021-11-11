@@ -20,6 +20,12 @@ void LBarrier::Spawn(GameState& gameState)
 	lBarrier->SetActive(true);
 }
 
-void LBarrier::Update(GameState& gameState) {}
+void LBarrier::Update(GameState& gameState) 
+{
+	gameState;
+}
 
-void LBarrier::Draw(GameState& gameState) const {}
+void LBarrier::Draw(GameState& gameState) const 
+{
+	gameState;
+}

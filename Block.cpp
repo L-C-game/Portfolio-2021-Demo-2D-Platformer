@@ -48,6 +48,8 @@ void Block::Update(GameState& gameState)
 		UpdateBroken();
 		break;
 	}
+
+	gameState;
 }
 
 void Block::UpdateStable() 

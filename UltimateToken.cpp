@@ -19,6 +19,7 @@ void UltimateToken::Spawn()
 void UltimateToken::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void UltimateToken::Draw(GameState& gameState) const

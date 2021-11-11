@@ -73,7 +73,7 @@ void IdleState::DrawPlayer(const Player& player, GameState& gameState) const
 
 void IdleState::StateExit(Player& player)
 {
-
+	player;
 }
 
 // WalkState
@@ -85,6 +85,7 @@ PlayerState& WalkState::getInstance()
 
 void WalkState::StateEnter(Player& player)
 {
+	player;
 }
 
 void WalkState::HandleInput(Player& player)
@@ -160,7 +161,7 @@ void WalkState::DrawPlayer(const Player& player, GameState& gameState) const
 
 void WalkState::StateExit(Player& player)
 {
-
+	player;
 }
 
 // Decceleration State
@@ -238,7 +239,7 @@ void SkidState::DrawPlayer(const Player& player, GameState& gameState) const
 
 void SkidState::StateExit(Player& player)
 {
-
+	player;
 }
 
 // CrouchState
@@ -306,7 +307,7 @@ void CrouchState::DrawPlayer(const Player& player, GameState& gameState) const
 
 void CrouchState::StateExit(Player& player)
 {
-
+	player;
 }
 
 // JumpState
@@ -394,7 +395,7 @@ void JumpState::DrawPlayer(const Player& player, GameState& gameState) const
 
 void JumpState::StateExit(Player& player)
 {
-
+	player;
 }
 
 // FallState
@@ -419,18 +420,18 @@ void FallState::HandleInput(Player& player)
 	{
 		if (player.GetAcceleration().x >= 0)
 		{
-			const Vector2f& acc = { -MOVE_ACC, (currentAcc.y) };
+			const Vector2f& accel = { -MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
-			player.SetAcceleration(acc);
+			player.SetAcceleration(accel);
 		}
 	}
 	else if (Play::KeyDown(VK_RIGHT))
 	{
 		if (player.GetAcceleration().x <= 0)
 		{
-			const Vector2f& acc = { MOVE_ACC, (currentAcc.y) };
+			const Vector2f& accel = { MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
-			player.SetAcceleration(acc);
+			player.SetAcceleration(accel);
 		}
 	}
 	else

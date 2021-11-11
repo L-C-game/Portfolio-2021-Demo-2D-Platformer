@@ -29,6 +29,7 @@ void Pickup::Spawn(PickUpData& pickupData)
 void Pickup::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void Pickup::Draw(GameState& gameState) const

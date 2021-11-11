@@ -26,6 +26,7 @@ void Platform::Spawn(PlatformData& platData)
 void Platform::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void Platform::Draw(GameState& gameState) const

@@ -49,17 +49,17 @@ bool MainGameUpdate(float elapsedTime)
 	switch (GetGameStatusState())
 	{
 	case GameStatusState::TITLE_STATE:
-		TitleStateUpdate(gameState);
+		TitleStateUpdate();
 		break;
 	case GameStatusState::PLAY_STATE:
-		PlayStateUpdate(gameState);
+		PlayStateUpdate();
 		GameObject::UpdateAll(gameState);
 		break;
 	case GameStatusState::GAMEOVER_STATE:
-		GameOverStateUpdate(gameState);
+		GameOverStateUpdate();
 		break;
 	case GameStatusState::WIN_STATE:
-		WinStateUpdate(gameState);
+		WinStateUpdate();
 		break;
 	}
 
@@ -68,11 +68,11 @@ bool MainGameUpdate(float elapsedTime)
 	return Play::KeyDown(VK_ESCAPE);
 }
 
-void TitleStateUpdate(GameState& gameState)
+void TitleStateUpdate()
 {
 	// Reset the score
 	gameState.score = 0;
-	CreateLevel(gameState);
+	CreateLevel();
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
@@ -95,7 +95,7 @@ void TitleStateUpdate(GameState& gameState)
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * SEVEN_TENTHS }, Play::CENTRE);
 }
 
-void PlayStateUpdate(GameState& gameState)
+void PlayStateUpdate()
 {
 	Play::DrawFontText("font24px", "SCORE: " + std::to_string(gameState.score),
 		{ S_DISPLAY_WIDTH * FIFTH,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
@@ -129,13 +129,14 @@ void PlayStateUpdate(GameState& gameState)
 	}
 }
 
-void GameOverStateUpdate(GameState& gameState)
+void GameOverStateUpdate()
 {
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
 		Play::StopAudioLoop("weirdWavvyThing");
 		Play::StartAudioLoop("untitled");
+		isLevelCreated = false;
 		SetGameStatusState(GameStatusState::TITLE_STATE);
 	}
 
@@ -162,13 +163,14 @@ void GameOverStateUpdate(GameState& gameState)
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
 }
 
-void WinStateUpdate(GameState& gameState)
+void WinStateUpdate()
 {
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
 		Play::StopAudioLoop("HET");
 		Play::StartAudioLoop("untitled");
+		isLevelCreated = false;
 		SetGameStatusState(GameStatusState::TITLE_STATE);
 	}
 
@@ -195,19 +197,17 @@ void WinStateUpdate(GameState& gameState)
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
 }
 
-void CreateLevel(GameState& gameState)
+void CreateLevel()
 {
-	static bool isLevelCreated{ false };
-	
 	if (!isLevelCreated)
 	{
-		PlaySpawnAll(gameState);
-		isLevelCreated = true;
+		PlaySpawnAll();
 	}
+	isLevelCreated = true;
 }
 
 // Setting up the Game world in a data oriented way
-void PlaySpawnAll(GameState& gameState)
+void PlaySpawnAll()
 {
 	Floor::Spawn();
 	Player::Spawn();
@@ -308,9 +308,9 @@ void PlaySpawnAll(GameState& gameState)
 		},
 	} };
 
-	for (PlatformData platData : platformArray)
+	for (PlatformData platformsData : platformArray)
 	{
-		Platform::Spawn(platData);
+		Platform::Spawn(platformsData);
 	}
 
 	std::array<PickUpData, PICKUP_AMOUNT>pickUpArray
@@ -614,9 +614,9 @@ void PlaySpawnAll(GameState& gameState)
 		// END OF L
 	} };
 
-	for (PickUpData pickUpData : pickUpArray)
+	for (PickUpData pickUpsData : pickUpArray)
 	{
-		Pickup::Spawn(pickUpData);
+		Pickup::Spawn(pickUpsData);
 	}
 
 	std::array<BlockData, BLOCK_AMOUNT>blockArray
@@ -721,9 +721,9 @@ void PlaySpawnAll(GameState& gameState)
 		},
 	} };
 
-	for (BlockData blockData : blockArray)
+	for (BlockData blocksData : blockArray)
 	{
-		Block::Spawn(blockData);
+		Block::Spawn(blocksData);
 	}
 
 	std::array<SpikeData, SPIKE_AMOUNT>spikeArray
@@ -812,9 +812,9 @@ void PlaySpawnAll(GameState& gameState)
 		},
 	} };
 
-	for (SpikeData spikeData : spikeArray)
+	for (SpikeData spikesData : spikeArray)
 	{
-		Spike::Spawn(spikeData);
+		Spike::Spawn(spikesData);
 	}
 
 	std::array<HealthData, HEALTH_AMOUNT>healthArray
@@ -831,9 +831,9 @@ void PlaySpawnAll(GameState& gameState)
 		},
 	} };
 
-	for (HealthData healthData : healthArray)
+	for (HealthData healthConsumablesData : healthArray)
 	{
-		Health::Spawn(healthData);
+		Health::Spawn(healthConsumablesData);
 	}
 
 	LBarrier::Spawn(gameState);

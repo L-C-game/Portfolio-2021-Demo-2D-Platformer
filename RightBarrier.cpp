@@ -22,7 +22,10 @@ void RBarrier::Spawn(GameState& gameState)
 
 void RBarrier::Update(GameState& gameState) 
 {
-
+	gameState;
 }
 
-void RBarrier::Draw(GameState& gameState) const {}
+void RBarrier::Draw(GameState& gameState) const 
+{
+	gameState;
+}

@@ -22,10 +22,10 @@ void Ceiling::Spawn(GameState& gameState)
 
 void Ceiling::Update(GameState& gameState)
 {
-
+	gameState;
 }
 
 void Ceiling::Draw(GameState& gameState) const
 {
-
+	gameState;
 }

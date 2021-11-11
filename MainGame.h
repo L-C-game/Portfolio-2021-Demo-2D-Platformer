@@ -266,13 +266,15 @@ enum class GameStatusState
 // GameStatus state variables and functions
 static GameStatusState m_gameStatusState{ GameStatusState::TITLE_STATE };
 
-static void SetGameStatusState(GameStatusState gameStatusState) { m_gameStatusState = gameStatusState; }
+inline void SetGameStatusState(GameStatusState gameStatusState) { m_gameStatusState = gameStatusState; }
 static GameStatusState GetGameStatusState() { return m_gameStatusState; }
 
-void TitleStateUpdate(GameState& gameState);
-void PlayStateUpdate(GameState& gameState);
-void GameOverStateUpdate(GameState& gameState);
-void WinStateUpdate(GameState& gameState);
+static bool isLevelCreated{ false };
 
-void CreateLevel(GameState& gameState);
-void PlaySpawnAll(GameState& gameState);
+void TitleStateUpdate();
+void PlayStateUpdate();
+void GameOverStateUpdate();
+void WinStateUpdate();
+
+void CreateLevel();
+void PlaySpawnAll();

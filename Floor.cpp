@@ -28,6 +28,7 @@ void Floor::Spawn()
 void Floor::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void Floor::Draw(GameState& gameState) const

@@ -69,7 +69,7 @@ public:
 	void ResetPlayer();
 
 	// Handles the specific behaviour when the player collides with particular objects
-	void CollisionSystem(GameState& gameState);
+	void CollisionSystem();
 
 	void CentreCameraOnPlayer(GameState& gameState);
 

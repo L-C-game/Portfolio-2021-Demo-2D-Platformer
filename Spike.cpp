@@ -24,6 +24,7 @@ void Spike::Spawn(SpikeData& platData)
 void Spike::Update(GameState& gameState)
 {
 	SetPosition(GetConstPos());
+	gameState;
 }
 
 void Spike::Draw(GameState& gameState) const
