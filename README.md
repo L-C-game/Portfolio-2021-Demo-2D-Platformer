@@ -27,23 +27,31 @@ To launch the project; download the Repository code, open and build the solution
 
 ## Functionality
 
-The game makes use of Object Oriented design principles, including; classes and inheritance, 
+The game makes use of Object Oriented design principles, including; classes and inheritance,
 the state design pattern, and the singleton design pattern.
 
-In order to represent a variety of game objects with vastly differing functionality a class based system was devised. 
+In order to represent a variety of game objects with vastly differing functionality a class based system was devised.
 
 Each of the object's within the game inherit from the base Game Object class.
 
-This class contains variables and methods that are relevant to all Game Object's such as position, half size (half the full object dimensions),
-and collision checking and resolution. 
+This class contains variables and methods that are relevant to all Game Objects such as position, half size (half the full object dimensions),
+and collision checking and resolution.
 
 The Game Object class also stores virtual methods for drawing and updating the object's, these are overridden in the relevant child classes.
 
 ### State Pattern
 
-The state pattern was used to represent the Player's FSM, this 
+The State Pattern was used to create the Player's FSM. 
+This pattern uses Object Oriented principles, 
+instead of using an enum and switch statements, 
+and each of the separate states are represented as a class. 
 
 #### Meyer's singleton
+
+Each of the state classes were created as singleton’s, specifically Meyer’s singleton. This was to ensure that there was only a single instance of each state at a time. 
+The singleton pattern was used to ensure that only a single instance of each state existed at once, as the player should only be in a single state at a time, this helps control access to the states. 
+Singleton’s also provide global access to the single instance, however unlike static classes you are able to perform creation logic.
+
 
 ### Data Oriented design
 
@@ -53,11 +61,11 @@ the array could then be looped through, calling the spawn method for the relevan
 
 ### AABB collision
 
-Collision in the game followed the method of Axis Aligned Bounding Boxes to check for collision's between objects.
-The overlap of the collision was then used to 
+Collisions in the game followed the method of Axis Aligned Bounding Boxes to check for collisions between objects.
+The overlap of the collision was then used to resolve the collision by setting the position of the moving object by the overlap in the opposite direction.
 
 ### Camera
-A simple camera was implemented by creating a camera struct as part of the GameState and setting that camera to be centred on the player. 
+A simple camera was implemented by creating a camera struct as part of the GameState and setting that camera to be centred on the player.
 All of the objects then must be drawn relative to the camera's position.
 
 ## Sources
