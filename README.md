@@ -4,19 +4,6 @@
 ![CoverPicture](https://user-images.githubusercontent.com/67602355/141102007-1d6ac265-a6bd-4fdb-8fbb-2afcb49dd31f.png)
 
 
-_________________________________________________________________________________________________________
-PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the,
-
-Creative Commons Attribution-No Derivatives 4.0 International Public License.
-
-Zool Redimensioned © 2021 Urbanscan Ltd. All rights reserved. 
-
-Zool Redimensioned was developed by Sumo Digital Academy under licence from Ian Stewart’s Urbanscan Ltd.
-
-Published and distributed by Secret Mode Limited. 
-
-Sumo Digital Academy and Secret Mode Limited are part of Sumo Group plc.
-_________________________________________________________________________________________________________
 
 ## Introduction
 This platformer demo was created as part of the Sumo Digital Academy internship. 
@@ -104,6 +91,20 @@ https://opengameart.org/users/celestialghost8
 Created using Bfxr
 
 https://www.bfxr.net/
+
+_________________________________________________________________________________________________________
+PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the,
+
+Creative Commons Attribution-No Derivatives 4.0 International Public License.
+
+Zool Redimensioned © 2021 Urbanscan Ltd. All rights reserved. 
+
+Zool Redimensioned was developed by Sumo Digital Academy under licence from Ian Stewart’s Urbanscan Ltd.
+
+Published and distributed by Secret Mode Limited. 
+
+Sumo Digital Academy and Secret Mode Limited are part of Sumo Group plc.
+_________________________________________________________________________________________________________
 
 
 
