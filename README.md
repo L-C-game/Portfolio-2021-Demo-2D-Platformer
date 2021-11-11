@@ -5,33 +5,26 @@
 
 
 _________________________________________________________________________________________________________
-PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the
+PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the,
 
 Creative Commons Attribution-No Derivatives 4.0 International Public License.
 
-Zool Redimensioned (© 2021 Sumo Digital, Sumo Digital Academy)
-_________________________________________________________________________________________________________
+Zool Redimensioned © 2021 Urbanscan Ltd. All rights reserved. 
 
-## Table of contents
-* [Introduction](#introduction)
-* [General Information](#general-information)
-* [Technologies](#technologies)
-* [Launch](#launch)
-* [Functionality](#functionality)
-* [Project Status](#project-status)
-* [Sources](#sources)
+Zool Redimensioned was developed by Sumo Digital Academy under licence from Ian Stewart’s Urbanscan Ltd.
+
+Published and distributed by Secret Mode Limited. 
+
+Sumo Digital Academy and Secret Mode Limited are part of Sumo Group plc.
+_________________________________________________________________________________________________________
 
 ## Introduction
 This platformer demo was created as part of the Sumo Digital Academy internship. 
 
-### Aim of the project
-- To create a simple 2D game that implements the State Design Pattern as the Player's FSM.
-
-## General Information
 "Zool in DemoLand" is a 2D platformer, the game consists of a title state, play state, win state and gameover state.
 
-The player's FSM was created using the State design pattern and Meyer's singleton to ensure that there
-was only a single instance of each state.
+### Aim of the project
+- To create a simple 2D game that implements the State Design Pattern as the Player's Finite State Machine (FSM).
 
 ## Technologies
 Language: C++
@@ -42,29 +35,43 @@ IDE: Visual Studio 2019
 
 Source Control: Initially Visual Studio, later SourceTree
 
-### Additional technologies 
-
-Sound effects: Bfxr
-
-Additional Sprites and Animations: Aseprite
-
 ## Launch
 To launch the project; download the Repository code, open and build the solution in Visual Studio.
 
 ## Functionality
 
+The game makes use of Object Oriented design principles, including; classes and inheritance, 
+the state design pattern, and the singleton design pattern.
+
+In order to represent a variety of game objects with vastly differing functionality a class based system was devised. 
+
+Each of the object's within the game inherit from the base Game Object class.
+
+This class contains variables and methods that are relevant to all Game Object's such as position, half size (half the full object dimensions),
+and collision checking and resolution. 
+
+The Game Object class also stores virtual methods for drawing and updating the object's, these are overridden in the relevant child classes.
+
 ### State Pattern
+
+The state pattern was used to represent the Player's FSM, this 
 
 #### Meyer's singleton
 
+### Data Oriented design
+
+Data oriented design principles were followed when implementing the objects which have multiples,
+this made data entry more efficient, as each of the objects could be set up with their relevant data in an array,
+the array could then be looped through, calling the spawn method for the relevant object for the number of objects.
+
 ### AABB collision
+
+Collision in the game followed the method of Axis Aligned Bounding Boxes to check for collision's between objects.
+The overlap of the collision was then used to 
 
 ### Camera
 A simple camera was implemented by creating a camera struct as part of the GameState and setting that camera to be centred on the player. 
 All of the objects then must be drawn relative to the camera's position.
- 
-## Project status 
-The project is ongoing. 
 
 ## Sources
 

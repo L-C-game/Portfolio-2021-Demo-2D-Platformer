@@ -24,15 +24,12 @@ Block::Block(Point2f pos) : GameObject(pos)
 
 void Block::Spawn(BlockData& blockData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_BLOCK) < (BLOCK_AMOUNT))
-	{
-		GameObject* blockG = new Block(blockData.pos);
-		blockG->SetHalfSize(blockData.HalfSizeBlock);
-		Block* block = static_cast<Block*>(blockG);
-		block->SetBlockID(blockData.blockSprite);
-		block->SetTimer(0);
-		block->SetActive(true);
-	}
+	GameObject* blockG = new Block(blockData.pos);
+	blockG->SetHalfSize(blockData.HalfSizeBlock);
+	Block* block = static_cast<Block*>(blockG);
+	block->SetBlockID(blockData.blockSprite);
+	block->SetTimer(0);
+	block->SetActive(true);
 }
 
 void Block::Update(GameState& gameState)

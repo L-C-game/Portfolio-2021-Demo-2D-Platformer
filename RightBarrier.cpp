@@ -15,13 +15,9 @@ RBarrier::RBarrier(Point2f pos) : GameObject(pos)
 
 void RBarrier::Spawn(GameState& gameState)
 {
-	// Right barrier constructor
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_RBARRIER) < 1)
-	{
-		Point2f initialPos = { (LEVEL_WIDTH + ZOOL_SIZE), (LEVEL_HEIGHT /2) };
-		GameObject* rBarrier = new RBarrier(initialPos - gameState.camera.pos);
-		rBarrier->SetActive(true);
-	}
+	Point2f initialPos = { (LEVEL_WIDTH + ZOOL_SIZE), (LEVEL_HEIGHT /2) };
+	GameObject* rBarrier = new RBarrier(initialPos - gameState.camera.pos);
+	rBarrier->SetActive(true);
 }
 
 void RBarrier::Update(GameState& gameState) 

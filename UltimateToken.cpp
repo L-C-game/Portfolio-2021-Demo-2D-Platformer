@@ -12,11 +12,8 @@ UltimateToken::UltimateToken(Point2f pos) : GameObject(pos)
 
 void UltimateToken::Spawn()
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_ULTIMATE) < 1)
-	{
-		GameObject* ultimateToken = new UltimateToken({ (S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE) - S_PIXELS_PER_UNIT_DOUBLE) });
-		ultimateToken->SetHalfSize({ S_PIXELS_PER_UNIT_DOUBLE - 1, S_PIXELS_PER_UNIT_DOUBLE - 1 });
-	}
+	GameObject* ultimateToken = new UltimateToken({ (S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE) - S_PIXELS_PER_UNIT_DOUBLE) });
+	ultimateToken->SetHalfSize({ S_PIXELS_PER_UNIT, S_PIXELS_PER_UNIT });
 }
 
 void UltimateToken::Update(GameState& gameState)

@@ -15,13 +15,9 @@ Ceiling::Ceiling(Point2f pos) : GameObject(pos)
 
 void Ceiling::Spawn(GameState& gameState)
 {
-	// Floor constructor
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_CEILING) < 1)
-	{
-		Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -ZOOL_SIZE };
-		GameObject* ceiling = new Ceiling(initialPos - gameState.camera.pos);
-		ceiling->SetActive(true);
-	}
+	Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -ZOOL_SIZE };
+	GameObject* ceiling = new Ceiling(initialPos - gameState.camera.pos);
+	ceiling->SetActive(true);
 }
 
 void Ceiling::Update(GameState& gameState)

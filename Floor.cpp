@@ -19,13 +19,9 @@ void Floor::Spawn()
 {
 	if (GameObject::s_vUpdateList.size() == 0)
 	{
-		// Floor constructor
-		if (GameObject::GetObjectCount(GameObject::Type::OBJ_FLOOR) < 1)
-		{
-			Point2f initialPos = { ((LEVEL_WIDTH)/ 2), FLOOR_Y };
-			GameObject* floor = new Floor(initialPos);
-			floor->SetActive(true);
-		}
+		Point2f initialPos = { ((LEVEL_WIDTH)/ 2), FLOOR_Y };
+		GameObject* floor = new Floor(initialPos);
+		floor->SetActive(true);
 	}
 }
 

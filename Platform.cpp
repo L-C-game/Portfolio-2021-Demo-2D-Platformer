@@ -16,14 +16,11 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 
 void Platform::Spawn(PlatformData& platData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLATFORM) < (PLATFORM_AMOUNT))
-	{
-		GameObject* platformG = new Platform(platData.pos);
-		platformG->SetHalfSize( platData.HalfSizePlat );
-		Platform* platform = static_cast<Platform*>(platformG);
-		platform->SetPlatID(platData.colour);
-		platform->SetActive(true);
-	}
+	GameObject* platformG = new Platform(platData.pos);
+	platformG->SetHalfSize( platData.HalfSizePlat );
+	Platform* platform = static_cast<Platform*>(platformG);
+	platform->SetPlatID(platData.colour);
+	platform->SetActive(true);
 }
 
 void Platform::Update(GameState& gameState)

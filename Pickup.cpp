@@ -18,15 +18,12 @@ Pickup::Pickup(Point2f pos) : GameObject(pos)
 
 void Pickup::Spawn(PickUpData& pickupData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PICKUP) < (PICKUP_AMOUNT))
-	{
-		GameObject* pickupG = new Pickup(pickupData.pos);
-		pickupG->SetHalfSize(pickupData.HalfSizePickUp);
-		Pickup* pickup = static_cast<Pickup*>(pickupG);
-		pickup->SetPointValue(pickupData.pointValue);
-		pickup->SetPickUpID(pickupData.pickupSprite);
-		pickup->SetActive(true);
-	}
+	GameObject* pickupG = new Pickup(pickupData.pos);
+	pickupG->SetHalfSize(pickupData.HalfSizePickUp);
+	Pickup* pickup = static_cast<Pickup*>(pickupG);
+	pickup->SetPointValue(pickupData.pointValue);
+	pickup->SetPickUpID(pickupData.pickupSprite);
+	pickup->SetActive(true);
 }
 
 void Pickup::Update(GameState& gameState)

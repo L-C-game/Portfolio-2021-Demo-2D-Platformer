@@ -339,7 +339,7 @@ void JumpState::HandleInput(Player& player)
 		if (player.GetAcceleration().x >= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { -MOVE_ACC / 2, (currentAcc.y) };
+			const Vector2f& acc = { -MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
 			player.SetAcceleration(acc);
 		}
@@ -349,7 +349,7 @@ void JumpState::HandleInput(Player& player)
 		if (player.GetAcceleration().x <= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { MOVE_ACC / 2, (currentAcc.y) };
+			const Vector2f& acc = { MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
 			player.SetAcceleration(acc);
 		}
@@ -419,7 +419,7 @@ void FallState::HandleInput(Player& player)
 	{
 		if (player.GetAcceleration().x >= 0)
 		{
-			const Vector2f& acc = { -MOVE_ACC / 2, (currentAcc.y) };
+			const Vector2f& acc = { -MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
 			player.SetAcceleration(acc);
 		}
@@ -428,7 +428,7 @@ void FallState::HandleInput(Player& player)
 	{
 		if (player.GetAcceleration().x <= 0)
 		{
-			const Vector2f& acc = { MOVE_ACC / 2, (currentAcc.y) };
+			const Vector2f& acc = { MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
 			player.SetAcceleration(acc);
 		}

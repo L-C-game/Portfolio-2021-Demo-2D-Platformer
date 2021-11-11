@@ -72,7 +72,7 @@ void TitleStateUpdate(GameState& gameState)
 {
 	// Reset the score
 	gameState.score = 0;
-	PlaySpawnAll(gameState);
+	CreateLevel(gameState);
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
@@ -193,6 +193,17 @@ void WinStateUpdate(GameState& gameState)
 
 	Play::DrawFontText("font24px", "PRESS ESCAPE TO QUIT.",
 		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
+}
+
+void CreateLevel(GameState& gameState)
+{
+	static bool isLevelCreated{ false };
+	
+	if (!isLevelCreated)
+	{
+		PlaySpawnAll(gameState);
+		isLevelCreated = true;
+	}
 }
 
 // Setting up the Game world in a data oriented way

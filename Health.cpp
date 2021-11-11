@@ -13,11 +13,8 @@ Health::Health(Point2f pos) : GameObject(pos)
 
 void Health::Spawn(HealthData& healthData)
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_HEALTH) < (HEALTH_AMOUNT))
-	{
-		GameObject* health = new Health(healthData.pos);
-		health->SetHalfSize(healthData.HalfSizeHealth);
-	}
+	GameObject* health = new Health(healthData.pos);
+	health->SetHalfSize(healthData.HalfSizeHealth);
 }
 
 void Health::Update(GameState& gameState)

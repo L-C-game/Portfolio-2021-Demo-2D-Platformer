@@ -1,6 +1,10 @@
 /*
 	Author: Laura Mary Clarke 2020
 	GitHub: L-C-game
+
+	This .h file contains important constants used throughout the game,
+	functions that are used in the .cpp file and structs to represent
+	certain game objects, 
 */
 
 // Utilities for the main game cpp file
@@ -77,6 +81,7 @@ const enum spriteIdInts
 	zoolWalkRpng,
 };
 
+// These enums are used to keep the Draw and update orders easy to access and alter
 const enum updateOrder
 {
 	UPDATE_ORDER_PLAYER,
@@ -116,30 +121,34 @@ constexpr int BLINK_DURATION{ 3 };
 
 // Min and max speed constants
 constexpr float MAX_SPEED_RUN{ 3.5 }; // Maximum horizontal speed
-constexpr int MAX_SPEED_FALL{ 7 }; // Maximum vertical speed (can fall faster than he can run)
+constexpr int MAX_SPEED_FALL{ 5 }; // Maximum vertical speed (can fall faster than he can run)
 constexpr float MINIMUM_SPEED_RUN{ 0.25f }; // A minimum speed, when this is reached the player stops and changes to idle
 
 // The excess pixels on the zool sprites
 constexpr int PIXEL_EXCESS_X_ZOOL{ 10 };
 constexpr int PIXEL_EXCESS_Y_ZOOL{ 8 };
 
+// Used in the resolution of horizontal collisions
+// This is to prevent the player becoming stuck within an object
 constexpr int PIXEL_BUFFER{ 2 };
 
-// Run animation speed
-constexpr int RUN_ANIM_SPEED{ 32 };
+// Various animation speed's
+constexpr int RUN_ANIM_SPEED{32};
 constexpr int SINGLE_FRAME_ANIM_SPEED{ 1 };
 constexpr int TWO_FRAME_ANIM_SPEED{6};
 constexpr int BLOCK_BREAK_ANIM_SPEED{ 12 };
 constexpr int BLOCK_REAPPEAR{ 48 };
 
-//Platform data and functions to populate world with platforms
+//Platform constants
+constexpr int PLATFORM_AMOUNT{ 15 };
 constexpr float HALF_SIZE_PLAT_X{ 24.0f };
 constexpr float HALF_SIZE_PLAT_Y{ 10.0f };
 
+// The half-size of small object's in the game
+// As multiple items are this size it was stored in a constant
 constexpr float HALF_SIZE_SMALL_OBJ{ 8.0f };
 
-constexpr int PLATFORM_AMOUNT{ 15 };
-
+// Pickup constants
 constexpr int PICKUP_AMOUNT{ 40 };
 constexpr int FIVE_POINTS{ 5 };
 constexpr int TEN_POINTS{ 10 };
@@ -176,7 +185,7 @@ constexpr float LETTER_MIDDLE_TOP_Y{ 414 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_
 constexpr float LETTER_MIDDLE_BOTTOM_Y{ 390 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) };
 constexpr float LETTER_BOTTOM_Y{ 438 - (S_DISPLAY_HEIGHT * THIRD + S_PIXELS_PER_UNIT_DOUBLE) };
 
-
+// Block and spike constants
 constexpr int BLOCK_AMOUNT{ 16 };
 constexpr int SPIKE_AMOUNT{ 16 };
 
@@ -188,7 +197,7 @@ const Point2f initialPlayerPos = { static_cast<float>(S_DISPLAY_WIDTH * TWO_FIFT
 constexpr int MAX_HEALTH_PLAYER{ 6 };
 constexpr int MIN_HEALTH_PLAYER{ 1 };
 
-// Camera struct 
+// Camera struct: contains the position and size of the camera
 struct Camera
 {
 	Point2f pos{ 0.0f, 0.0f };
@@ -196,16 +205,21 @@ struct Camera
 	const float height{ S_DISPLAY_HEIGHT };
 };
 
-// Using a struct as the base access is public
+// Struct to represent the game state
 struct GameState
 {
 	// The time elapsed in the game
 	float time{ 0.0f };
+	// Player's score
 	int score{ 0 };
+	// Player's health
 	int health{ 0 };
+	// Reference to the camera
 	Camera camera;
 };
 
+// Struct's representing game object's that there are multiple of
+// These objects are created in a data oriented manner
 struct PlatformData
 {
 	Point2f pos{0.0f, 0.0f};
@@ -260,4 +274,5 @@ void PlayStateUpdate(GameState& gameState);
 void GameOverStateUpdate(GameState& gameState);
 void WinStateUpdate(GameState& gameState);
 
+void CreateLevel(GameState& gameState);
 void PlaySpawnAll(GameState& gameState);

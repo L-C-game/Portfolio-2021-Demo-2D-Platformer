@@ -28,6 +28,8 @@ public:
 		OBJ_ALL = 999
 	};
 
+    // Enum class to store the side of the player that collides
+    // This is used to set the collision behaviour 
     enum class CollidingSide
     {
         SIDE_NULL = -1,
@@ -44,6 +46,7 @@ public:
 	virtual void Update(GameState& gameState) = 0;
 	virtual void Draw(GameState& gameState) const = 0;
 
+	// Simple random number generator
 	static float RandomNumGen(int min, int max);
 
 	void SetPosition(Point2f pos) { m_pos = pos; }
@@ -55,9 +58,6 @@ public:
     void SetAcceleration(Vector2f accel) { m_acceleration = accel; }
     Vector2f GetAcceleration() const { return m_acceleration; };
 
-	void SetRotation(float rot) { m_rot = rot; }
-	float GetRotation() const { return m_rot; };
-
     // AABB getters and setters 
     void SetHalfSize(Point2f halfSize) { m_halfSize = halfSize; }
     Point2f GetHalfSize() const { return m_halfSize; };
@@ -65,7 +65,7 @@ public:
     // Work out overlap of the collision
     Point2f CalcOverlap(GameObject* other);
 
-    // Resolve the collision
+    // Checks and resolves the collision using the collision overlap
     CollidingSide ResolveCollision(GameObject* other);
 
     void SetSolid(bool isSolid) { m_solid = isSolid; }
@@ -100,6 +100,8 @@ public:
     static void UpdateAll(GameState& gameState);
     static void DrawAll(GameState& gameState);
     static void DestroyAll();
+
+    // Determines if two objects are colliding 
     bool AABBCollision(GameObject* other);
 
 protected:
@@ -126,8 +128,6 @@ protected:
     bool m_solid{ true };
 
     bool m_collectable{ false };
-
-    float m_rot{ 0.0f };
 
     // Set the order of update and draw
     int m_drawOrder{ 0 };

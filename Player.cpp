@@ -23,13 +23,10 @@ Player::Player(Point2f pos) : GameObject(pos)
 // Spawn player
 void Player::Spawn()
 {
-	if (GameObject::GetObjectCount(GameObject::Type::OBJ_PLAYER) < 1)
-	{
-		GameObject* playerG = new Player(initialPlayerPos);
-		Player* player = static_cast<Player*>(playerG);
-		player->SetInitialPlayerState();
-		player->SetActive(true);
-	}
+	GameObject* playerG = new Player(initialPlayerPos);
+	Player* player = static_cast<Player*>(playerG);
+	player->SetInitialPlayerState();
+	player->SetActive(true);
 }
 
 void Player::SetInitialPlayerState()
