@@ -205,6 +205,7 @@ void CreateLevel()
 	g_IS_LEVEL_CREATED = true;
 }
 
+// Adapted from Baamageddon level load from file
 void LoadLevel(void)
 {
 	std::ifstream levelfile;
