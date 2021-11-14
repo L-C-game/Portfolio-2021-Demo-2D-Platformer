@@ -52,8 +52,7 @@ Meyer's singleton was used as it is thread safe.
 ### Data Oriented design
 
 Data oriented design principles were followed when implementing the objects which have multiples,
-this made data entry more efficient, as each of the objects could be set up with their relevant data in an array,
-the array could then be looped through, calling the spawn method for the relevant object for the number of objects.
+their data was hand-typed into a file which is read line by line to populate the level.
 
 ## Sources
 
@@ -80,12 +79,24 @@ Sumo Digital Academy
 ### Music 
 CC0 License 
 
+celestialghost8
+
 https://opengameart.org/users/celestialghost8
 
 ### Sound effects
 Created using Bfxr
 
 https://www.bfxr.net/
+
+### Read file code adapted from Baamageddon game.
+Created by Dave Moore.
+
+### Font
+CC0 License
+
+BM Japan by BitmapMania
+
+https://www.dafont.com/bm-japan.font
 
 _________________________________________________________________________________________________________
 PlayBuffer is the intellectual property of Sumo Digital Academy and is used under the,
