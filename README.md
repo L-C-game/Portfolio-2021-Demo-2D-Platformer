@@ -29,14 +29,10 @@ To launch the project; download the Repository code, open and build the solution
 
 The game makes use of Object Oriented design principles, including; classes and inheritance,
 the state design pattern, and the singleton design pattern.
-
 In order to represent a variety of game objects with vastly differing functionality a class based system was devised.
-
 Each of the object's within the game inherit from the base Game Object class.
-
 This class contains variables and methods that are relevant to all Game Objects such as position, half size (half the full object dimensions),
 and collision checking and resolution.
-
 The Game Object class also stores virtual methods for drawing and updating the object's, these are overridden in the relevant child classes.
 
 ### State Pattern
