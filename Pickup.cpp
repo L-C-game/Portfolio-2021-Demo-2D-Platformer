@@ -14,12 +14,12 @@ Pickup::Pickup(Point2f pos) : GameObject(pos)
 	SetConstPos(pos);
 	SetIsCollectable(true);
 	SetSolid(false);
+	SetHalfSize({g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ});
 }
 
 void Pickup::Spawn(PickUpData& pickupData)
 {
 	GameObject* pickupG = new Pickup(pickupData.pos);
-	pickupG->SetHalfSize(pickupData.HalfSizePickUp);
 	Pickup* pickup = static_cast<Pickup*>(pickupG);
 	pickup->SetPointValue(pickupData.pointValue);
 	pickup->SetPickUpID(pickupData.pickupSprite);

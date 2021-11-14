@@ -12,7 +12,7 @@ UltimateToken::UltimateToken(Point2f pos) : GameObject(pos)
 
 void UltimateToken::Spawn()
 {
-	GameObject* ultimateToken = new UltimateToken({ (g_DISPLAY_WIDTH * g_THREE_QUARTERS + 2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (2 * g_ZOOL_SIZE) - g_PIXELS_PER_UNIT_DOUBLE) });
+	GameObject* ultimateToken = new UltimateToken({ 640, 898 });
 	ultimateToken->SetHalfSize({ g_PIXELS_PER_UNIT, g_PIXELS_PER_UNIT });
 }
 

@@ -20,14 +20,13 @@ Block::Block(Point2f pos) : GameObject(pos)
 	SetSolid(true);
 	SetConstPos(pos);
 	SetBlockState(BlockState::STABLE_STATE);
+	SetHalfSize({ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ });
 }
 
 void Block::Spawn(BlockData& blockData)
 {
 	GameObject* blockG = new Block(blockData.pos);
-	blockG->SetHalfSize(blockData.HalfSizeBlock);
 	Block* block = static_cast<Block*>(blockG);
-	block->SetBlockID(blockData.blockSprite);
 	block->SetTimer(0);
 	block->SetActive(true);
 }

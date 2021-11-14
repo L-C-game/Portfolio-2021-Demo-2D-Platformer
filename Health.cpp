@@ -9,12 +9,13 @@ Health::Health(Point2f pos) : GameObject(pos)
 	SetConstPos(pos);
 	SetIsCollectable(true);
 	SetSolid(false);
+	SetHalfSize({ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ });
 }
 
 void Health::Spawn(HealthData& healthData)
 {
 	GameObject* health = new Health(healthData.pos);
-	health->SetHalfSize(healthData.HalfSizeHealth);
+
 }
 
 void Health::Update(GameState& gameState)

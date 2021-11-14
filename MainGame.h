@@ -223,35 +223,30 @@ struct GameState
 struct PlatformData
 {
 	Point2f pos{0.0f, 0.0f};
-	Point2f HalfSizePlat{ g_HALF_SIZE_PLAT_X, g_HALF_SIZE_PLAT_Y };
-	spriteIdInts colour{ nullpng };
+	int colour{ nullpng };
 };
 
 struct PickUpData
 {
-	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizePickUp{ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ };
-	spriteIdInts pickupSprite{ nullpng };
+	// Type Pickup
+	Point2f pos{ 0.0f, 0.0f }; 
+	int pickupSprite{ nullpng };
 	int pointValue{ 0 };
 };
 
 struct BlockData
 {
 	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizeBlock{ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ };
-	spriteIdInts blockSprite{ nullpng };
 };
 
 struct SpikeData
 {
 	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizeSpike{ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ };
 };
 
 struct HealthData
 {
 	Point2f pos{ 0.0f, 0.0f };
-	Point2f HalfSizeHealth{ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ };
 };
 
 enum class GameStatusState
@@ -276,5 +271,7 @@ void PlayStateUpdate();
 void GameOverStateUpdate();
 void WinStateUpdate();
 
-void Createg_LEVEL();
+void CreateLevel();
 void PlaySpawnAll();
+
+void LoadLevel(void);

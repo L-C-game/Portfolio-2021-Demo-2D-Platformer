@@ -12,12 +12,12 @@ Platform::Platform(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_PLATFORM);
 	SetDrawOrder(drawOrder::DRAW_ORDER_PLATFORM);
 	SetConstPos(pos);
+	SetHalfSize({ g_HALF_SIZE_PLAT_X, g_HALF_SIZE_PLAT_Y });
 }
 
 void Platform::Spawn(PlatformData& platData)
 {
 	GameObject* platformG = new Platform(platData.pos);
-	platformG->SetHalfSize( platData.HalfSizePlat );
 	Platform* platform = static_cast<Platform*>(platformG);
 	platform->SetPlatID(platData.colour);
 	platform->SetActive(true);

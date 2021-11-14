@@ -12,12 +12,12 @@ Spike::Spike(Point2f pos) : GameObject(pos)
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_SPIKE);
 	SetDrawOrder(drawOrder::DRAW_ORDER_SPIKE);
 	SetConstPos(pos);
+	SetHalfSize({ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ });
 }
 
 void Spike::Spawn(SpikeData& platData)
 {
 	GameObject* spikeG = new Spike(platData.pos);
-	spikeG->SetHalfSize(platData.HalfSizeSpike);
 	spikeG->SetActive(true);
 }
 

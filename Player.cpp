@@ -123,14 +123,14 @@ void Player::CollisionSystem()
 					if (GetHealth() >= g_MIN_HEALTH_PLAYER && !GetIsHurt())
 					{
 						SetHealth(GetHealth() - 1);
-						if (GetHealth() != 0)
+						if (GetHealth() > 0)
 						{
 							Play::PlayAudio("hitPlayer");
 							SetIsHurt(true);
 						}
 						else 
 						{
-							SetPlayerState(IdleState::getInstance());
+							SetGameStatusState(GameStatusState::GAMEOVER_STATE);
 						}
 					}
 				}
@@ -143,7 +143,6 @@ void Player::CollisionSystem()
 						SetHealth(GetHealth() + 1);
 						Play::PlayAudio("heal");
 						health->SetActive(false);
-						
 					}
 				}
 

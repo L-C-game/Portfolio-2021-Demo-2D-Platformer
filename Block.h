@@ -54,7 +54,7 @@ public:
 private:
 	Point2f m_constPos{ 0.0f, 0.0f };
 	int m_timer{ 0 };
-	int m_blockID{ 0 };
+	int m_blockID{ blockpng };
 	int m_animSpeed{ g_SINGLE_FRAME_ANIM_SPEED };
 	BlockState m_state{BlockState::STABLE_STATE};
 };
