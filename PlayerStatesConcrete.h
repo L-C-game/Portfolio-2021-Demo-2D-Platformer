@@ -3,7 +3,7 @@
 	GitHub: L-C-game
 
 	Finite state machine built using the state design pattern and Meyer's Singleton for thread safety.
-	The following references were used to help me understand and implement the pattern in my own game
+	The following references were used to help me understand and implement the pattern in my own game.
 	References:
 	Meyer's Singleton:
 	http://laristra.github.io/flecsi/src/developer-guide/patterns/meyers_singleton.html
@@ -14,13 +14,11 @@
 
 	Each of the states is represented as it's own class with method's that override the pure virtual base methods of the interface. 
 	The states have been implemented as singleton's so there is only a single instance of each in memory.
-	While this works well with the current game design as there is only a single player it would not work if there were 2 instances of the player.
 
 	By using the State design pattern, each of the states are more self contained but also share methods that are relevant to all of them,
 	this helps avoid repeating code.
 
 	Each of the states have entry and exit methods which allow for sounds to be played and flags and other variables to be reset.
-
 
 */
 
