@@ -114,7 +114,7 @@ static constexpr float g_GRAVITY{ (30.0f / 60.0f) }; // Acceleration due to GRAV
 static constexpr float g_MOVE_ACC{ (45.0f / 60.0f) }; // Acceleration when moving
 static constexpr float g_STUN_ACC{(90.0f / 60.0f)};
 static constexpr int g_JUMP_SPEED{ 4 }; // The speed of Jumping upwards
-// Maximum jump duration in seconds
+// Timer durations in seconds
 static constexpr int g_JUMP_DURATION{ 30 };
 static constexpr int g_I_FRAMES_DURATION{ 15 };
 static constexpr int g_BLINK_DURATION{ 3 };
@@ -150,40 +150,6 @@ static constexpr float g_HALF_SIZE_SMALL_OBJ{ 8.0f };
 
 // Pickup constants
 static constexpr int g_PICKUP_AMOUNT{ 40 };
-static constexpr int g_FIVE_POINTS{ 5 };
-static constexpr int g_TEN_POINTS{ 10 };
-static constexpr int g_THIRTY_POINTS{ 30 };
-
-// Positions for the ZOOL easter egg pickups, here for easier modification
-// X positions
-// Z 
-static constexpr float g_Z_LEFT_X{ 640 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_Z_MIDDLE_X{ 664 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_Z_RIGHT_X{ 688 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_Z_DIAGONAL_LEFT_X{ 656 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_Z_DIAGONAL_RIGHT_X{ 672 + g_DISPLAY_WIDTH * g_QUARTER };
-
-// O_FIRST
-static constexpr float g_O_FIRST_LEFT_X{ 752 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_O_FIRST_MIDDLE_X{ 776 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_O_FIRST_RIGHT_X{ 800 + g_DISPLAY_WIDTH * g_QUARTER };
-
-// O_SECOND 
-static constexpr float g_O_SECOND_LEFT_X{ 880 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_O_SECOND_MIDDLE_X{ 904 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_O_SECOND_RIGHT_X{ 928 + g_DISPLAY_WIDTH * g_QUARTER };
-
-// L 
-static constexpr float g_L_LEFT_X{ 1008 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_L_MIDDLE_X{ 1032 + g_DISPLAY_WIDTH * g_QUARTER };
-static constexpr float g_L_RIGHT_X{ 1056 + g_DISPLAY_WIDTH * g_QUARTER };
-
-// Y axis positions
-// Letter height
-static constexpr float g_LETTER_TOP_Y{ 366 - (g_DISPLAY_HEIGHT * g_THIRD + g_PIXELS_PER_UNIT_DOUBLE) };
-static constexpr float g_LETTER_MIDDLE_TOP_Y{ 414 - (g_DISPLAY_HEIGHT * g_THIRD + g_PIXELS_PER_UNIT_DOUBLE) };
-static constexpr float g_LETTER_MIDDLE_BOTTOM_Y{ 390 - (g_DISPLAY_HEIGHT * g_THIRD + g_PIXELS_PER_UNIT_DOUBLE) };
-static constexpr float g_LETTER_BOTTOM_Y{ 438 - (g_DISPLAY_HEIGHT * g_THIRD + g_PIXELS_PER_UNIT_DOUBLE) };
 
 // Block and spike constants
 static constexpr int g_BLOCK_AMOUNT{ 16 };
@@ -251,7 +217,6 @@ struct HealthData
 
 enum class GameStatusState
 {
-	// Need to add title state
 	TITLE_STATE = 0,
 	PLAY_STATE,
 	WIN_STATE,

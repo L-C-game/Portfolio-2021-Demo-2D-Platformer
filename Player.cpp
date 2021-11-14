@@ -29,12 +29,14 @@ void Player::Spawn()
 	player->SetActive(true);
 }
 
+// Used only for the initial state
 void Player::SetInitialPlayerState()
 {
 	PlayerState& newState = IdleState::getInstance();
 	m_pStateCurrent = &newState;
 }
 
+// Calls exit and entry methods and sets the state depending on which reference to the state instances is passed in
 void Player::SetPlayerState(PlayerState& newState)
 {
 	Player& playerAddress = *this;
@@ -43,7 +45,7 @@ void Player::SetPlayerState(PlayerState& newState)
 	m_pStateCurrent->StateEnter(playerAddress);
 }
 
-void Player::ResetPlayer()
+void Player::ResetPlayer() // Method to reset the player to the start position and health
 {
 	SetPosition(g_INITIAL_PLAYER_POS);
 	SetHealth(g_MAX_HEALTH_PLAYER);
@@ -64,14 +66,17 @@ void Player::CollisionSystem()
 	// Check if any of the GameObjects have collided with the player
 	for (GameObject* other : oList)
 	{
+		// So the player isn't checked 
 		if (!(other->GetType() == GameObject::Type::OBJ_PLAYER))
 		{
 			// Resolve collison and return which side of the player has collided
 			GameObject::CollidingSide collidingSide = ResolveCollision(other);
 			if (collidingSide != GameObject::CollidingSide::SIDE_NULL)
 			{
+				// Check whether the object is solid (if not then don't resolve collision or alter player acceleration etc
 				if (other->GetSolid())
 				{
+					// Fill the collision list
 					collisionList.push_back(other);
 				
 
@@ -96,6 +101,8 @@ void Player::CollisionSystem()
 						break;
 					}
 				}
+
+				// Perform different actions depending on what object is collided with by the player
 
 				if (other->GetIsCollectable())
 				{
@@ -180,6 +187,7 @@ void Player::Update(GameState& gameState)
 	Player& playerAddress = *this;
 	m_pStateCurrent->HandleInput(playerAddress);
 	m_pStateCurrent->SetupAnim(playerAddress);
+	// Check for collisions and perform the appropriate functionality depending on the object collided with
 	CollisionSystem();
 
 	CentreCameraOnPlayer(gameState);

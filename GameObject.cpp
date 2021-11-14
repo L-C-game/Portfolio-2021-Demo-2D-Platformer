@@ -28,6 +28,7 @@ GameObject::~GameObject()
 	s_vUpdateList.erase(std::find(s_vUpdateList.begin(), s_vUpdateList.end(), this));
 }
 
+// Calls each GameObject in the update list's update function
 void GameObject::UpdateAll(GameState& gameState)
 {
 	std::sort(s_vUpdateList.begin(), s_vUpdateList.end(), GameObject::UpdateOrder);
@@ -58,6 +59,7 @@ float GameObject::RandomNumGen(int min, int max)
 	return static_cast<float>((std::rand() % ((max - min) + 1)) + min);
 }
 
+// Checking if two objects collide based on AABB collision
 bool GameObject::AABBCollision(GameObject* other)
 {
 	if (abs((this->GetPosition().x) - (other->GetPosition().x)) > (this->GetHalfSize().x + other->GetHalfSize().x))
@@ -73,7 +75,7 @@ bool GameObject::AABBCollision(GameObject* other)
 	return true;
 }
 
-// Might want to change to giving 2 game objects if the collision moves to it's own file
+// Calculates the overlap of the 2 objects undergoing AABB collision
 Point2f GameObject::CalcOverlap(GameObject* other)
 {
 	Point2f overlap;
@@ -82,6 +84,7 @@ Point2f GameObject::CalcOverlap(GameObject* other)
 	return overlap;
 }
 
+// Resolves the collision between 2 objects and returns the side of the player which collided with the object
 GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 {
 	if (AABBCollision(other))
