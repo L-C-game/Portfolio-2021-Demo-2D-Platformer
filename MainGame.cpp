@@ -211,19 +211,19 @@ void LoadLevel(void)
 	std::ifstream levelfile;
 	levelfile.open("ZoolLevel.txt");
 
-	std::string sType, sX, sY, sSprite, sPValue;
+	std::string sType, sX, sY, sSprite, sPValue; // Strings for the file data
 
-	std::getline(levelfile, sType);
+	std::getline(levelfile, sType); // get the type line by line from the file
 
-	while (!levelfile.eof())
+	while (!levelfile.eof()) // While not at the end of file
 	{
-		std::getline(levelfile, sType);
+		std::getline(levelfile, sType); // Data format within file
 		std::getline(levelfile, sX);
 		std::getline(levelfile, sY);
 		std::getline(levelfile, sSprite);
 		std::getline(levelfile, sPValue);
 
-		if (sType == "HEALTH")
+		if (sType == "HEALTH") // Check that the correct data is being accessed using the GameObject type name
 		{
 			HealthData healthData;
 			
