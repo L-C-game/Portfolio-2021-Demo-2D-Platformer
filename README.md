@@ -79,7 +79,8 @@ Sumo Digital Academy
 ### Music 
 CC0 License 
 
-celestialghost8
+"HET", "untitled" and "weirdWavvyThing" by celestialghost8 
+
 
 https://opengameart.org/users/celestialghost8
 
