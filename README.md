@@ -51,6 +51,7 @@ and each of the separate states are represented as a class.
 Each of the state classes were created as singleton’s, specifically Meyer’s singleton. This was to ensure that there was only a single instance of each state at a time. 
 The singleton pattern was used to ensure that only a single instance of each state existed at once, as the player should only be in a single state at a time, this helps control access to the states. 
 Singleton’s also provide global access to the single instance, however unlike static classes you are able to perform creation logic.
+Meyer's singleton was used as it is thread safe.
 
 ### Data Oriented design
 
