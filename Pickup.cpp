@@ -34,5 +34,5 @@ void Pickup::Update(GameState& gameState)
 
 void Pickup::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(GetPickUpID(), GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(GetPickUpID(), GetPosition() - gameState.camera.pos, static_cast<int>(g_SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

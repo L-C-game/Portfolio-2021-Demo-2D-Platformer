@@ -52,21 +52,11 @@ Each of the state classes were created as singleton’s, specifically Meyer’s 
 The singleton pattern was used to ensure that only a single instance of each state existed at once, as the player should only be in a single state at a time, this helps control access to the states. 
 Singleton’s also provide global access to the single instance, however unlike static classes you are able to perform creation logic.
 
-
 ### Data Oriented design
 
 Data oriented design principles were followed when implementing the objects which have multiples,
 this made data entry more efficient, as each of the objects could be set up with their relevant data in an array,
 the array could then be looped through, calling the spawn method for the relevant object for the number of objects.
-
-### AABB collision
-
-Collisions in the game followed the method of Axis Aligned Bounding Boxes to check for collisions between objects.
-The overlap of the collision was then used to resolve the collision by setting the position of the moving object by the overlap in the opposite direction.
-
-### Camera
-A simple camera was implemented by creating a camera struct as part of the GameState and setting that camera to be centred on the player.
-All of the objects then must be drawn relative to the camera's position.
 
 ## Sources
 

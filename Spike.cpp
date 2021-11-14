@@ -29,5 +29,5 @@ void Spike::Update(GameState& gameState)
 
 void Spike::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(spikespng, GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(spikespng, GetPosition() - gameState.camera.pos, static_cast<int>(g_SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

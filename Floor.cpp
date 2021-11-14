@@ -19,7 +19,7 @@ void Floor::Spawn()
 {
 	if (GameObject::s_vUpdateList.size() == 0)
 	{
-		Point2f initialPos = { ((LEVEL_WIDTH)/ 2), FLOOR_Y };
+		Point2f initialPos = { ((g_LEVEL_WIDTH)/ 2), g_FLOOR_Y };
 		GameObject* floor = new Floor(initialPos);
 		floor->SetActive(true);
 	}
@@ -33,5 +33,5 @@ void Floor::Update(GameState& gameState)
 
 void Floor::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(floorpng, GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(floorpng, GetPosition() - gameState.camera.pos, static_cast<int>(g_SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

@@ -12,8 +12,8 @@ UltimateToken::UltimateToken(Point2f pos) : GameObject(pos)
 
 void UltimateToken::Spawn()
 {
-	GameObject* ultimateToken = new UltimateToken({ (S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE) - S_PIXELS_PER_UNIT_DOUBLE) });
-	ultimateToken->SetHalfSize({ S_PIXELS_PER_UNIT, S_PIXELS_PER_UNIT });
+	GameObject* ultimateToken = new UltimateToken({ (g_DISPLAY_WIDTH * g_THREE_QUARTERS + 2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (2 * g_ZOOL_SIZE) - g_PIXELS_PER_UNIT_DOUBLE) });
+	ultimateToken->SetHalfSize({ g_PIXELS_PER_UNIT, g_PIXELS_PER_UNIT });
 }
 
 void UltimateToken::Update(GameState& gameState)
@@ -24,5 +24,5 @@ void UltimateToken::Update(GameState& gameState)
 
 void UltimateToken::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(GetUltimateTokenID(), GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(GetUltimateTokenID(), GetPosition() - gameState.camera.pos, static_cast<int>(g_SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

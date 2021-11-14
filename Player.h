@@ -82,10 +82,10 @@ private:
 	PlayerState* m_pStateCurrent{nullptr};
 	bool m_isLeftFacing{ false };
 	bool m_isGrounded{ true };
-	int m_health{ MAX_HEALTH_PLAYER };
+	int m_health{ g_MAX_HEALTH_PLAYER };
 	bool m_isHurt{ false };
 	int m_playerID{ zoolIdleRpng };
-	int m_animSpeed{ SINGLE_FRAME_ANIM_SPEED };
+	int m_animSpeed{ g_SINGLE_FRAME_ANIM_SPEED };
 	int m_score{ 0 };
 
 	// time elasped since entering jump state in frames

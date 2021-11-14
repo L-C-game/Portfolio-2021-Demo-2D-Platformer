@@ -53,7 +53,7 @@ void IdleState::HandleInput(Player& player)
 
 void IdleState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -96,7 +96,7 @@ void WalkState::HandleInput(Player& player)
 		if (player.GetAcceleration().x >= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { -MOVE_ACC, (currentAcc.y) };
+			const Vector2f& acc = { -g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
 			player.SetAcceleration(acc);
 		}
@@ -107,7 +107,7 @@ void WalkState::HandleInput(Player& player)
 		if (player.GetAcceleration().x <= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { MOVE_ACC, (currentAcc.y) };
+			const Vector2f& acc = { g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
 			player.SetAcceleration(acc);
 		}
@@ -141,7 +141,7 @@ void WalkState::HandleInput(Player& player)
 
 void WalkState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(RUN_ANIM_SPEED);
+	player.SetAnimSpeed(g_RUN_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -190,7 +190,7 @@ void SkidState::HandleInput(Player& player)
 		player.SetPlayerState(WalkState::getInstance());
 	}
 
-	if ((abs(player.GetVelocity().x) <= MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
+	if ((abs(player.GetVelocity().x) <= g_MINIMUM_SPEED_RUN) && (!Play::KeyDown(VK_RIGHT) && !Play::KeyDown(VK_LEFT)) || (Play::KeyDown(VK_LEFT) && Play::KeyDown(VK_RIGHT)))
 	{
 		// If the player presses neither of L and R set to idle state
 		player.SetPlayerState(IdleState::getInstance());
@@ -219,7 +219,7 @@ void SkidState::HandleInput(Player& player)
 
 void SkidState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -287,7 +287,7 @@ void CrouchState::HandleInput(Player& player)
 
 void CrouchState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -331,7 +331,7 @@ void JumpState::HandleInput(Player& player)
 	if(player.GetVelocity().y == 0)
 	{
 		Vector2f currentVel = player.GetVelocity();
-		Vector2f vel = { (currentVel.x),(currentVel.y - JUMP_SPEED) };
+		Vector2f vel = { (currentVel.x),(currentVel.y - g_JUMP_SPEED) };
 		player.SetVelocity(vel);
 	}
 
@@ -340,7 +340,7 @@ void JumpState::HandleInput(Player& player)
 		if (player.GetAcceleration().x >= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { -MOVE_ACC, (currentAcc.y) };
+			const Vector2f& acc = { -g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
 			player.SetAcceleration(acc);
 		}
@@ -350,7 +350,7 @@ void JumpState::HandleInput(Player& player)
 		if (player.GetAcceleration().x <= 0)
 		{
 			const Vector2f& currentAcc = player.GetAcceleration();
-			const Vector2f& acc = { MOVE_ACC, (currentAcc.y) };
+			const Vector2f& acc = { g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
 			player.SetAcceleration(acc);
 		}
@@ -362,7 +362,7 @@ void JumpState::HandleInput(Player& player)
 
 	// When the player is no longer holding space and the height he is is above his initial position,
 	// Change to fall state
-	if ((!(Play::KeyDown(VK_SPACE)) || player.GetJumpTimer() > JUMP_DURATION))
+	if ((!(Play::KeyDown(VK_SPACE)) || player.GetJumpTimer() > g_JUMP_DURATION))
 	{
 		player.SetPlayerState(FallState::getInstance());
 	}
@@ -375,7 +375,7 @@ void JumpState::HandleInput(Player& player)
 
 void JumpState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -413,14 +413,14 @@ void FallState::StateEnter(Player& player)
 void FallState::HandleInput(Player& player)
 {
 	Vector2f currentAcc = player.GetAcceleration();
-	Vector2f acc = { (currentAcc.x),(GRAVITY) };
+	Vector2f acc = { (currentAcc.x),(g_GRAVITY) };
 	player.SetAcceleration(acc);
 	
 	if (Play::KeyDown(VK_LEFT))
 	{
 		if (player.GetAcceleration().x >= 0)
 		{
-			const Vector2f& accel = { -MOVE_ACC, (currentAcc.y) };
+			const Vector2f& accel = { -g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(true);
 			player.SetAcceleration(accel);
 		}
@@ -429,7 +429,7 @@ void FallState::HandleInput(Player& player)
 	{
 		if (player.GetAcceleration().x <= 0)
 		{
-			const Vector2f& accel = { MOVE_ACC, (currentAcc.y) };
+			const Vector2f& accel = { g_MOVE_ACC, (currentAcc.y) };
 			player.SetIsLeftFacing(false);
 			player.SetAcceleration(accel);
 		}
@@ -452,7 +452,7 @@ void FallState::HandleInput(Player& player)
 
 void FallState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{
@@ -496,35 +496,35 @@ void HurtState::HandleInput(Player& player)
 	player.SetiFramesTimer(player.GetiFramesTimer() + 1);
 	player.SetBlinkTimer(player.GetBlinkTimer() + 1);
 
-	if (player.GetAcceleration().x <= 0 && player.GetiFramesTimer() < I_FRAMES_DURATION)
+	if (player.GetAcceleration().x <= 0 && player.GetiFramesTimer() < g_I_FRAMES_DURATION)
 	{
 		if (!player.GetIsLeftFacing())
 		{
-			const Vector2f& acc = { -STUN_ACC * 2, -STUN_ACC * TENTH };
+			const Vector2f& acc = { -g_STUN_ACC * 2, -g_STUN_ACC * g_TENTH };
 			player.SetAcceleration(acc);
 			player.SetIsLeftFacing(false);
 		}
 
 		if (player.GetIsLeftFacing())
 		{
-			const Vector2f& acc = { STUN_ACC * 2, -STUN_ACC * TENTH };
+			const Vector2f& acc = { g_STUN_ACC * 2, -g_STUN_ACC * g_TENTH };
 			player.SetAcceleration(acc);
 			player.SetIsLeftFacing(true);
 		}
 	}
 
-	if (player.GetiFramesTimer() >= I_FRAMES_DURATION)
+	if (player.GetiFramesTimer() >= g_I_FRAMES_DURATION)
 	{
 		player.SetPlayerState(IdleState::getInstance());
 	}
 
-	if (!player.GetIsBlinking() && player.GetBlinkTimer() >= BLINK_DURATION)
+	if (!player.GetIsBlinking() && player.GetBlinkTimer() >= g_BLINK_DURATION)
 	{
 		player.SetIsBlinking(true);
 		player.SetBlinkTimer(0);
 	}
 
-	if (player.GetIsBlinking() && player.GetBlinkTimer() >= BLINK_DURATION)
+	if (player.GetIsBlinking() && player.GetBlinkTimer() >= g_BLINK_DURATION)
 	{
 		player.SetIsBlinking(false);
 		player.SetBlinkTimer(0);
@@ -539,7 +539,7 @@ void HurtState::StateExit(Player& player)
 
 void HurtState::SetupAnim(Player& player)
 {
-	player.SetAnimSpeed(SINGLE_FRAME_ANIM_SPEED);
+	player.SetAnimSpeed(g_SINGLE_FRAME_ANIM_SPEED);
 
 	if (!(player.GetIsLeftFacing()))
 	{

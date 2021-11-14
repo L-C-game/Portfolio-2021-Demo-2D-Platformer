@@ -25,5 +25,5 @@ void Health::Update(GameState& gameState)
 
 void Health::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(GetHealthID(), GetPosition() - gameState.camera.pos, static_cast<int>( TWO_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(GetHealthID(), GetPosition() - gameState.camera.pos, static_cast<int>( g_TWO_FRAME_ANIM_SPEED * gameState.time));
 }

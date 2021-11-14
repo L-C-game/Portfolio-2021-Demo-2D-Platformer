@@ -31,5 +31,5 @@ void Platform::Update(GameState& gameState)
 
 void Platform::Draw(GameState& gameState) const
 {
-	Play::DrawSprite(GetPlatID(), GetPosition() - gameState.camera.pos, static_cast<int>(SINGLE_FRAME_ANIM_SPEED * gameState.time));
+	Play::DrawSprite(GetPlatID(), GetPosition() - gameState.camera.pos, static_cast<int>(g_SINGLE_FRAME_ANIM_SPEED * gameState.time));
 }

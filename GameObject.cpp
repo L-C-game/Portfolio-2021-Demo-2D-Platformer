@@ -115,7 +115,7 @@ GameObject::CollidingSide GameObject::ResolveCollision(GameObject* other)
 			// resolve horizontal
 			if (other->GetSolid())
 			{
-				posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + (PIXEL_BUFFER / 2)));
+				posPtr->x = posPtr->x + ((xDiff / abs(xDiff)) * (overlap.x + (g_PIXEL_BUFFER / 2)));
 				this->SetPosition(*posPtr);
 			}
 

@@ -10,12 +10,12 @@ RBarrier::RBarrier(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_RBARRIER);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_RBARRIER);
-	SetHalfSize({ (ZOOL_SIZE), (LEVEL_HEIGHT / 2) });
+	SetHalfSize({ (g_ZOOL_SIZE), (g_LEVEL_HEIGHT / 2) });
 }
 
 void RBarrier::Spawn(GameState& gameState)
 {
-	Point2f initialPos = { (LEVEL_WIDTH + ZOOL_SIZE), (LEVEL_HEIGHT /2) };
+	Point2f initialPos = { (g_LEVEL_WIDTH + g_ZOOL_SIZE), (g_LEVEL_HEIGHT /2) };
 	GameObject* rBarrier = new RBarrier(initialPos - gameState.camera.pos);
 	rBarrier->SetActive(true);
 }

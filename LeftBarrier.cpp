@@ -10,12 +10,12 @@ LBarrier::LBarrier(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_LBARRIER);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_LBARRIER);
-	SetHalfSize({(ZOOL_SIZE), (LEVEL_HEIGHT/2)});
+	SetHalfSize({(g_ZOOL_SIZE), (g_LEVEL_HEIGHT/2)});
 }
 
 void LBarrier::Spawn(GameState& gameState)
 {
-	Point2f initialPos = { -(ZOOL_SIZE), (LEVEL_HEIGHT/2) };
+	Point2f initialPos = { -(g_ZOOL_SIZE), (g_LEVEL_HEIGHT/2) };
 	GameObject* lBarrier = new LBarrier(initialPos - gameState.camera.pos);
 	lBarrier->SetActive(true);
 }

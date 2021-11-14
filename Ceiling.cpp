@@ -10,12 +10,12 @@ Ceiling::Ceiling(Point2f pos) : GameObject(pos)
 {
 	SetType(Type::OBJ_CEILING);
 	SetUpdateOrder(updateOrder::UPDATE_ORDER_CEILING);
-	this->SetHalfSize({ (S_DISPLAY_WIDTH/2), (S_PIXELS_PER_UNIT) });
+	this->SetHalfSize({ (g_DISPLAY_WIDTH/2), (g_PIXELS_PER_UNIT) });
 }
 
 void Ceiling::Spawn(GameState& gameState)
 {
-	Point2f initialPos = { (S_DISPLAY_WIDTH / 2), -ZOOL_SIZE };
+	Point2f initialPos = { (g_DISPLAY_WIDTH / 2), -g_ZOOL_SIZE };
 	GameObject* ceiling = new Ceiling(initialPos - gameState.camera.pos);
 	ceiling->SetActive(true);
 }

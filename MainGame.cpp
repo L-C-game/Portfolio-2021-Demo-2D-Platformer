@@ -29,7 +29,7 @@ HealthData healthData;
 // The entry point for a Windows program
 void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 {
-	Play::CreateManager( S_DISPLAY_WIDTH, S_DISPLAY_HEIGHT, S_DISPLAY_SCALE );
+	Play::CreateManager( g_DISPLAY_WIDTH, g_DISPLAY_HEIGHT, g_DISPLAY_SCALE );
 	Play::CentreAllSpriteOrigins();
 	Play::LoadBackground( "Data\\Backgrounds\\Background.png" );
 
@@ -72,7 +72,7 @@ void TitleStateUpdate()
 {
 	// Reset the score
 	gameState.score = 0;
-	CreateLevel();
+	Createg_LEVEL();
 
 	if (Play::KeyPressed(VK_RETURN))
 	{
@@ -80,25 +80,25 @@ void TitleStateUpdate()
 	}
 
 	Play::DrawFontText("font36px", "ZOOL IN DEMOLAND",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS RETURN/ENTER TO PLAY!",
-		{ S_DISPLAY_WIDTH / 2 ,  S_DISPLAY_HEIGHT * TWO_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2 ,  g_DISPLAY_HEIGHT * g_TWO_FIFTHS }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "USE THE DIRECTIONAL BUTTONS TO MOVE,",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT / 2 }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT / 2 }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS SPACEBAR TO JUMP,",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_THREE_FIFTHS }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS ESCAPE TO QUIT.",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * SEVEN_TENTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_SEVEN_TENTHS }, Play::CENTRE);
 }
 
 void PlayStateUpdate()
 {
 	Play::DrawFontText("font24px", "SCORE: " + std::to_string(gameState.score),
-		{ S_DISPLAY_WIDTH * FIFTH,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH * g_FIFTH,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
 
 	std::vector <GameObject*> oList = GameObject::GetTypeList(GameObject::Type::OBJ_ALL);
 	for (GameObject* gameObject : oList)
@@ -119,7 +119,7 @@ void PlayStateUpdate()
 	}
 
 	Play::DrawFontText("font24px", "HEALTH: " + std::to_string(gameState.health),
-		{ S_DISPLAY_WIDTH * FOUR_FIFTHS,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH * g_FOUR_FIFTHS,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
 
 	if (gameState.health == 0)
 	{
@@ -136,7 +136,7 @@ void GameOverStateUpdate()
 	{
 		Play::StopAudioLoop("weirdWavvyThing");
 		Play::StartAudioLoop("untitled");
-		isLevelCreated = false;
+		g_IS_LEVEL_CREATED = false;
 		SetGameStatusState(GameStatusState::TITLE_STATE);
 	}
 
@@ -151,16 +151,16 @@ void GameOverStateUpdate()
 	}
 
 	Play::DrawFontText("font36px", "GAME OVER",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "FINAL SCORE: " + std::to_string(gameState.score),
-		{ S_DISPLAY_WIDTH / 2 ,  S_DISPLAY_HEIGHT * TWO_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2 ,  g_DISPLAY_HEIGHT * g_TWO_FIFTHS }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS RETURN/ENTER TO RETRY!",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT / 2}, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT / 2}, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS ESCAPE TO QUIT.",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_THREE_FIFTHS }, Play::CENTRE);
 }
 
 void WinStateUpdate()
@@ -170,7 +170,7 @@ void WinStateUpdate()
 	{
 		Play::StopAudioLoop("HET");
 		Play::StartAudioLoop("untitled");
-		isLevelCreated = false;
+		g_IS_LEVEL_CREATED = false;
 		SetGameStatusState(GameStatusState::TITLE_STATE);
 	}
 
@@ -185,25 +185,25 @@ void WinStateUpdate()
 	}
 
 	Play::DrawFontText("font36px", "YOU WIN!",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * TENTH }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "FINAL SCORE: " + std::to_string(gameState.score),
-		{ S_DISPLAY_WIDTH / 2 ,  S_DISPLAY_HEIGHT * TWO_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2 ,  g_DISPLAY_HEIGHT * g_TWO_FIFTHS }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS RETURN/ENTER TO RETRY!",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT / 2 }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT / 2 }, Play::CENTRE);
 
 	Play::DrawFontText("font24px", "PRESS ESCAPE TO QUIT.",
-		{ S_DISPLAY_WIDTH / 2,  S_DISPLAY_HEIGHT * THREE_FIFTHS }, Play::CENTRE);
+		{ g_DISPLAY_WIDTH / 2,  g_DISPLAY_HEIGHT * g_THREE_FIFTHS }, Play::CENTRE);
 }
 
-void CreateLevel()
+void Createg_LEVEL()
 {
-	if (!isLevelCreated)
+	if (!g_IS_LEVEL_CREATED)
 	{
 		PlaySpawnAll();
 	}
-	isLevelCreated = true;
+	g_IS_LEVEL_CREATED = true;
 }
 
 // Setting up the Game world in a data oriented way
@@ -214,95 +214,95 @@ void PlaySpawnAll()
 	UltimateToken::Spawn();
 
 	// Platform data as an array of structs
-	std::array<PlatformData, PLATFORM_AMOUNT>platformArray
+	std::array<PlatformData, g_PLATFORM_AMOUNT>platformArray
 	{ {
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * NINE_TENTHS - HALF_SIZE_SMALL_OBJ)}),
+			(platData.pos = {(g_DISPLAY_WIDTH / 2), (g_LEVEL_HEIGHT * g_NINE_TENTHS - g_HALF_SIZE_SMALL_OBJ)}),
 			platData.HalfSizePlat,
 			(platData.colour = platPinkpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER), (LEVEL_HEIGHT * FOUR_FIFTHS)}),
+			(platData.pos = {(g_DISPLAY_WIDTH * g_QUARTER), (g_LEVEL_HEIGHT * g_FOUR_FIFTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platBluepng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT * SEVEN_TENTHS)}),
+			(platData.pos = {(g_DISPLAY_WIDTH / 2), (g_LEVEL_HEIGHT * g_SEVEN_TENTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * QUARTER) , (LEVEL_HEIGHT * THREE_FIFTHS)}),
+			(platData.pos = {(g_DISPLAY_WIDTH * g_QUARTER) , (g_LEVEL_HEIGHT * g_THREE_FIFTHS)}),
 			platData.HalfSizePlat,
 			(platData.colour = platRedpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH / 2), (LEVEL_HEIGHT / 2)}),
+			(platData.pos = {(g_DISPLAY_WIDTH / 2), (g_LEVEL_HEIGHT / 2)}),
 			platData.HalfSizePlat,
 			(platData.colour = platGreenpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), (LEVEL_HEIGHT / 2)}),
+			(platData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS), (g_LEVEL_HEIGHT / 2)}),
 			platData.HalfSizePlat,
 			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * 2), (LEVEL_HEIGHT / 2)}),
+			(platData.pos = {(g_DISPLAY_WIDTH * 2), (g_LEVEL_HEIGHT / 2)}),
 			platData.HalfSizePlat,
 			(platData.colour = platYellowpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {((S_DISPLAY_WIDTH / 2) - (S_DISPLAY_WIDTH * QUARTER)), (S_DISPLAY_HEIGHT + (S_DISPLAY_HEIGHT * QUARTER))}),
+			(platData.pos = {((g_DISPLAY_WIDTH / 2) - (g_DISPLAY_WIDTH * g_QUARTER)), (g_DISPLAY_HEIGHT + (g_DISPLAY_HEIGHT * g_QUARTER))}),
 			platData.HalfSizePlat,
 			(platData.colour = platPinkpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH / 2), (S_DISPLAY_HEIGHT)}),
+			(platData.pos = {(g_DISPLAY_WIDTH / 2), (g_DISPLAY_HEIGHT)}),
 			platData.HalfSizePlat,
 			(platData.colour = platBluepng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH/ 2 + S_DISPLAY_WIDTH * QUARTER), (S_DISPLAY_HEIGHT)}),
+			(platData.pos = {(g_DISPLAY_WIDTH/ 2 + g_DISPLAY_WIDTH * g_QUARTER), (g_DISPLAY_HEIGHT)}),
 			platData.HalfSizePlat,
 			(platData.colour = platRedpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			(platData.pos = {(g_DISPLAY_WIDTH), (g_DISPLAY_HEIGHT - g_PIXELS_PER_UNIT_DOUBLE)}),
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH * QUARTER)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			(platData.pos = {((g_DISPLAY_WIDTH) + (g_DISPLAY_WIDTH * g_QUARTER)), (g_DISPLAY_HEIGHT - g_PIXELS_PER_UNIT_DOUBLE)}),
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH / 2)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			(platData.pos = {((g_DISPLAY_WIDTH) + (g_DISPLAY_WIDTH / 2)), (g_DISPLAY_HEIGHT - g_PIXELS_PER_UNIT_DOUBLE)}),
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {((S_DISPLAY_WIDTH) + (S_DISPLAY_WIDTH * THREE_QUARTERS)), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			(platData.pos = {((g_DISPLAY_WIDTH) + (g_DISPLAY_WIDTH * g_THREE_QUARTERS)), (g_DISPLAY_HEIGHT - g_PIXELS_PER_UNIT_DOUBLE)}),
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
 		PlatformData
 		{
-			(platData.pos = {(S_DISPLAY_WIDTH * 2), (S_DISPLAY_HEIGHT - S_PIXELS_PER_UNIT_DOUBLE)}),
+			(platData.pos = {(g_DISPLAY_WIDTH * 2), (g_DISPLAY_HEIGHT - g_PIXELS_PER_UNIT_DOUBLE)}),
 			platData.HalfSizePlat,
 			(platData.colour = platSpecialpng)
 		},
@@ -313,49 +313,49 @@ void PlaySpawnAll()
 		Platform::Spawn(platformsData);
 	}
 
-	std::array<PickUpData, PICKUP_AMOUNT>pickUpArray
+	std::array<PickUpData, g_PICKUP_AMOUNT>pickUpArray
 	{ {
 		PickUpData
 		{
-			(pickUpData.pos = {S_DISPLAY_WIDTH * FOUR_FIFTHS, LEVEL_HEIGHT - (2 * ZOOL_SIZE - S_PIXELS_PER_UNIT)}),
+			(pickUpData.pos = {g_DISPLAY_WIDTH * g_FOUR_FIFTHS, g_LEVEL_HEIGHT - (2 * g_ZOOL_SIZE - g_PIXELS_PER_UNIT)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
-			(pickUpData.pointValue = FIVE_POINTS)
+			(pickUpData.pointValue = g_FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - S_PIXELS_PER_UNIT))}),
+			(pickUpData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS), ((g_LEVEL_HEIGHT / 2) - (g_ZOOL_SIZE - g_PIXELS_PER_UNIT))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
-			(pickUpData.pointValue = FIVE_POINTS)
+			(pickUpData.pointValue = g_FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH + HALF_SIZE_SMALL_OBJ), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - HALF_SIZE_SMALL_OBJ))}),
+			(pickUpData.pos = {(g_DISPLAY_WIDTH + g_HALF_SIZE_SMALL_OBJ), ((g_LEVEL_HEIGHT / 2) - (g_ZOOL_SIZE - g_HALF_SIZE_SMALL_OBJ))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = tenpointpng),
-			(pickUpData.pointValue = TEN_POINTS)
+			(pickUpData.pointValue = g_TEN_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH / 2), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - S_PIXELS_PER_UNIT))}),
+			(pickUpData.pos = {(g_DISPLAY_WIDTH / 2), ((g_LEVEL_HEIGHT / 2) - (g_ZOOL_SIZE - g_PIXELS_PER_UNIT))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
-			(pickUpData.pointValue = FIVE_POINTS)
+			(pickUpData.pointValue = g_FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH * QUARTER + S_DISPLAY_WIDTH + HALF_SIZE_SMALL_OBJ), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - HALF_SIZE_SMALL_OBJ))}),
+			(pickUpData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + g_DISPLAY_WIDTH + g_HALF_SIZE_SMALL_OBJ), ((g_LEVEL_HEIGHT / 2) - (g_ZOOL_SIZE - g_HALF_SIZE_SMALL_OBJ))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
-			(pickUpData.pointValue = FIVE_POINTS)
+			(pickUpData.pointValue = g_FIVE_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2) + HALF_SIZE_SMALL_OBJ), ((LEVEL_HEIGHT / 2) - (ZOOL_SIZE - HALF_SIZE_SMALL_OBJ))}),
+			(pickUpData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH / 2) + g_HALF_SIZE_SMALL_OBJ), ((g_LEVEL_HEIGHT / 2) - (g_ZOOL_SIZE - g_HALF_SIZE_SMALL_OBJ))}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = fivepointpng),
-			(pickUpData.pointValue = FIVE_POINTS)
+			(pickUpData.pointValue = g_FIVE_POINTS)
 		},
 
 
@@ -363,253 +363,253 @@ void PlaySpawnAll()
 		// START OF Z
 		PickUpData
 		{
-			(pickUpData.pos = {Z_LEFT_X, (LETTER_TOP_Y)}),
+			(pickUpData.pos = {g_Z_LEFT_X, (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {Z_MIDDLE_X, (LETTER_TOP_Y)}),
+			(pickUpData.pos = {g_Z_MIDDLE_X, (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {Z_RIGHT_X, (LETTER_TOP_Y)}),
+			(pickUpData.pos = {g_Z_RIGHT_X, (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
-		},
-
-		PickUpData
-		{
-			(pickUpData.pos = {Z_DIAGONAL_LEFT_X, (LETTER_MIDDLE_TOP_Y)}),
-			pickUpData.HalfSizePickUp,
-			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
-		},
-		PickUpData
-		{
-			(pickUpData.pos = {Z_DIAGONAL_RIGHT_X, (LETTER_MIDDLE_BOTTOM_Y)}),
-			pickUpData.HalfSizePickUp,
-			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 
 		PickUpData
 		{
-			(pickUpData.pos = {Z_LEFT_X, (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {g_Z_DIAGONAL_LEFT_X, (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(Z_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {g_Z_DIAGONAL_RIGHT_X, (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
+		},
+
+		PickUpData
+		{
+			(pickUpData.pos = {g_Z_LEFT_X, (g_LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(Z_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_Z_MIDDLE_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
+		},
+		PickUpData
+		{
+			(pickUpData.pos = {(g_Z_RIGHT_X), (g_LETTER_BOTTOM_Y)}),
+			pickUpData.HalfSizePickUp,
+			(pickUpData.pickupSprite = thirtypointpng),
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		// END OF Z
 		// START OF O 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_LEFT_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_FIRST_MIDDLE_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_MIDDLE_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_RIGHT_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_LEFT_X), (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_LEFT_X), (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_MIDDLE_TOP_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_RIGHT_X), (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_RIGHT_X), (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_FIRST_LEFT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_LEFT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_FIRST_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_MIDDLE_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_FIRST_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_FIRST_RIGHT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		// END OF O
 		// START OF O 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_LEFT_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_SECOND_MIDDLE_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_MIDDLE_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_RIGHT_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_LEFT_X), (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_LEFT_X), (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_MIDDLE_TOP_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_RIGHT_X), (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_RIGHT_X), (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(O_SECOND_LEFT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_LEFT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_SECOND_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_MIDDLE_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(O_SECOND_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_O_SECOND_RIGHT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		// END OF O
 		// START OF L
 		PickUpData 
 		{
-			(pickUpData.pos = {(L_LEFT_X), (LETTER_TOP_Y)}),
+			(pickUpData.pos = {(g_L_LEFT_X), (g_LETTER_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(L_LEFT_X), (LETTER_MIDDLE_TOP_Y)}),
+			(pickUpData.pos = {(g_L_LEFT_X), (g_LETTER_MIDDLE_TOP_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(L_LEFT_X), (LETTER_MIDDLE_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_L_LEFT_X), (g_LETTER_MIDDLE_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData 
 		{
-			(pickUpData.pos = {(L_LEFT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_L_LEFT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(L_MIDDLE_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_L_MIDDLE_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		PickUpData
 		{
-			(pickUpData.pos = {(L_RIGHT_X), (LETTER_BOTTOM_Y)}),
+			(pickUpData.pos = {(g_L_RIGHT_X), (g_LETTER_BOTTOM_Y)}),
 			pickUpData.HalfSizePickUp,
 			(pickUpData.pickupSprite = thirtypointpng),
-			(pickUpData.pointValue = THIRTY_POINTS)
+			(pickUpData.pointValue = g_THIRTY_POINTS)
 		},
 		// END OF L
 	} };
@@ -619,53 +619,53 @@ void PlaySpawnAll()
 		Pickup::Spawn(pickUpsData);
 	}
 
-	std::array<BlockData, BLOCK_AMOUNT>blockArray
+	std::array<BlockData, g_BLOCK_AMOUNT>blockArray
 	{ {
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH / 2 + g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH / 2 + g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS + g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS + g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
@@ -673,49 +673,49 @@ void PlaySpawnAll()
 		// Second section of falling blocks
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + 2 * g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * QUARTER + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + 2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH / 2 + 2 * g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH / 2 + 2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - ( 2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS + 2 * g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - ( 2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH * THREE_QUARTERS + 2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH * g_THREE_QUARTERS + 2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT * THREE_QUARTERS + (S_PIXELS_PER_UNIT_DOUBLE)) + (2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT * g_THREE_QUARTERS + (g_PIXELS_PER_UNIT_DOUBLE)) + (2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
 		BlockData
 		{
-			(blockData.pos = {(S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT * THREE_QUARTERS + (S_PIXELS_PER_UNIT_DOUBLE)) + (2 * ZOOL_SIZE))}),
+			(blockData.pos = {(g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT * g_THREE_QUARTERS + (g_PIXELS_PER_UNIT_DOUBLE)) + (2 * g_ZOOL_SIZE))}),
 			blockData.HalfSizeBlock,
 			(blockData.blockSprite = blockpng),
 		},
@@ -726,88 +726,88 @@ void PlaySpawnAll()
 		Block::Spawn(blocksData);
 	}
 
-	std::array<SpikeData, SPIKE_AMOUNT>spikeArray
+	std::array<SpikeData, g_SPIKE_AMOUNT>spikeArray
 	{ {
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT) - (2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE) - (S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE) - (g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + S_DISPLAY_WIDTH * QUARTER), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE) - (S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + g_DISPLAY_WIDTH * g_QUARTER), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE) - (g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * QUARTER) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_QUARTER) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT) - (2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2)), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE) - (S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH / 2)), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE) - (g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH / 2) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT) - (2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS)), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_THREE_QUARTERS)), ((g_LEVEL_HEIGHT) - (2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT) - (2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_THREE_QUARTERS) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT) - (2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 
 		// Second set of spikes
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + S_DISPLAY_WIDTH * QUARTER), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + g_DISPLAY_WIDTH * g_QUARTER), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * QUARTER) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_QUARTER) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2)), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH / 2)), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH / 2) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH / 2) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS)), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_THREE_QUARTERS)), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 		SpikeData
 		{
-			(spikeData.pos = {(2 * S_DISPLAY_WIDTH + (S_DISPLAY_WIDTH * THREE_QUARTERS) + S_PIXELS_PER_UNIT), ((LEVEL_HEIGHT)-(2 * (ZOOL_SIZE)-(S_PIXELS_PER_UNIT)))}),
+			(spikeData.pos = {(2 * g_DISPLAY_WIDTH + (g_DISPLAY_WIDTH * g_THREE_QUARTERS) + g_PIXELS_PER_UNIT), ((g_LEVEL_HEIGHT)-(2 * (g_ZOOL_SIZE)-(g_PIXELS_PER_UNIT)))}),
 			spikeData.HalfSizeSpike
 		},
 	} };
@@ -817,16 +817,16 @@ void PlaySpawnAll()
 		Spike::Spawn(spikesData);
 	}
 
-	std::array<HealthData, HEALTH_AMOUNT>healthArray
+	std::array<HealthData, g_HEALTH_AMOUNT>healthArray
 	{ {
 		HealthData
 		{
-			(healthData.pos = {(S_DISPLAY_WIDTH / 2 + 2 * S_DISPLAY_WIDTH), ((LEVEL_HEIGHT / 2 + (S_PIXELS_PER_UNIT_DOUBLE)) - (ZOOL_SIZE + S_PIXELS_PER_UNIT))}),
+			(healthData.pos = {(g_DISPLAY_WIDTH / 2 + 2 * g_DISPLAY_WIDTH), ((g_LEVEL_HEIGHT / 2 + (g_PIXELS_PER_UNIT_DOUBLE)) - (g_ZOOL_SIZE + g_PIXELS_PER_UNIT))}),
 			healthData.HalfSizeHealth
 		},
 		HealthData
 		{
-			(healthData.pos = {(S_DISPLAY_WIDTH * QUARTER + HALF_SIZE_SMALL_OBJ) , (LEVEL_HEIGHT * THREE_FIFTHS - S_PIXELS_PER_UNIT)}),
+			(healthData.pos = {(g_DISPLAY_WIDTH * g_QUARTER + g_HALF_SIZE_SMALL_OBJ) , (g_LEVEL_HEIGHT * g_THREE_FIFTHS - g_PIXELS_PER_UNIT)}),
 			healthData.HalfSizeHealth
 		},
 	} };

@@ -54,17 +54,17 @@ void Block::Update(GameState& gameState)
 
 void Block::UpdateStable() 
 {
-	SetHalfSize({ HALF_SIZE_SMALL_OBJ, HALF_SIZE_SMALL_OBJ });
+	SetHalfSize({ g_HALF_SIZE_SMALL_OBJ, g_HALF_SIZE_SMALL_OBJ });
 	SetAnimSpeed(0);
 }
 
 void Block::UpdateBreak()
 {
 	SetBlockID(spriteIdInts::blockbreakpng);
-	SetAnimSpeed(BLOCK_BREAK_ANIM_SPEED);
+	SetAnimSpeed(g_BLOCK_BREAK_ANIM_SPEED);
 	SetTimer(GetTimer() + 1);
 
-	if (GetTimer() >= 2 * BLOCK_BREAK_ANIM_SPEED)
+	if (GetTimer() >= 2 * g_BLOCK_BREAK_ANIM_SPEED)
 	{
 		SetTimer(0);
 		SetSolid(false);
@@ -76,7 +76,7 @@ void Block::UpdateBroken()
 {
 	SetTimer(GetTimer() + 1);
 
-	if (GetTimer() >= 2 * BLOCK_REAPPEAR)
+	if (GetTimer() >= 2 * g_BLOCK_REAPPEAR)
 	{
 		SetSolid(true);
 		SetTimer(0);
