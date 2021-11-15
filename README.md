@@ -5,6 +5,9 @@
 
 
 
+https://user-images.githubusercontent.com/67602355/141744677-38c32eaf-aad2-4ec6-8fae-6cc3e49b5b57.mp4
+
+
 ## Introduction
 This platformer demo was created as part of the Sumo Digital Academy internship. 
 
@@ -112,6 +115,4 @@ Published and distributed by Secret Mode Limited.
 
 Sumo Digital Academy and Secret Mode Limited are part of Sumo Group plc.
 _________________________________________________________________________________________________________
-
-
 
