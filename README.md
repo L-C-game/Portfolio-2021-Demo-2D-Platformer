@@ -1,10 +1,6 @@
 # 2D Platformer Demo "Zool in Demoland"
 
 
-![CoverPicture](https://user-images.githubusercontent.com/67602355/141102007-1d6ac265-a6bd-4fdb-8fbb-2afcb49dd31f.png)
-
-
-
 https://user-images.githubusercontent.com/67602355/141744931-76198bf5-7f26-482e-b731-52189e84d900.mp4
 
 
