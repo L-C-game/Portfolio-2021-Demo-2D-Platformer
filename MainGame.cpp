@@ -116,13 +116,6 @@ void PlayStateUpdate()
 
 	Play::DrawFontText("font24px", "HEALTH: " + std::to_string(gameState.health),
 		{ g_DISPLAY_WIDTH * g_FOUR_FIFTHS,  g_DISPLAY_HEIGHT * g_TENTH }, Play::CENTRE);
-
-	if (gameState.health == 0)
-	{
-		Play::StopAudioLoop("untitled");
-		Play::StartAudioLoop("weirdWavvyThing");
-		SetGameStatusState(GameStatusState::GAMEOVER_STATE);
-	}
 }
 
 void GameOverStateUpdate()

@@ -137,6 +137,8 @@ void Player::CollisionSystem()
 						}
 						else 
 						{
+							Play::StopAudioLoop("untitled");
+							Play::StartAudioLoop("weirdWavvyThing");
 							SetGameStatusState(GameStatusState::GAMEOVER_STATE);
 						}
 					}
